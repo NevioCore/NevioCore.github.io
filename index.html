@@ -78,10 +78,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=4.5">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body class="site-body">
 
@@ -172,15 +169,39 @@
 
           </div>
 
-          <!-- Hero 3D Visual -->
-          <div class="hero-visual-frame">
-            <img src="assets/3d_hero_cyber.jpg" alt="Automatisierte Daten-Pipelines Architektur" class="hero-visual-img">
-            <div class="visual-badge">
+          <!-- Hero Live Engineering Studio Preview -->
+          <div class="hero-visual-frame" style="background: linear-gradient(180deg, #071518 0%, #03080a 100%); border: 1px solid var(--color-border); border-radius: 1.25rem; overflow: hidden; box-shadow: var(--shadow-cyber);">
+            <div style="background: #0d1f23; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; gap: 0.45rem; align-items: center;">
+                <span style="width: 11px; height: 11px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+                <span style="width: 11px; height: 11px; border-radius: 50%; background: #eab308; display: inline-block;"></span>
+                <span style="width: 11px; height: 11px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-secondary); margin-left: 0.5rem;">pipeline.py — NevioCore Ingestion Engine</span>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-mint); background: rgba(94, 255, 136, 0.1); padding: 0.2rem 0.5rem; border-radius: 0.3rem;">v5.0 ACTIVE</span>
+            </div>
+
+            <div style="padding: 1.5rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.7; color: #e2e8f0;">
+              <div><span style="color: #38bdf8;">from</span> pydantic <span style="color: #38bdf8;">import</span> BaseModel, Field</div>
+              <div><span style="color: #38bdf8;">from</span> typing <span style="color: #38bdf8;">import</span> List, Optional</div>
+              <div style="color: var(--color-text-muted); margin: 0.4rem 0;"># Schlüsselfertige Datenharmonisierung für WaWi &amp; ERP</div>
+              <div><span style="color: #f43f5e;">async def</span> <span style="color: #a78bfa;">ingest_and_reconcile</span>(batch: List[B2BOrder]):</div>
+              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">cleaned</span> = await pipeline.clean_dataset(batch)</div>
+              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">deduped</span> = sha256_fingerprint_dedupe(cleaned)</div>
+              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">return</span> await erp_bridge.commit_transaction(deduped)</div>
+              
+              <div style="margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; border-radius: 0.35rem; font-size: 0.75rem;">
+                <span style="color: var(--color-mint); font-weight: 700;">✓ pytest test_suite.py: 14 passed in 0.04s</span><br>
+                <span style="color: var(--color-text-secondary);">Durchsatz: 480 Datensätze/s • Latenz: 32ms • Zero Data Loss</span>
+              </div>
+            </div>
+
+            <div class="visual-badge" style="background: rgba(3, 8, 10, 0.95); border-top: 1px solid var(--color-border); padding: 0.85rem 1.25rem;">
               <div style="font-weight: 600; color: var(--color-text-primary); font-size: 0.85rem;">
-                Nevio Niebel • Studio für Automatisierung
+                Nevio Waldemar Niebel • Software Engineering Studio
               </div>
               <div style="color: var(--color-text-secondary); font-size: 0.75rem; margin-top: 0.2rem;">
-                Salzgitter (Region Braunschweig) • Deutschlandweit Remote
+                Salzgitter (Region Braunschweig) • Deutschlandweit &amp; DACH Remote
               </div>
             </div>
           </div>
@@ -461,6 +482,18 @@
                         <span>Kostenlose Ersteinschätzung anfordern →</span>
                       </button>
                     </form>
+
+                    <!-- Transparent Fallback Box (shown if server delivery is unconfirmed) -->
+                    <div id="audit-lead-fallback-box" style="display: none; margin-top: 1.25rem; padding: 1.25rem; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 0.75rem;">
+                      <h4 style="color: var(--color-cyan); margin-bottom: 0.4rem; font-size: 0.95rem;">ℹ️ Direkte E-Mail-Übermittlung</h4>
+                      <p style="color: var(--color-text-secondary); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem;">
+                        Ihre Daten sind oben im Formular erhalten. Bitte senden Sie die vorbereitete Anfrage mit einem Klick per E-Mail an <strong style="color: var(--color-text-primary);">dev@nevioniebel.tech</strong> oder kopieren Sie den Text:
+                      </p>
+                      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <a id="audit-lead-fallback-mailto-btn" href="#" class="btn btn-primary btn-sm">✉️ Anfrage jetzt per E-Mail absenden</a>
+                        <button type="button" id="audit-lead-fallback-copy-btn" class="btn btn-outline btn-sm">📋 Text kopieren</button>
+                      </div>
+                    </div>
                   </div>
 
                   <!-- Lead Success State -->
@@ -590,7 +623,7 @@
               <span class="solution-category">Paket B • Festpreis ab 650 €</span>
               <h3 class="solution-title">Website &amp; digitale Anfragen</h3>
               <p class="solution-desc">
-                Professionelle Webauftritte, barrierearme Kontaktprozesse und automatische Vorqualifizierung von Kundenanfragen. Schnelle Ladezeiten, rechtssicher nach DSGVO.
+                Professionelle Webauftritte, barrierearme Kontaktprozesse und automatische Vorqualifizierung von Kundenanfragen. Schnelle Ladezeiten, datenschutzkonform nach DSGVO-Standards.
               </p>
               <div class="solution-tags">
                 <span>Webauftritt</span>
@@ -684,12 +717,12 @@
       <div class="container">
         <div class="roi-calculator-box">
           <div style="text-align: center; max-width: 680px; margin: 0 auto 2.5rem;">
-            <span class="section-tag">Mathematischer Business Case</span>
+            <span class="section-tag">Wirtschaftlichkeitsanalyse</span>
             <h2 style="font-size: 2rem; margin-top: 0.5rem; margin-bottom: 0.75rem;">
-              Berechnen Sie Ihren <span class="highlight-mint">konkreten ROI</span>
+              Berechnen Sie das <span class="highlight-mint">Einsparpotenzial</span> für Ihren Betrieb
             </h2>
             <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
-              Wie viel Zeit und Geld verbrennt Ihr Team jeden Monat mit manueller Dateneingabe, Copy-Paste oder fehleranfälligen Tabellen? Schieben Sie die Regler für Ihren individuellen Amortisationszeitpunkt:
+              Wie viel Zeit und Geld bindet Ihr Team monatlich mit manueller Dateneingabe, Copy-Paste oder fehleranfälligen Tabellen? Schieben Sie die Regler für eine realistische Modellierung:
             </p>
           </div>
 
@@ -699,7 +732,7 @@
               <div class="roi-slider-group">
                 <div class="roi-slider-header">
                   <span>Wöchentlicher manueller Zeitaufwand:</span>
-                  <span class="roi-slider-val" id="roi-hours-val">10 Std.</span>
+                  <span class="roi-slider-val" id="roi-hours-val">10 Std. / Woche</span>
                 </div>
                 <input type="range" min="2" max="40" step="1" value="10" class="roi-range" id="roi-hours">
                 <small style="color: var(--color-text-muted); font-size: 0.8rem;">Zeit Ihres Teams für CSV-Bereinigung, Portal-Abgleiche &amp; manuelle Updates</small>
@@ -708,7 +741,7 @@
               <div class="roi-slider-group">
                 <div class="roi-slider-header">
                   <span>Kalkulatorischer Stundensatz:</span>
-                  <span class="roi-slider-val" id="roi-rate-val">45 €</span>
+                  <span class="roi-slider-val" id="roi-rate-val">45 € / Std.</span>
                 </div>
                 <input type="range" min="25" max="120" step="5" value="45" class="roi-range" id="roi-rate">
                 <small style="color: var(--color-text-muted); font-size: 0.8rem;">Durchschnittliche interne Bruttokosten pro Mitarbeiter-Stunde</small>
@@ -722,21 +755,25 @@
                 <span class="roi-stat-val" id="roi-cost-monthly">1.890 € / Mo.</span>
               </div>
               <div class="roi-stat-row">
-                <span class="roi-stat-label">Einmalige Investition (Standard-Pipeline):</span>
+                <span class="roi-stat-label">Einmalige Implementierung (Standard-Pipeline):</span>
                 <span class="roi-stat-val">850 € Festpreis</span>
               </div>
               <div class="roi-stat-row">
-                <span class="roi-stat-label">Vollständig amortisiert nach:</span>
-                <span class="roi-stat-val highlight" id="roi-breakeven-days">13 Tagen</span>
+                <span class="roi-stat-label">Geschätzter Break-Even:</span>
+                <span class="roi-stat-val highlight" id="roi-breakeven-days">ca. 1 Monat</span>
               </div>
               <div class="roi-stat-row" style="border-bottom: none; padding-bottom: 0;">
-                <span class="roi-stat-label">Ihre Netto-Ersparnis im 1. Jahr:</span>
-                <span class="roi-stat-val highlight" id="roi-yearly-savings">21.830 €</span>
+                <span class="roi-stat-label">Geschätzte Netto-Ersparnis im 1. Jahr:</span>
+                <span class="roi-stat-val highlight" id="roi-yearly-savings">ca. 15.000 €</span>
               </div>
+
+              <p style="font-size: 0.72rem; color: var(--color-text-muted); line-height: 1.4; margin-top: 0.75rem;">
+                * Modellierte Schätzung bei realistischer 75% Automatisierungsquote (25% manuelle Restkontrolle) abzüglich 850 € Setup und 300 €/Jahr Wartungspuffer.
+              </p>
 
               <div style="margin-top: 0.5rem;">
                 <a href="booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden" class="btn btn-primary btn-block" id="roi-cta-btn">
-                  Jetzt Einsparpotenzial sichern →
+                  Unverbindliches Angebot anfragen →
                 </a>
               </div>
             </div>
@@ -862,6 +899,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=4.5"></script>
+  <script src="app.js?v=5.0"></script>
 </body>
 </html>

@@ -22,8 +22,8 @@
   --color-text-secondary: #9db2b5;
   --color-text-muted: #627b7f;
 
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   --shadow-cyber: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(94, 255, 136, 0.08);
@@ -1041,6 +1041,17 @@ body.site-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+@media (max-width: 680px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  min-width: 0;
+  width: 100%;
 }
 
 .form-row > * {

@@ -197,49 +197,160 @@ let activeScenarioId = "invoicing";
 let isSimulating = false;
 
 // =========================================================================
-// 3. RFC 4180 COMPLIANT PARSER (CSV, TSV, JSON)
+// 3. CRYPTOGRAPHIC SHA-256 & RFC 4180 COMPLIANT PARSER (CSV, TSV, JSON)
 // =========================================================================
 
 /**
- * Robust CSV/TSV parser handling quotes, commas/semicolons, and escaped quotes
+ * Standard FIPS 180-4 compliant SHA-256 hashing algorithm in pure JS.
+ * Used for collision-resistant cryptographic deduplication across rows.
+ */
+function sha256Utf8(str) {
+  if (typeof str !== "string") str = String(str || "");
+  const ascii = unescape(encodeURIComponent(str));
+
+  function rightRotate(value, amount) {
+    return (value >>> amount) | (value << (32 - amount));
+  }
+
+  const mathPow = Math.pow;
+  const maxWord = mathPow(2, 32);
+  const lengthProperty = "length";
+  let i, j;
+  let result = "";
+  const words = [];
+  const asciiBitLength = ascii[lengthProperty] * 8;
+  const hash = [];
+  const k = [];
+  let primeCounter = 0;
+
+  const isComposite = {};
+  for (let candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (i = 0; i < 313; i += candidate) {
+        isComposite[i] = candidate;
+      }
+      hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+      k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+    }
+  }
+
+  let padded = ascii + "\x80";
+  while (padded[lengthProperty] % 64 - 56) padded += "\x00";
+  for (i = 0; i < padded[lengthProperty]; i++) {
+    words[i >> 2] |= padded.charCodeAt(i) << ((3 - i) % 4) * 8;
+  }
+  words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+  words[words[lengthProperty]] = (asciiBitLength | 0);
+
+  for (j = 0; j < words[lengthProperty];) {
+    const w = words.slice(j, j += 16);
+    const oldHash = hash.slice(0, 8);
+    for (i = 0; i < 64; i++) {
+      const w15 = w[i - 15];
+      const w2 = w[i - 2];
+      const s0 = rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3);
+      const s1 = rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10);
+      w[i] = (i < 16) ? w[i] : (w[i - 16] + s0 + w[i - 7] + s1) | 0;
+      const ch = (hash[4] & hash[5]) ^ (~hash[4] & hash[6]);
+      const temp1 = hash[7] + (rightRotate(hash[4], 6) ^ rightRotate(hash[4], 11) ^ rightRotate(hash[4], 25)) + ch + k[i] + w[i];
+      const maj = (hash[0] & hash[1]) ^ (hash[0] & hash[2]) ^ (hash[1] & hash[2]);
+      const temp2 = (rightRotate(hash[0], 2) ^ rightRotate(hash[0], 13) ^ rightRotate(hash[0], 22)) + maj;
+      hash[7] = hash[6];
+      hash[6] = hash[5];
+      hash[5] = hash[4];
+      hash[4] = (hash[3] + temp1) | 0;
+      hash[3] = hash[2];
+      hash[2] = hash[1];
+      hash[1] = hash[0];
+      hash[0] = (temp1 + temp2) | 0;
+    }
+    for (i = 0; i < 8; i++) {
+      hash[i] = (hash[i] + oldHash[i]) | 0;
+    }
+  }
+
+  for (i = 0; i < 8; i++) {
+    for (j = 3; j + 1; j--) {
+      const b = (hash[i] >> (j * 8)) & 255;
+      result += ((b < 16) ? "0" : "") + b.toString(16);
+    }
+  }
+  return result;
+}
+
+/**
+ * Robust RFC 4180 compliant CSV/TSV parser:
+ * - Only double quote (") is the quote character (apostrophes ' like in O'Connor are regular characters)
+ * - Escaped double quotes ("") resolve to a single "
+ * - Multiline cells (CRLF / LF inside quotes) are preserved
+ * - Commas, semicolons, tabs inside quotes are preserved as cell data
+ * - Delimiter auto-detection across sample records outside quotes
+ * - Accurately counts blank lines
  */
 function parseCsvAdvanced(text, delimiterHint) {
-  // 1. Detect delimiter if not given
+  if (!text || typeof text !== "string") return { headers: [], rows: [], delimiter: ";", emptyLinesCount: 0 };
+
+  // 1. Delimiter auto-detection if not specified
   let delimiter = delimiterHint;
   if (!delimiter) {
-    const firstLine = text.split(/\r?\n/)[0] || "";
-    const semicolons = (firstLine.match(/;/g) || []).length;
-    const commas = (firstLine.match(/,/g) || []).length;
-    const tabs = (firstLine.match(/\t/g) || []).length;
-    if (semicolons >= commas && semicolons >= tabs) delimiter = ";";
-    else if (tabs > commas) delimiter = "\t";
-    else delimiter = ",";
+    const counts = { ";": 0, ",": 0, "\t": 0, "|": 0 };
+    let inQ = false;
+    const sample = text.slice(0, 2000);
+    for (let i = 0; i < sample.length; i++) {
+      const c = sample[i];
+      if (c === "\"") {
+        if (inQ && sample[i + 1] === "\"") { i++; }
+        else { inQ = !inQ; }
+      } else if (!inQ && counts[c] !== undefined) {
+        counts[c]++;
+      }
+    }
+    // Priority for German DACH B2B: semicolon, then comma, then tab
+    if (counts[";"] > 0 && counts[";"] >= counts[","]) delimiter = ";";
+    else if (counts[","] > 0 && counts[","] > counts[";"]) delimiter = ",";
+    else if (counts["\t"] > 0) delimiter = "\t";
+    else delimiter = ";";
   }
 
   const rows = [];
   let currentRow = [];
   let currentField = "";
   let inQuotes = false;
+  let emptyLinesCount = 0;
 
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
     const nextChar = text[i + 1];
 
-    if (char === '"' || char === "'") {
-      if (inQuotes && nextChar === char) {
-        // Escaped quote
-        currentField += char;
-        i++;
+    if (char === "\"") {
+      if (inQuotes) {
+        if (nextChar === "\"") {
+          // Escaped double quote RFC 4180: "" -> "
+          currentField += "\"";
+          i++; // skip next quote
+        } else {
+          // Closing quote
+          inQuotes = false;
+        }
       } else {
-        inQuotes = !inQuotes;
+        // Opening quote ONLY if at field start (ignoring leading whitespace)
+        if (currentField.trim().length === 0) {
+          inQuotes = true;
+          currentField = ""; // discard any whitespace before opening quote
+        } else {
+          currentField += char;
+        }
       }
     } else if (char === delimiter && !inQuotes) {
       currentRow.push(currentField.trim());
       currentField = "";
-    } else if ((char === '\r' || char === '\n') && !inQuotes) {
-      if (char === '\r' && nextChar === '\n') i++; // Skip \n in \r\n
+    } else if ((char === "\r" || char === "\n") && !inQuotes) {
+      if (char === "\r" && nextChar === "\n") i++; // handle CRLF
       currentRow.push(currentField.trim());
-      if (currentRow.some(f => f.length > 0)) {
+      const isBlank = currentRow.every(f => f.length === 0);
+      if (isBlank) {
+        emptyLinesCount++;
+      } else {
         rows.push(currentRow);
       }
       currentRow = [];
@@ -249,19 +360,23 @@ function parseCsvAdvanced(text, delimiterHint) {
     }
   }
 
+  // Final field & row flush
   if (currentField.length > 0 || currentRow.length > 0) {
     currentRow.push(currentField.trim());
-    if (currentRow.some(f => f.length > 0)) {
+    const isBlank = currentRow.every(f => f.length === 0);
+    if (isBlank) {
+      emptyLinesCount++;
+    } else {
       rows.push(currentRow);
     }
   }
 
-  if (rows.length === 0) return { headers: [], rows: [], delimiter };
+  if (rows.length === 0) return { headers: [], rows: [], delimiter, emptyLinesCount };
 
-  const headers = rows[0].map(h => h.replace(/^["']|["']$/g, ""));
+  const headers = rows[0].map(h => h.trim());
   const dataRows = rows.slice(1);
 
-  return { headers, rows: dataRows, delimiter };
+  return { headers, rows: dataRows, delimiter, emptyLinesCount };
 }
 
 /**
@@ -286,10 +401,23 @@ function parseJsonDataset(text) {
 // =========================================================================
 
 /**
+ * Sanitizes a CSV cell against spreadsheet formula injection (OWASP DDE prevention)
+ */
+function sanitizeCsvCell(val) {
+  if (val === null || val === undefined) return "";
+  let str = String(val);
+  if (/^[=+\-@\t\r]/.test(str)) {
+    str = "'" + str;
+  }
+  return str;
+}
+
+/**
  * Cleans the dataset in memory:
  * - Fixes corrupted UTF-8 umlaute
- * - Removes duplicate rows (based on SHA-256 / normalized row key)
+ * - Removes duplicate rows using cryptographic SHA-256 row fingerprints
  * - Standardizes German & international phone numbers to E.164 (+49...)
+ * - Neutralizes formula injection vulnerabilities on CSV export
  * - Trims whitespace
  */
 function cleanDatasetInMemory(dataset) {
@@ -328,10 +456,13 @@ function cleanDatasetInMemory(dataset) {
   let encodingFixedCount = 0;
   let phonesNormalizedCount = 0;
 
+  const firstHeader = (dataset.headers[0] || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const hasIdColumn = /^(id|nr|index|rowid|artikelid|produktid)$/.test(firstHeader);
+
   dataset.rows.forEach(row => {
     // 1. Repair fields
     const cleanedRow = row.map(val => {
-      let v = val.trim();
+      let v = String(val || "").trim();
       const repaired = repairEncoding(v);
       if (repaired !== v) encodingFixedCount++;
 
@@ -343,20 +474,29 @@ function cleanDatasetInMemory(dataset) {
       return repaired;
     });
 
-    // 2. Deduplicate
-    const rowKey = cleanedRow.map(x => x.toLowerCase().replace(/[^a-z0-9]/g, "")).join("||");
-    if (seenHashes.has(rowKey)) {
+    // 2. Cryptographic SHA-256 Deduplication (evaluates business fields)
+    const dedupeCells = hasIdColumn && cleanedRow.length > 1 ? cleanedRow.slice(1) : cleanedRow;
+    const rowKey = dedupeCells.map(x => x.toLowerCase().trim()).join("\x1f");
+    const rowHash = sha256Utf8(rowKey);
+
+    if (seenHashes.has(rowHash)) {
       duplicatesRemoved++;
     } else {
-      seenHashes.add(rowKey);
+      seenHashes.add(rowHash);
       cleanedRows.push(cleanedRow);
     }
   });
 
-  // Re-encode cleaned dataset to CSV text
+  // Re-encode cleaned dataset to CSV text with OWASP formula injection protection
   const delimiter = dataset.delimiter || ";";
-  const headerLine = dataset.headers.join(delimiter);
-  const dataLines = cleanedRows.map(r => r.map(f => f.includes(delimiter) || f.includes('"') ? `"${f.replace(/"/g, '""')}"` : f).join(delimiter));
+  const headerLine = dataset.headers.map(h => sanitizeCsvCell(h)).join(delimiter);
+  const dataLines = cleanedRows.map(r => r.map(f => {
+    const sanitized = sanitizeCsvCell(f);
+    if (sanitized.includes(delimiter) || sanitized.includes("\"") || sanitized.includes("\n") || sanitized.includes("\r")) {
+      return `"${sanitized.replace(/"/g, '""')}"`;
+    }
+    return sanitized;
+  }).join(delimiter));
   const fullCleanedCsv = [headerLine, ...dataLines].join("\n");
 
   return {
@@ -384,23 +524,29 @@ function analyzeDataQuality(headers, rows) {
   const seenHashes = new Set();
   const duplicateExamples = [];
 
+  const firstHeader = (headers && headers[0] ? headers[0] : "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const hasIdColumn = /^(id|nr|index|rowid|artikelid|produktid)$/.test(firstHeader);
+
   const phoneVariationRegex = /^(0049|\+49|0)[0-9\s\/\-\(\)]+$/;
   const e164StrictRegex = /^\+49[1-9][0-9]{5,14}$/;
   const encodingCorruptRegex = /(Ã¼|Ã¶|Ã¤|ÃŸ|Ã„|Ã–|Ãœ|â‚¬|\?{2,})/;
 
   rows.forEach((row, idx) => {
-    const rowKey = row.join("||").toLowerCase().replace(/[^a-z0-9]/g, "");
-    if (seenHashes.has(rowKey)) {
+    const dedupeCells = hasIdColumn && row.length > 1 ? row.slice(1) : row;
+    const rowKey = dedupeCells.map(c => String(c || "").toLowerCase().trim()).join("\x1f");
+    const rowHash = sha256Utf8(rowKey);
+
+    if (seenHashes.has(rowHash)) {
       duplicates++;
       if (duplicateExamples.length < 3) {
         duplicateExamples.push(`Zeile ${idx + 2}: ${row.slice(0, 3).join(" | ")}`);
       }
     } else {
-      seenHashes.add(rowKey);
+      seenHashes.add(rowHash);
     }
 
     row.forEach(val => {
-      const v = val.trim();
+      const v = String(val || "").trim();
       if (v === "" || v === "null" || v === "n/a" || v === "-") {
         missingValues++;
       }
@@ -845,19 +991,20 @@ function downloadBlob(blob, filename) {
 }
 
 /**
- * Unified Sovereign Lead Dispatcher (Dual HTTPS Server + Direct Mail Fallback)
- * Dispatches to Formsubmit HTTPS gateway and local lead server.
+ * Unified Lead Dispatcher (Public FormSubmit HTTPS Gateway + Transparent Fallback)
+ * Dispatches to FormSubmit HTTPS endpoint.
+ * Note: Never contacts visitor-local endpoints in production. Does not store visitor PII in localStorage.
  * Returns { delivered: boolean, receipt: string, statusMessage: string }
  */
 async function dispatchLeadData(payload) {
   let delivered = false;
-  let receipt = payload.id;
+  const receipt = payload.id;
   let statusMessage = "";
 
-  // 1. Try public HTTPS endpoint: Formsubmit.co AJAX
+  // 1. Try public HTTPS endpoint: FormSubmit AJAX
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const timeoutId = setTimeout(() => controller.abort(), 4500);
     const formSubmitPayload = {
       _subject: `Neue B2B-Anfrage [${payload.id}]: ${payload.company || payload.name}`,
       name: payload.name || "Interessent",
@@ -882,63 +1029,29 @@ async function dispatchLeadData(payload) {
 
     if (res.ok) {
       const data = await res.json();
-      if (data.success === "true" || data.success === true) {
+      if (data && (data.success === "true" || data.success === true)) {
         delivered = true;
         statusMessage = "Erfolgreich serverseitig zugestellt und im Postfach archiviert.";
       }
     }
   } catch (e) {
-    // Network error or blocked
+    // Network error, adblocker or gateway timeout
   }
-
-  // 2. If not yet delivered, try local backend server if reachable (development / local preview)
-  if (!delivered) {
-    const localEndpoints = ["/api/lead", "http://127.0.0.1:8081/api/lead"];
-    for (const ep of localEndpoints) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1500);
-        const res = await fetch(ep, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          signal: controller.signal
-        });
-        clearTimeout(timeoutId);
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.success) {
-            delivered = true;
-            statusMessage = "Erfolgreich über lokalen Inbound-Server registriert.";
-            break;
-          }
-        }
-      } catch (e) {}
-    }
-  }
-
-  // 3. Local state persistence
-  try {
-    const existing = JSON.parse(localStorage.getItem("nevioniebel_inbound_leads") || "[]");
-    payload.deliveredToServer = delivered;
-    existing.push(payload);
-    localStorage.setItem("nevioniebel_inbound_leads", JSON.stringify(existing));
-  } catch (err) {}
 
   return { delivered, receipt, statusMessage };
 }
 
 /**
- * Audit Lead Submission with Dual-Delivery & Honest Fallback
+ * Audit Lead Submission with Honest Fallback (Keeps input visible on non-delivery)
  */
 async function handleAuditLeadSubmit(event) {
   event.preventDefault();
 
-  const name = document.getElementById("audit-lead-name").value.trim();
-  const company = document.getElementById("audit-lead-company").value.trim();
-  const email = document.getElementById("audit-lead-email").value.trim();
-  const message = document.getElementById("audit-lead-message").value.trim();
-  const consent = document.getElementById("audit-lead-consent").checked;
+  const name = (document.getElementById("audit-lead-name")?.value || "").trim();
+  const company = (document.getElementById("audit-lead-company")?.value || "").trim();
+  const email = (document.getElementById("audit-lead-email")?.value || "").trim();
+  const message = (document.getElementById("audit-lead-message")?.value || "").trim();
+  const consent = document.getElementById("audit-lead-consent")?.checked;
 
   if (!consent) {
     alert("Bitte bestätigen Sie die Datenschutzerklärung für die Kontaktaufnahme.");
@@ -959,8 +1072,8 @@ async function handleAuditLeadSubmit(event) {
 
   const formBox = document.getElementById("audit-lead-form-box");
   const successBox = document.getElementById("audit-lead-success-box");
+  const fallbackBox = document.getElementById("audit-lead-fallback-box");
   const refCodeEl = document.getElementById("audit-lead-ref-code");
-  const mailtoBtn = document.getElementById("audit-lead-mailto-btn");
   const statusMsg = document.getElementById("audit-lead-status-msg");
 
   const mailSubject = `Ersteinschätzung Daten-Audit: ${company || name} [${leadRecord.id}]`;
@@ -975,18 +1088,27 @@ async function handleAuditLeadSubmit(event) {
 
   const mailtoUrl = `mailto:dev@nevioniebel.tech?cc=niebelnevio@icloud.com&subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
 
-  if (refCodeEl) refCodeEl.textContent = leadRecord.id;
-  if (mailtoBtn) mailtoBtn.href = mailtoUrl;
-
   const dispatchResult = await dispatchLeadData(leadRecord);
 
-  if (formBox) formBox.style.display = "none";
-  if (successBox) successBox.style.display = "block";
-
-  if (dispatchResult.delivered && statusMsg) {
-    statusMsg.innerHTML = `Ihre Anfrage wurde erfolgreich an den Server übermittelt (Vorgangs-ID: <strong class="highlight-mint">${leadRecord.id}</strong>). Ich melde mich innerhalb von 24h an Werktagen bei Ihnen.`;
-  } else if (statusMsg) {
-    statusMsg.innerHTML = `<strong>Direktübermittlung erforderlich:</strong> Ihre Angaben wurden mit Referenz <strong class="highlight-mint">${leadRecord.id}</strong> erfasst. Bitte klicken Sie unten auf <em>'Anfrage jetzt per E-Mail absenden'</em> oder schreiben Sie direkt an <a href="mailto:dev@nevioniebel.tech" style="color: var(--color-mint);">dev@nevioniebel.tech</a>.`;
+  if (dispatchResult.delivered) {
+    if (formBox) formBox.style.display = "none";
+    if (fallbackBox) fallbackBox.style.display = "none";
+    if (successBox) successBox.style.display = "block";
+    if (refCodeEl) refCodeEl.textContent = leadRecord.id;
+    if (statusMsg) {
+      statusMsg.innerHTML = `Ihre Anfrage wurde erfolgreich an den Server übermittelt (Vorgangs-ID: <strong class="highlight-mint">${leadRecord.id}</strong>). Ich melde mich innerhalb von 24h an Werktagen persönlich bei Ihnen.`;
+    }
+  } else {
+    // Form REMAINS VISIBLE with entered data. Show clear fallback CTA.
+    if (fallbackBox) {
+      fallbackBox.style.display = "block";
+      const fallbackMailto = document.getElementById("audit-lead-fallback-mailto-btn");
+      if (fallbackMailto) fallbackMailto.href = mailtoUrl;
+      const copyBtn = document.getElementById("audit-lead-fallback-copy-btn");
+      if (copyBtn) {
+        copyBtn.onclick = () => copyTextToClipboard(mailBody, copyBtn);
+      }
+    }
     try { window.location.href = mailtoUrl; } catch (e) {}
   }
 }
@@ -1353,8 +1475,8 @@ async function handlePortalBookingSubmit(e) {
 
   const formBox = document.getElementById("portal-form-container");
   const successBox = document.getElementById("portal-success-container");
+  const fallbackBox = document.getElementById("portal-fallback-container");
   const refCodeEl = document.getElementById("portal-ref-code");
-  const mailtoBtn = document.getElementById("portal-mailto-fallback-btn");
   const statusMsg = document.getElementById("portal-status-msg");
 
   const subject = `Projekt- & Terminbuchung: ${pkg} - ${company} (${name}) [${bookingRecord.id}]`;
@@ -1370,24 +1492,33 @@ async function handlePortalBookingSubmit(e) {
 
   const mailtoUrl = `mailto:dev@nevioniebel.tech?cc=niebelnevio@icloud.com&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-  if (refCodeEl) refCodeEl.textContent = bookingRecord.id;
-  if (mailtoBtn) mailtoBtn.href = mailtoUrl;
-
   const dispatchResult = await dispatchLeadData(bookingRecord);
 
-  if (formBox) formBox.style.display = "none";
-  if (successBox) successBox.style.display = "block";
-
-  if (dispatchResult.delivered && statusMsg) {
-    statusMsg.innerHTML = `Ihre Terminanfrage wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${bookingRecord.id}</strong>). Ich prüfe Ihre Angaben persönlich und melde mich binnen 24 Stunden an Werktagen bei Ihnen.`;
-  } else if (statusMsg) {
-    statusMsg.innerHTML = `<strong>Direktübermittlung erforderlich:</strong> Ihre Angaben wurden mit Referenz <strong style="color: var(--color-mint); font-family: var(--font-mono);">${bookingRecord.id}</strong> erfasst. Bitte klicken Sie unten auf <em>'Terminanfrage jetzt per E-Mail absenden'</em> oder senden Sie eine E-Mail direkt an <a href="mailto:dev@nevioniebel.tech" style="color: var(--color-mint);">dev@nevioniebel.tech</a>.`;
+  if (dispatchResult.delivered) {
+    if (formBox) formBox.style.display = "none";
+    if (fallbackBox) fallbackBox.style.display = "none";
+    if (successBox) successBox.style.display = "block";
+    if (refCodeEl) refCodeEl.textContent = bookingRecord.id;
+    if (statusMsg) {
+      statusMsg.innerHTML = `Ihre Terminanfrage wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${bookingRecord.id}</strong>). Ich prüfe Ihre Angaben persönlich und melde mich binnen 24 Stunden an Werktagen bei Ihnen.`;
+    }
+  } else {
+    // Keep form and entered data VISIBLE! Show honest fallback container with 1-click mailto
+    if (fallbackBox) {
+      fallbackBox.style.display = "block";
+      const fallbackMailto = document.getElementById("portal-fallback-mailto-btn");
+      if (fallbackMailto) fallbackMailto.href = mailtoUrl;
+      const copyBtn = document.getElementById("portal-fallback-copy-btn");
+      if (copyBtn) {
+        copyBtn.onclick = () => copyTextToClipboard(body, copyBtn);
+      }
+    }
     try { window.location.href = mailtoUrl; } catch (err) {}
   }
 }
 
 // =========================================================================
-// 11. ROI CALCULATOR
+// 11. ROI CALCULATOR (REALISTIC BUSINESS CASE & UNCERTAINTY MODELING)
 // =========================================================================
 
 function initRoiCalculator() {
@@ -1406,23 +1537,37 @@ function initRoiCalculator() {
     const hours = parseFloat(hoursSlider.value);
     const rate = parseFloat(rateSlider.value);
 
-    if (hoursVal) hoursVal.textContent = `${hours} Std.`;
-    if (rateVal) rateVal.textContent = `${rate} €`;
+    if (hoursVal) hoursVal.textContent = `${hours} Std. / Woche`;
+    if (rateVal) rateVal.textContent = `${rate} € / Std.`;
 
-    const monthlyHours = hours * 4.2;
-    const monthlyCost = monthlyHours * rate;
+    // Realistic automation model:
+    // Manual hours/month = hours * 4.2 weeks
+    const monthlyManualHours = hours * 4.2;
+    const monthlyManualCost = monthlyManualHours * rate;
+
+    // Realistic automation factor: 75% automated, 25% residual manual review & exceptions
+    const automationRate = 0.75;
+    const monthlyAutomatedSavings = monthlyManualCost * automationRate;
+
+    // Initial setup investment (Paket D baseline: 850 €) & realistic annual maintenance buffer (300 €)
     const projectInvestment = 850;
-    const dailyCost = monthlyCost / 21;
-    const breakEven = Math.max(1, Math.round(projectInvestment / dailyCost));
-    const year1Savings = Math.round(monthlyCost * 12 - projectInvestment);
+    const annualMaintenance = 300;
 
-    if (costMonthly) costMonthly.textContent = `${Math.round(monthlyCost).toLocaleString("de-DE")} € / Mo.`;
-    if (breakevenDays) breakevenDays.textContent = `${breakEven} Tagen`;
-    if (yearlySavings) yearlySavings.textContent = `${year1Savings.toLocaleString("de-DE")} €`;
+    // Net savings year 1
+    const annualGrossSavings = monthlyAutomatedSavings * 12;
+    const netSavingsYear1 = Math.max(0, Math.round(annualGrossSavings - projectInvestment - annualMaintenance));
+
+    // Estimated break-even in months
+    const monthlyNetBenefit = monthlyAutomatedSavings - (annualMaintenance / 12);
+    const breakEvenMonths = monthlyNetBenefit > 0 ? (projectInvestment / monthlyNetBenefit).toFixed(1) : "N/A";
+
+    if (costMonthly) costMonthly.textContent = `ca. ${Math.round(monthlyManualCost).toLocaleString("de-DE")} € / Mo.`;
+    if (breakevenDays) breakevenDays.textContent = `ca. ${breakEvenMonths} Monaten`;
+    if (yearlySavings) yearlySavings.textContent = `ca. ${netSavingsYear1.toLocaleString("de-DE")} €`;
 
     if (roiCta) {
-      roiCta.textContent = `Jetzt ${year1Savings.toLocaleString("de-DE")} € Einsparpotenzial sichern →`;
-      roiCta.href = `booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden&roi_savings=${year1Savings}&hours=${hours}`;
+      roiCta.textContent = `Unverbindliches Angebot anfragen →`;
+      roiCta.href = `booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden&roi_savings=${netSavingsYear1}&hours=${hours}`;
     }
   }
 
@@ -1435,6 +1580,18 @@ function escapeHtml(text) {
   if (!text) return "";
   const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
   return String(text).replace(/[&<>"']/g, m => map[m]);
+}
+
+function copyTextToClipboard(text, btnElement) {
+  navigator.clipboard.writeText(text).then(() => {
+    if (btnElement) {
+      const origText = btnElement.innerHTML;
+      btnElement.innerHTML = "✓ Text kopiert!";
+      setTimeout(() => { btnElement.innerHTML = origText; }, 2500);
+    }
+  }).catch(() => {
+    alert("Kopieren fehlgeschlagen. Bitte markieren und kopieren Sie den Text manuell.");
+  });
 }
 
 async function handleContactSubmit(e) {
@@ -1458,8 +1615,8 @@ async function handleContactSubmit(e) {
 
   const formBox = document.getElementById("contact-form-container");
   const successBox = document.getElementById("contact-success-container");
+  const fallbackBox = document.getElementById("contact-fallback-container");
   const refCodeEl = document.getElementById("contact-ref-code");
-  const mailtoBtn = document.getElementById("contact-mailto-fallback-btn");
   const statusMsg = document.getElementById("contact-status-msg");
 
   const mailSubject = `Kontaktanfrage: ${subject} - ${name} [${contactRecord.id}]`;
@@ -1473,18 +1630,27 @@ async function handleContactSubmit(e) {
 
   const mailtoUrl = `mailto:dev@nevioniebel.tech?cc=niebelnevio@icloud.com&subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
 
-  if (refCodeEl) refCodeEl.textContent = contactRecord.id;
-  if (mailtoBtn) mailtoBtn.href = mailtoUrl;
-
   const dispatchResult = await dispatchLeadData(contactRecord);
 
-  if (formBox) formBox.style.display = "none";
-  if (successBox) successBox.style.display = "block";
-
-  if (dispatchResult.delivered && statusMsg) {
-    statusMsg.innerHTML = `Ihre Nachricht wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${contactRecord.id}</strong>). Ich melde mich innerhalb von 24 Stunden an Werktagen persönlich bei Ihnen.`;
-  } else if (statusMsg) {
-    statusMsg.innerHTML = `<strong>Direktübermittlung erforderlich:</strong> Ihre Nachricht wurde mit Referenz <strong style="color: var(--color-mint); font-family: var(--font-mono);">${contactRecord.id}</strong> erfasst. Bitte klicken Sie unten auf <em>'Nachricht jetzt per E-Mail absenden'</em> oder schreiben Sie direkt an <a href="mailto:dev@nevioniebel.tech" style="color: var(--color-mint);">dev@nevioniebel.tech</a>.`;
+  if (dispatchResult.delivered) {
+    if (formBox) formBox.style.display = "none";
+    if (fallbackBox) fallbackBox.style.display = "none";
+    if (successBox) successBox.style.display = "block";
+    if (refCodeEl) refCodeEl.textContent = contactRecord.id;
+    if (statusMsg) {
+      statusMsg.innerHTML = `Ihre Nachricht wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${contactRecord.id}</strong>). Ich melde mich innerhalb von 24 Stunden an Werktagen persönlich bei Ihnen.`;
+    }
+  } else {
+    // Keep form and entered data VISIBLE! Show honest fallback container with 1-click mailto
+    if (fallbackBox) {
+      fallbackBox.style.display = "block";
+      const fallbackMailto = document.getElementById("contact-fallback-mailto-btn");
+      if (fallbackMailto) fallbackMailto.href = mailtoUrl;
+      const copyBtn = document.getElementById("contact-fallback-copy-btn");
+      if (copyBtn) {
+        copyBtn.onclick = () => copyTextToClipboard(mailBody, copyBtn);
+      }
+    }
     try { window.location.href = mailtoUrl; } catch (err) {}
   }
 }
@@ -1513,5 +1679,7 @@ window.handlePortalBookingSubmit = handlePortalBookingSubmit;
 window.handleContactSubmit = handleContactSubmit;
 window.executeCliCommand = executeCliCommand;
 window.executeTerminalCommand = executeCliCommand;
+window.copyTextToClipboard = copyTextToClipboard;
+window.sha256Utf8 = sha256Utf8;
 window.getCurrentDataset = () => typeof currentDataset !== "undefined" ? currentDataset : null;
 window.getCleanedContent = () => typeof cleanedDatasetContent !== "undefined" ? cleanedDatasetContent : null;

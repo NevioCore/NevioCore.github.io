@@ -4,12 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kontakt &amp; Direkte Anfrage | Nevio Niebel</title>
-  <meta name="description" content="Kontaktieren Sie Nevio Waldemar Niebel direkt: Schnelle Antwortgarantie binnen 4 Stunden für B2B-Softwareentwicklung, Web Scraping und Daten-Pipelines.">
+  <meta name="description" content="Kontaktieren Sie Nevio Waldemar Niebel direkt für B2B-Softwareentwicklung, Web Scraping und Daten-Pipelines. Schnelle Rückmeldung an Werktagen.">
   <link rel="canonical" href="https://nevioniebel.tech/contact.html">
-  <link rel="stylesheet" href="style.css?v=4.5">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body class="site-body">
 
@@ -38,11 +35,11 @@
       <div class="container" style="text-align: center; max-width: 860px;">
         <span class="section-tag">Direkter Kontakt</span>
         <h1 class="hero-title" style="font-size: 3rem;">
-          Schnelle Antwort garantiert <br>
-          <span class="highlight-mint">innerhalb von 4 Stunden</span>
+          Schreiben Sie mir direkt <br>
+          <span class="highlight-mint">Persönliche Rückmeldung an Werktagen</span>
         </h1>
         <p class="hero-subtitle">
-          Haben Sie eine technische Frage, möchten Sie eine Machbarkeit prüfen lassen oder ein Festpreisangebot anfordern? Schreiben Sie mir direkt.
+          Haben Sie eine technische Frage, möchten Sie eine Machbarkeit prüfen lassen oder ein Festpreisangebot anfordern? Ich melde mich in der Regel innerhalb von 24 Stunden an Werktagen persönlich bei Ihnen.
         </p>
       </div>
     </section>
@@ -96,11 +93,11 @@
             </div>
 
             <div style="padding: 1.5rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0.9rem;">
-              <h4 style="color: var(--color-mint); font-size: 0.95rem; margin-bottom: 0.5rem;">🔒 Verbindliche Service-Garantie:</h4>
+              <h4 style="color: var(--color-mint); font-size: 0.95rem; margin-bottom: 0.5rem;">🔒 Verlässliche Zusammenarbeit:</h4>
               <ul style="list-style: none; font-size: 0.85rem; color: var(--color-text-secondary); display: flex; flex-direction: column; gap: 0.4rem;">
-                <li>• Maximale Antwortzeit: 4 Stunden an Werktagen</li>
-                <li>• 100% Vertraulichkeit Ihrer Projektdaten &amp; NDAs</li>
-                <li>• Keine lästigen Werbe-Anrufe oder Newsletter</li>
+                <li>• Rückmeldung in der Regel innerhalb von 24 Stunden an Werktagen</li>
+                <li>• Vertrauliche Behandlung Ihrer Projektdaten (auf Wunsch mit NDA)</li>
+                <li>• Kein Werbe-Spam, kein Newsletter</li>
               </ul>
             </div>
           </div>
@@ -136,18 +133,29 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </button>
             </form>
+
+            <!-- Transparent Fallback Box (shown if server delivery is unconfirmed) -->
+            <div id="contact-fallback-container" style="display: none; margin-top: 1.5rem; padding: 1.25rem; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 0.75rem;">
+              <h4 style="color: var(--color-cyan); margin-bottom: 0.4rem; font-size: 0.95rem;">ℹ️ Direkte E-Mail-Übermittlung</h4>
+              <p style="color: var(--color-text-secondary); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem;">
+                Ihre Angaben sind oben im Formular erhalten. Bitte senden Sie die vorbereitete Nachricht mit einem Klick per E-Mail an <strong style="color: var(--color-text-primary);">dev@nevioniebel.tech</strong> oder kopieren Sie den Text:
+              </p>
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a id="contact-fallback-mailto-btn" href="#" class="btn btn-primary btn-sm">✉️ Jetzt per E-Mail absenden</a>
+                <button type="button" id="contact-fallback-copy-btn" class="btn btn-outline btn-sm">📋 Text kopieren</button>
+              </div>
+            </div>
           </div>
 
           <!-- Success Confirmation Box (Hidden initially) -->
           <div class="booking-form-card" id="contact-success-container" style="display: none; text-align: center; padding: 4rem 2rem;">
             <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--color-mint);">✓</div>
-            <h3 style="font-size: 1.6rem; margin-bottom: 0.75rem;">Nachricht vorbereitet!</h3>
+            <h3 style="font-size: 1.6rem; margin-bottom: 0.75rem;">Nachricht übermittelt!</h3>
             <p id="contact-status-msg" style="color: var(--color-text-secondary); max-width: 480px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
-              Vielen Dank für Ihre Anfrage! Ihr Anliegen wurde unter Vorgangsnummer <strong id="contact-ref-code" style="color: var(--color-mint); font-family: var(--font-mono);">CONTACT-REF</strong> erfasst. Klicken Sie unten auf 'Jetzt per E-Mail absenden', um die Nachricht direkt an Nevio Niebel zu senden. Ich melde mich innerhalb von 24 Stunden an Werktagen persönlich bei Ihnen.
+              Vielen Dank für Ihre Anfrage! Ihr Anliegen wurde unter Vorgangsnummer <strong id="contact-ref-code" style="color: var(--color-mint); font-family: var(--font-mono);">CONTACT-REF</strong> serverseitig registriert. Ich melde mich innerhalb von 24 Stunden an Werktagen persönlich bei Ihnen.
             </p>
             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-              <a id="contact-mailto-fallback-btn" href="mailto:dev@nevioniebel.tech" class="btn btn-primary">✉️ Nachricht jetzt per E-Mail senden</a>
-              <a href="index.html" class="btn btn-outline">Zurück zur Startseite</a>
+              <a href="index.html" class="btn btn-primary">Zurück zur Startseite</a>
             </div>
           </div>
 
@@ -198,6 +206,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=4.5"></script>
+  <script src="app.js?v=5.0"></script>
 </body>
 </html>
