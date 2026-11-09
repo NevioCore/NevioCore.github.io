@@ -110,7 +110,7 @@
             <h3 class="form-title">💬 Nachricht senden</h3>
             <p class="form-sub">Beschreiben Sie kurz Ihr Anliegen – ich melde mich umgehend.</p>
 
-            <form onsubmit="handleContactSubmit(event)">
+            <form onsubmit="handleContactSubmit(event); return false;">
               <div class="form-group">
                 <label for="contact-name">Ihr Name</label>
                 <input type="text" id="contact-name" class="form-control" placeholder="z. B. Michael Meyer" required>

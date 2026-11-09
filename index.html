@@ -432,7 +432,7 @@
                     <p style="color: var(--color-text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem;">
                       Fordern Sie eine kostenlose, unverbindliche Ersteinschätzung an. Ich zeige Ihnen, wie sich dieser Datenstrom mit einer schlanken Python-Pipeline dauerhaft ohne manuelle Eingriffe automatisieren lässt.
                     </p>
-                    <form onsubmit="handleAuditLeadSubmit(event)">
+                    <form onsubmit="handleAuditLeadSubmit(event); return false;">
                       <div class="form-row">
                         <div class="form-group">
                           <label for="audit-lead-name">Ihr Name *</label>
