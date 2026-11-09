@@ -198,19 +198,6 @@
     </div>
   </footer>
 
-  <script>
-    function handleContactSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById("contact-name").value;
-      const email = document.getElementById("contact-email").value;
-      const subject = document.getElementById("contact-subject").value;
-      const message = document.getElementById("contact-message").value;
-
-      const fullSubject = `Anfrage über nevioniebel.tech: ${subject} (${name})`;
-      const fullBody = `Guten Tag Nevio,\n\n${message}\n\nKontaktdaten:\nName: ${name}\nE-Mail: ${email}`;
-
-      window.location.href = `mailto:dev@nevioniebel.tech?subject=${encodeURIComponent(fullSubject)}&body=${encodeURIComponent(fullBody)}`;
-    }
-  </script>
+  <script src="app.js?v=4.5"></script>
 </body>
 </html>
