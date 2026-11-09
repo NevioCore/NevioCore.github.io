@@ -59,7 +59,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -159,16 +159,16 @@
 
           </div>
 
-          <!-- Hero 3D Cyber Visual -->
+          <!-- Hero 3D Visual -->
           <div class="hero-visual-frame">
-            <img src="assets/3d_hero_cyber.jpg" alt="Autonomous Data Automation Engine 3D Visual" class="hero-visual-img">
+            <img src="assets/3d_hero_cyber.jpg" alt="Daten-Pipelines &amp; Automatisierung Architektur" class="hero-visual-img">
             <div class="visual-badge">
               <div class="visual-badge-status">
                 <span class="status-dot"></span>
-                <span>ENGINE: ONLINE</span>
+                <span>STATUS: VERFÜGBAR FÜR PROJEKTE</span>
               </div>
               <div style="color: var(--color-text-secondary); font-size: 0.75rem;">
-                LATENZ: &lt; 42ms | ZERO DOWNTIME
+                REAKTIONSZEIT: &lt; 4h | PERSÖNLICHE BETREUUNG
               </div>
             </div>
           </div>
@@ -177,14 +177,14 @@
       </div>
     </section>
 
-    <!-- Interactive Cyber Terminal Simulator -->
+    <!-- Interactive Data- & Quality-Audit Labor -->
     <section id="terminal-demo" class="section section-dark">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Interaktive Simulation</span>
-          <h2 class="section-title">Wie meine Software für Sie arbeitet</h2>
+          <span class="section-tag">Interaktives Datenlabor</span>
+          <h2 class="section-title">Echtes Handwerk: Sehen Sie, wie wir Daten bereinigen</h2>
           <p class="section-subtitle">
-            Wählen Sie unten ein Szenario aus, um live im Terminal zu sehen, wie die Architektur Ihre Daten automatisiert und verarbeitet.
+            Keine leeren Versprechungen: Testen Sie unsere Datenverarbeitungs- und Extraktions-Logik direkt im Browser. Wählen Sie ein Szenario, führen Sie Befehle aus oder laden Sie eine eigene Tabelle zum kostenlosen Qualitäts-Check hoch.
           </p>
         </div>
 
@@ -197,18 +197,62 @@
                 <span class="dot dot-yellow"></span>
                 <span class="dot dot-green"></span>
               </div>
-              <span class="terminal-title">nevio@craftsman: ~/automation-engine</span>
+              <span class="terminal-title">nevio@terminal: ~/daten-und-effizienz-labor</span>
               <span class="terminal-badge" id="terminal-status-badge">Bereit</span>
+            </div>
+
+            <!-- Mode Switcher Tabs -->
+            <div class="terminal-mode-bar">
+              <button class="terminal-mode-btn active" id="tab-mode-scenarios" onclick="switchTerminalMode('scenarios')">
+                <span>⚡</span> 1. Live-Szenarien
+              </button>
+              <button class="terminal-mode-btn" id="tab-mode-audit" onclick="switchTerminalMode('audit')">
+                <span>📁</span> 2. Kostenloser Datei-Audit (Drag &amp; Drop)
+              </button>
+              <button class="terminal-mode-btn" id="tab-mode-cli" onclick="switchTerminalMode('cli')">
+                <span>⌨️</span> 3. Interaktive Konsole
+              </button>
+            </div>
+
+            <!-- Drag & Drop Zone (Visible in Audit Mode or Collapsible) -->
+            <div class="terminal-dropzone" id="terminal-dropzone" style="display: none;" onclick="triggerFileInput()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
+              <div class="dropzone-icon">📁</div>
+              <div class="dropzone-text">CSV- oder Textdatei hier hineinziehen oder klicken</div>
+              <div class="dropzone-sub">Prüft Datensätze sofort lokal im Browser auf Dubletten, Formatfehler und manuelle Zeitverschwendung (100% datenschutzkonform, keine Übertragung an Server).</div>
+              <input type="file" id="audit-file-input" accept=".csv,.txt,.tsv,.json" style="display: none;" onchange="handleFileSelect(event)">
+              <div style="margin-top: 0.75rem;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="loadSampleDataset(event)">
+                  🧪 Kostenlose Beispieldatei laden (Musterkatalog mit typischen Fehlern)
+                </button>
+              </div>
             </div>
             
             <div class="terminal-screen" id="terminal-screen">
-              <div class="terminal-line"><span class="prompt-user">nevio@craftsman</span>:<span class="prompt-path">~/engine</span>$ <span class="text-cmd">welcome --interactive-mode</span></div>
-              <div class="terminal-line text-log">[SYSTEM] Cyber-Engineering Engine initialisiert. Wählen Sie ein Modul zur Ausführung:</div>
-              <div class="terminal-line text-log">[TIP] Klicken Sie auf eine der 4 Kacheln unten, um den automatisierten Ablauf zu starten.</div>
+              <div class="terminal-line"><span class="prompt-user">gast@besucher</span>:<span class="prompt-path">~/labor</span>$ <span class="text-cmd">willkommen --hilfe</span></div>
+              <div class="terminal-line text-log">[INFO] Willkommen im interaktiven Datenlabor von Nevio Niebel.</div>
+              <div class="terminal-line text-log">[TIP] Klicken Sie unten auf ein Szenario oder wechseln Sie zu 'Kostenloser Datei-Audit', um eine eigene Tabelle auf Fehler und Einsparpotenzial prüfen zu lassen.</div>
+            </div>
+
+            <!-- CLI Input Bar -->
+            <div class="terminal-cli-bar">
+              <span class="prompt-user" style="font-size: 0.8rem;">gast@besucher</span>:<span class="prompt-path" style="font-size: 0.8rem;">~/labor</span>$&nbsp;
+              <input type="text" id="terminal-cli-input" class="terminal-cli-input" placeholder="Befehl eingeben (z. B. 'help', 'audit', 'sample', 'clean', 'roi')..." onkeydown="handleCliKeyDown(event)">
+              <button class="terminal-cli-submit" onclick="submitCliCommand()">Ausführen ↵</button>
+            </div>
+
+            <!-- Quick Action Command Pills Bar -->
+            <div class="terminal-pills-bar">
+              <span class="pill-label">Schnell-Befehle:</span>
+              <button class="quick-cmd-pill" onclick="executeCliCommand('help')">help</button>
+              <button class="quick-cmd-pill" onclick="executeCliCommand('sample')">sample (Muster-Daten)</button>
+              <button class="quick-cmd-pill" onclick="executeCliCommand('audit')">audit (Fehler-Scan)</button>
+              <button class="quick-cmd-pill" onclick="executeCliCommand('clean')">clean (Bereinigung)</button>
+              <button class="quick-cmd-pill" onclick="executeCliCommand('roi')">roi (Kostenrechner)</button>
+              <button class="quick-cmd-pill" onclick="executeCliCommand('clear')">clear</button>
             </div>
 
             <!-- Tactile Interactive Scenario Selector Buttons Grid -->
-            <div class="terminal-button-grid">
+            <div class="terminal-button-grid" id="terminal-scenario-grid">
               <button class="terminal-selector-btn active" id="btn-scenario-scraping" onclick="playScenario('scraping')">
                 <div class="btn-header">
                   <span>⚡</span>
@@ -530,6 +574,55 @@
       </div>
     </section>
 
+    <!-- Unser Versprechen: Fairness, Transparenz & Mehrwert -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Unser Versprechen</span>
+          <h2 class="section-title">Warum eine Zusammenarbeit für Sie ein echtes Plus ist</h2>
+          <p class="section-subtitle">
+            Ich möchte nicht einfach Aufträge abrechnen – ich möchte, dass Ihr Unternehmen spürbar mehr Zeit, weniger Fehler und einen klaren finanziellen Gewinn aus der Software zieht.
+          </p>
+        </div>
+
+        <div class="principles-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+          
+          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1.25rem; padding: 2rem;">
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🤝</div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">Faire Partnerschaft auf Augenhöhe</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+              Keine aufgeblähten IT-Großprojekte und keine versteckten Kosten. Sie investieren einmalig in ein Werkzeug, das sich nachweisbar für Sie rechnet. Sollte eine Automatisierung für Ihren konkreten Fall wirtschaftlich keinen Sinn ergeben, sage ich Ihnen das offen und ehrlich im ersten 15-Minuten-Gespräch.
+            </p>
+          </div>
+
+          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1.25rem; padding: 2rem;">
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🛡️</div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">100% Zufriedenheits- &amp; Funktionsgarantie</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+              Null finanzielles Risiko: Sie zahlen erst 50% Anzahlung nach Auftragsbestätigung. Die restlichen 50% werden erst fällig, wenn die Pipeline bei Ihnen in der Praxis reibungslos läuft, alle Tests besteht und von Ihnen freigegeben wurde. Inklusive 30 Tagen kostenloser Nachbesserung.
+            </p>
+          </div>
+
+          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1.25rem; padding: 2rem;">
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">⏱️</div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">Schluss mit frustrierender Routine-Arbeit</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+              Ihre Mitarbeiter wurden eingestellt, um Kunden zu betreuen, Aufträge abzuwickeln und Umsatz zu generieren – nicht, um Artikelnummern, Preise oder Tabellenzeilen manuell abzutippen. Ich befreie Ihr Team von stumpfer Fleißarbeit, damit Sie sich wieder auf das Wesentliche konzentrieren können.
+            </p>
+          </div>
+
+          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1.25rem; padding: 2rem;">
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">📞</div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">Direktkontakt ohne Agentur-Wasserkopf</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+              Keine Callcenter, keine wechselnden Junior-Entwickler und kein Stille-Post-Prinzip. Sie sprechen direkt mit mir – dem Entwickler, der Ihren Code schreibt, Ihre Systeme versteht und werktags innerhalb von maximal 4 Stunden auf Rückfragen reagiert.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- Call to Action Banner -->
     <section class="section section-dark" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
       <div class="container" style="text-align: center; max-width: 800px;">
@@ -595,6 +688,6 @@
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=2.1"></script>
 </body>
 </html>

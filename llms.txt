@@ -7,6 +7,12 @@
 - **API-Integration & Microservices**: FastAPI, Pydantic v2 Typvalidierung, idempotente Webhooks, REST- und GraphQL-Konnektoren für Shopify, Shopware, DATEV, HubSpot, Stripe und PostgreSQL. (https://nevioniebel.tech/services.html#api)
 - **Automatisierte Daten-Pipelines (ETL)**: Dockerisierte Ingestion-Pipelines, automatische Datenbereinigung, Validierung, Fehlerbehandlung mit Exponential Backoff, tägliche Management-Reports via E-Mail und Slack. (https://nevioniebel.tech/services.html#pipeline)
 - **QA & Wartungs-Retainer**: 100% Unittest- und Pytest-Testabdeckung, Clean Code, 24/7 Monitoring mit < 4h SLA. (https://nevioniebel.tech/services.html#retainer)
+- **Kostenloser Datenqualitäts- & Effizienz-Audit**: Browser-native Vorab-Prüfung von CSV- und Tabellendateien auf Dubletten, Formatfehler und manuelle Zeitverschwendung mit sofortiger ROI-Kalkulation. (https://nevioniebel.tech/#terminal-demo)
+
+## Branchen & Anwendungsfälle
+- **E-Commerce & Marktplatz-Händler**: Automatisierter Preis- und Bestandsabgleich von Mitbewerbern, Überwachung von Lieferanten-Feeds, B2B-Katalogextraktion.
+- **Handwerk, SHK & Elektro**: Automatisierte Übernahme von Großhändler-Katalogen (Datanorm, CSV), Synchronisation zwischen Angebotserstellung und ERP (WinWorker, KWP, pds, Craftnote).
+- **Großhandel & B2B-Vertrieb**: Automatische Validierung und Normalisierung von Kundendateien, Beseitigung von Dubletten, Standardisierung von Rufnummern (E.164) und Adressen.
 
 ## Pakete & Preismodelle
 1. **Script Automation (350 € einmalig)**: Einmalige Extraktion, Skriptbereinigung oder Parser. Lieferzeit 24–48 Stunden, 14 Tage Support. (https://nevioniebel.tech/pricing.html)

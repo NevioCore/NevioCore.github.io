@@ -6,7 +6,7 @@
   <title>Projekt &amp; Termin buchen | Nevio Niebel Software Engineering</title>
   <meta name="description" content="Konfigurieren Sie Ihr Softwareentwicklungsprojekt, wählen Sie Ihr Paket (Web Scraping, B2B Pipeline, Retainer) und sichern Sie sich Ihr unverbindliches 15-Minuten Beratungsgespräch.">
   <link rel="canonical" href="https://nevioniebel.tech/booking.html">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -91,11 +91,11 @@
                 <div class="form-group">
                   <label for="portal-day">Bevorzugter Tag</label>
                   <select id="portal-day" class="form-control" required>
-                    <option value="Schnellstmöglich (Heute / Morgen)">Schnellstmöglich (Heute / Morgen)</option>
+                    <option value="Schnellstmöglich">Heute / Schnellstmöglich</option>
                     <option value="Mittwoch">Mittwoch</option>
                     <option value="Donnerstag">Donnerstag</option>
                     <option value="Freitag">Freitag</option>
-                    <option value="Nächste Woche">Nächste Woche</option>
+                    <option value="Nächste Woche">Nächste Woche (flexibel)</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -104,6 +104,7 @@
                     <option value="Vormittags (09:00 - 12:00 Uhr)">Vormittags (09:00 - 12:00 Uhr)</option>
                     <option value="Mittags (12:00 - 14:00 Uhr)">Mittags (12:00 - 14:00 Uhr)</option>
                     <option value="Nachmittags (14:00 - 17:00 Uhr)">Nachmittags (14:00 - 17:00 Uhr)</option>
+                    <option value="Ganztags flexibel">Ganztags flexibel</option>
                   </select>
                 </div>
               </div>
@@ -156,9 +157,9 @@
             <p class="form-sub" style="margin-bottom: 1.5rem;">Transparente B2B-Konditionen direkt auf einen Blick.</p>
 
             <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.5rem;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-                <span style="color: var(--color-text-secondary);">Gewähltes Paket:</span>
-                <strong id="summary-package-name" style="color: var(--color-text-primary);">B2B Data Pipeline (850 €)</strong>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; font-size: 0.9rem;">
+                <span style="color: var(--color-text-secondary); flex-shrink: 0;">Gewähltes Paket:</span>
+                <strong id="summary-package-name" style="color: var(--color-text-primary); text-align: right; word-break: break-word; max-width: 100%;">B2B Data Pipeline (850 €)</strong>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
                 <span style="color: var(--color-text-secondary);">Gesamtpreis (Netto):</span>
@@ -249,6 +250,6 @@
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=2.1"></script>
 </body>
 </html>
