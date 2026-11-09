@@ -51,28 +51,13 @@ body.site-body {
   overflow-x: hidden;
 }
 
-/* Ambient Radial Lights */
+/* Ambient Radial Lights disabled to eliminate WebKit tile buffer rendering glitches */
 .ambient-glow {
-  position: absolute;
-  width: 700px;
-  height: 700px;
-  border-radius: 50%;
-  filter: blur(160px);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.15;
+  display: none !important;
 }
 
-.glow-1 {
-  top: -150px;
-  left: 15%;
-  background: radial-gradient(circle, var(--color-mint) 0%, transparent 70%);
-}
-
-.glow-2 {
-  top: 800px;
-  right: 5%;
-  background: radial-gradient(circle, var(--color-cyan) 0%, transparent 70%);
+.glow-1, .glow-2 {
+  display: none !important;
 }
 
 /* Layout Utilities */
@@ -1089,13 +1074,16 @@ select.form-control {
   -webkit-appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235eff88' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1.1em;
-  padding-right: 2.75rem;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.2rem;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  font-size: 0.85rem;
   cursor: pointer;
+  min-width: 0;
+  max-width: 100%;
 }
 
 select.form-control option {

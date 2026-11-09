@@ -9,12 +9,12 @@
 - **Zero-Dependency Core:** Reines semantisches HTML5, modulares Modern-CSS und leichtgewichtiges Vanilla-JS (kein Node-Build, keine schwerfälligen Frameworks).
 - **Ladezeit:** < 80ms (100/100 Google Lighthouse Score).
 - **Interaktiver Solution-Simulator:** Terminal-Erklärspiel mit dynamischem Typewriter-Effekt für verschiedene Kunden-Use-Cases.
-- **Integriertes Buchungs- & Kontaktmodul:** Direkte Terminauswahl mit Paketverknüpfung und 4-Stunden-SLA.
+- **Integriertes Buchungs- & Kontaktmodul:** Direkte Terminauswahl mit Paketverknüpfung und schneller Rückmeldung an Werktagen (< 24h).
 - **GEO- & SEO-Optimiert:** Vollständiges Schema.org JSON-LD Markup, `llms.txt`, `robots.txt` und `sitemap.xml` für KI-Suchmaschinen (ChatGPT, Perplexity, Gemini).
 - **Verkaufspsychologie:**
   - Klares Leistungsversprechen für Daten-Pipelines, Web Scraping und Systemintegration.
   - 3 feste Preispakete (350 € / 850 € / 190 € pro Monat Retainer) + Consulting.
-  - Direkte Vertrauensbeweise: 100% Testabdeckung, DSGVO-Konformität, SLA-Garantie, GitHub Profil-Verlinkung.
+  - Direkte Vertrauensbeweise: Robuste Pytest-Testabdeckung, DSGVO-Orientierung, persönliche Betreuung, GitHub Profil-Verlinkung.
   - 1-Click CTAs direkt an `dev@nevioniebel.tech`.
 
 ---

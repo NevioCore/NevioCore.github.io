@@ -845,9 +845,48 @@ function downloadBlob(blob, filename) {
 }
 
 /**
- * Client-Side Reliable Lead Capture Submission (No Mailto Lock-In)
+ * Unified Sovereign Lead Dispatcher (Dual Server + Mailto Delivery)
  */
-function handleAuditLeadSubmit(event) {
+async function dispatchLeadData(payload) {
+  const endpoints = ["/api/lead", "http://127.0.0.1:8081/api/lead"];
+  let delivered = false;
+
+  for (const endpoint of endpoints) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        delivered = true;
+        break;
+      }
+    } catch (e) {
+      // Server endpoint unreachable on static hosting or offline, proceed to fallback
+    }
+  }
+
+  try {
+    const existing = JSON.parse(localStorage.getItem("nevioniebel_inbound_leads") || "[]");
+    payload.deliveredToServer = delivered;
+    existing.push(payload);
+    localStorage.setItem("nevioniebel_inbound_leads", JSON.stringify(existing));
+  } catch (err) {
+    console.warn("Storage warning:", err);
+  }
+
+  return delivered;
+}
+
+/**
+ * Audit Lead Submission with Dual-Delivery & Mailto Auto-Prompt
+ */
+async function handleAuditLeadSubmit(event) {
   event.preventDefault();
 
   const name = document.getElementById("audit-lead-name").value.trim();
@@ -861,7 +900,6 @@ function handleAuditLeadSubmit(event) {
     return;
   }
 
-  // Create lead record
   const leadRecord = {
     id: `LEAD-${Date.now()}`,
     source: "website_audit_lead_capture",
@@ -874,23 +912,38 @@ function handleAuditLeadSubmit(event) {
     consentGiven: true
   };
 
-  // Save to localStorage so no lead is EVER lost
-  try {
-    const existing = JSON.parse(localStorage.getItem("nevioniebel_inbound_leads") || "[]");
-    existing.push(leadRecord);
-    localStorage.setItem("nevioniebel_inbound_leads", JSON.stringify(existing));
-  } catch (err) {
-    console.warn("localStorage write error:", err);
-  }
-
-  // Show immediate on-page confirmation
   const formBox = document.getElementById("audit-lead-form-box");
   const successBox = document.getElementById("audit-lead-success-box");
   const refCodeEl = document.getElementById("audit-lead-ref-code");
+  const mailtoBtn = document.getElementById("audit-lead-mailto-btn");
+  const statusMsg = document.getElementById("audit-lead-status-msg");
+
+  const mailSubject = `Ersteinschätzung Daten-Audit: ${company || name} [${leadRecord.id}]`;
+  const mailBody = `Hallo Nevio Niebel,\n\nich habe den kostenlosen Daten-Audit auf nevioniebel.tech genutzt und interessiere mich für eine Optimierung:\n\n` +
+    `• Vorgangs-ID: ${leadRecord.id}\n` +
+    `• Name: ${name}\n` +
+    `• Unternehmen: ${company || 'k. A.'}\n` +
+    `• E-Mail: ${email}\n` +
+    `• Analysierte Datei: ${leadRecord.datasetAnalyzed}\n` +
+    (message ? `• Anmerkung:\n${message}\n\n` : `\n`) +
+    `Bitte senden Sie mir eine unverbindliche Einschätzung zu.\n\nFreundliche Grüße,\n${name}`;
+
+  const mailtoUrl = `mailto:dev@nevioniebel.tech?cc=niebelnevio@icloud.com&subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
 
   if (refCodeEl) refCodeEl.textContent = leadRecord.id;
+  if (mailtoBtn) mailtoBtn.href = mailtoUrl;
+
+  const delivered = await dispatchLeadData(leadRecord);
+
   if (formBox) formBox.style.display = "none";
   if (successBox) successBox.style.display = "block";
+
+  if (delivered && statusMsg) {
+    statusMsg.innerHTML = `Ihre Anfrage wurde erfolgreich an den Server übermittelt (Vorgangs-ID: <strong class="highlight-mint">${leadRecord.id}</strong>). Ich melde mich innerhalb von 24h an Werktagen bei Ihnen.`;
+  } else {
+    // Prompt mail client open
+    try { window.location.href = mailtoUrl; } catch (e) {}
+  }
 }
 
 function updateOfferCardForAudit(stats, fileName, annualLoss) {
@@ -923,7 +976,7 @@ function updateOfferCardForAudit(stats, fileName, annualLoss) {
       <li><span>✓</span> Repariert alle korrumpierten Umlaute & Sonderzeichen</li>
       <li><span>✓</span> Standardisiert Telefonnummern nach internationalem E.164 Standard</li>
       <li><span>✓</span> Berechnetes Einsparpotenzial: ca. ${annualLoss ? annualLoss.toLocaleString("de-DE") : "0"} € pro Jahr</li>
-      <li><span>✓</span> 100% DSGVO-konform, lokal oder auf Ihrem Server betreibbar</li>
+      <li><span>✓</span> DSGVO-orientiert, lokal oder auf Ihrem Server betreibbar</li>
     `;
   }
 
@@ -1228,7 +1281,7 @@ function checkUrlPackageParameter() {
   }
 }
 
-function handlePortalBookingSubmit(e) {
+async function handlePortalBookingSubmit(e) {
   e.preventDefault();
 
   const pkgInput = document.getElementById("selected-package");
@@ -1240,7 +1293,6 @@ function handlePortalBookingSubmit(e) {
   const email = document.getElementById("portal-email").value.trim();
   const notes = document.getElementById("portal-notes") ? document.getElementById("portal-notes").value.trim() : "";
 
-  // 1. Create client-side lead object
   const bookingRecord = {
     id: `BOOK-${Date.now()}`,
     source: "booking_portal",
@@ -1254,26 +1306,13 @@ function handlePortalBookingSubmit(e) {
     status: "DISCOVERED_INBOUND"
   };
 
-  // 2. Save to localStorage to guarantee lead preservation
-  try {
-    const existing = JSON.parse(localStorage.getItem("nevioniebel_inbound_leads") || "[]");
-    existing.push(bookingRecord);
-    localStorage.setItem("nevioniebel_inbound_leads", JSON.stringify(existing));
-  } catch (err) {
-    console.warn("localStorage error:", err);
-  }
-
-  // 3. Show instant confirmation UI on page
   const formBox = document.getElementById("portal-form-container");
   const successBox = document.getElementById("portal-success-container");
   const refCodeEl = document.getElementById("portal-ref-code");
+  const mailtoBtn = document.getElementById("portal-mailto-fallback-btn");
+  const statusMsg = document.getElementById("portal-status-msg");
 
-  if (refCodeEl) refCodeEl.textContent = bookingRecord.id;
-  if (formBox) formBox.style.display = "none";
-  if (successBox) successBox.style.display = "block";
-
-  // 4. Also provide mailto trigger for users with mail clients
-  const subject = `Projekt- & Terminbuchung: ${pkg} - ${company} (${name})`;
+  const subject = `Projekt- & Terminbuchung: ${pkg} - ${company} (${name}) [${bookingRecord.id}]`;
   const body = `Sehr geehrter Herr Niebel,\n\nhiermit frage ich ein unverbindliches 15-minütiges Gespräch für folgendes Projekt an:\n\n` +
     `• Referenz: ${bookingRecord.id}\n` +
     `• Gewähltes Paket: ${pkg}\n` +
@@ -1284,11 +1323,21 @@ function handlePortalBookingSubmit(e) {
     (notes ? `• Vorhaben:\n${notes}\n\n` : `\n`) +
     `Mit freundlichen Grüßen,\n${name}\n${company}`;
 
-  const mailtoUrl = `mailto:dev@nevioniebel.tech?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  
-  // Set fallback button
-  const mailtoBtn = document.getElementById("portal-mailto-fallback-btn");
+  const mailtoUrl = `mailto:dev@nevioniebel.tech?cc=niebelnevio@icloud.com&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  if (refCodeEl) refCodeEl.textContent = bookingRecord.id;
   if (mailtoBtn) mailtoBtn.href = mailtoUrl;
+
+  const delivered = await dispatchLeadData(bookingRecord);
+
+  if (formBox) formBox.style.display = "none";
+  if (successBox) successBox.style.display = "block";
+
+  if (delivered && statusMsg) {
+    statusMsg.innerHTML = `Ihre Terminanfrage wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${bookingRecord.id}</strong>). Ich prüfe Ihre Angaben persönlich und melde mich binnen 24 Stunden an Werktagen bei Ihnen.`;
+  } else {
+    try { window.location.href = mailtoUrl; } catch (err) {}
+  }
 }
 
 // =========================================================================
@@ -1342,7 +1391,7 @@ function escapeHtml(text) {
   return String(text).replace(/[&<>"']/g, m => map[m]);
 }
 
-function handleContactSubmit(e) {
+async function handleContactSubmit(e) {
   e.preventDefault();
 
   const name = (document.getElementById("contact-name")?.value || "").trim();
@@ -1361,22 +1410,11 @@ function handleContactSubmit(e) {
     status: "DISCOVERED_INBOUND"
   };
 
-  try {
-    const existing = JSON.parse(localStorage.getItem("nevioniebel_inbound_leads") || "[]");
-    existing.push(contactRecord);
-    localStorage.setItem("nevioniebel_inbound_leads", JSON.stringify(existing));
-  } catch (err) {
-    console.warn("localStorage error:", err);
-  }
-
   const formBox = document.getElementById("contact-form-container");
   const successBox = document.getElementById("contact-success-container");
   const refCodeEl = document.getElementById("contact-ref-code");
   const mailtoBtn = document.getElementById("contact-mailto-fallback-btn");
-
-  if (refCodeEl) refCodeEl.textContent = contactRecord.id;
-  if (formBox) formBox.style.display = "none";
-  if (successBox) successBox.style.display = "block";
+  const statusMsg = document.getElementById("contact-status-msg");
 
   const mailSubject = `Kontaktanfrage: ${subject} - ${name} [${contactRecord.id}]`;
   const mailBody = `Sehr geehrter Herr Niebel,\n\nhiermit sende ich folgende Anfrage über das Kontaktformular:\n\n` +
@@ -1387,8 +1425,21 @@ function handleContactSubmit(e) {
     `• Nachricht:\n${message}\n\n` +
     `Mit freundlichen Grüßen,\n${name}`;
 
-  const mailtoUrl = `mailto:dev@nevioniebel.tech?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+  const mailtoUrl = `mailto:dev@nevioniebel.tech?cc=niebelnevio@icloud.com&subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+
+  if (refCodeEl) refCodeEl.textContent = contactRecord.id;
   if (mailtoBtn) mailtoBtn.href = mailtoUrl;
+
+  const delivered = await dispatchLeadData(contactRecord);
+
+  if (formBox) formBox.style.display = "none";
+  if (successBox) successBox.style.display = "block";
+
+  if (delivered && statusMsg) {
+    statusMsg.innerHTML = `Ihre Nachricht wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${contactRecord.id}</strong>). Ich melde mich innerhalb von 24 Stunden an Werktagen persönlich bei Ihnen.`;
+  } else {
+    try { window.location.href = mailtoUrl; } catch (err) {}
+  }
 }
 
 // Global initialization

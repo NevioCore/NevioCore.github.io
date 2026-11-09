@@ -13,9 +13,6 @@
 </head>
 <body class="site-body">
 
-  <div class="ambient-glow glow-1"></div>
-  <div class="ambient-glow glow-2"></div>
-
   <!-- Navigation Bar -->
   <header class="navbar" id="top">
     <div class="container nav-content">
@@ -88,7 +85,7 @@
                 <div class="package-radio-card" data-package="Paket E: Wartung und laufende Betreuung (ab 190 €/Mo.)" onclick="selectPackageCard(this, 'Paket E: Wartung & laufende Betreuung', 'ab 190 € / Mo.')">
                   <div class="pkg-name">Paket E: Wartung</div>
                   <div class="pkg-price">ab 190 € / Monat</div>
-                  <div style="font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 0.3rem;">24/7 Monitoring • &lt; 4h SLA</div>
+                  <div style="font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 0.3rem;">Monitoring • Verlässliche Updates</div>
                 </div>
 
                 <div class="package-radio-card" data-package="Individuelle Anfrage / Consulting (95 €/h)" onclick="selectPackageCard(this, 'Individuelle Anfrage / Consulting', '95 € / Std.')">
@@ -113,9 +110,9 @@
                 <div class="form-group">
                   <label for="portal-time">Bevorzugtes Zeitfenster</label>
                   <select id="portal-time" class="form-control" required>
-                    <option value="Vormittags (09:00 - 12:00 Uhr)">Vormittags (09:00 - 12:00 Uhr)</option>
-                    <option value="Mittags (12:00 - 14:00 Uhr)">Mittags (12:00 - 14:00 Uhr)</option>
-                    <option value="Nachmittags (14:00 - 17:00 Uhr)">Nachmittags (14:00 - 17:00 Uhr)</option>
+                    <option value="09:00 - 12:00 Uhr">09:00 – 12:00 Uhr (Vormittag)</option>
+                    <option value="12:00 - 14:00 Uhr">12:00 – 14:00 Uhr (Mittag)</option>
+                    <option value="14:00 - 17:00 Uhr">14:00 – 17:00 Uhr (Nachmittag)</option>
                     <option value="Ganztags flexibel">Ganztags flexibel</option>
                   </select>
                 </div>
@@ -153,12 +150,12 @@
           <!-- Success Confirmation Box (Hidden initially) -->
           <div class="booking-form-card" id="portal-success-container" style="display: none; text-align: center; padding: 4rem 2rem;">
             <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--color-mint);">✓</div>
-            <h3 style="font-size: 1.6rem; margin-bottom: 0.75rem;">Terminanfrage erfolgreich erfasst!</h3>
-            <p style="color: var(--color-text-secondary); max-width: 480px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
-              Ihre Terminanfrage wurde mit Vorgangsnummer <strong id="portal-ref-code" style="color: var(--color-mint); font-family: var(--font-mono);">BOOK-REF</strong> im System registriert. Ich prüfe Ihre Angaben persönlich und melde mich innerhalb von 4 Stunden mit dem passenden Videocall-Link (Google Meet / Teams) bei Ihnen.
+            <h3 style="font-size: 1.6rem; margin-bottom: 0.75rem;">Terminanfrage vorbereitet!</h3>
+            <p id="portal-status-msg" style="color: var(--color-text-secondary); max-width: 480px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
+              Ihre Terminanfrage wurde mit Vorgangsnummer <strong id="portal-ref-code" style="color: var(--color-mint); font-family: var(--font-mono);">BOOK-REF</strong> erfasst. Klicken Sie unten auf 'Jetzt per E-Mail absenden', um die Terminanfrage direkt an Nevio Niebel zu senden. Ich melde mich an Werktagen binnen 24 Stunden mit dem Kalender-Link bei Ihnen.
             </p>
             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-              <a id="portal-mailto-fallback-btn" href="mailto:dev@nevioniebel.tech" class="btn btn-secondary">Zusätzlich per E-Mail bestätigen</a>
+              <a id="portal-mailto-fallback-btn" href="mailto:dev@nevioniebel.tech" class="btn btn-primary">✉️ Terminanfrage jetzt per E-Mail senden</a>
               <a href="index.html" class="btn btn-outline">Zurück zur Startseite</a>
             </div>
           </div>
@@ -188,8 +185,8 @@
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
                 <span style="color: var(--color-mint);">✓</span>
                 <div style="font-size: 0.85rem; color: var(--color-text-secondary);">
-                  <strong style="color: var(--color-text-primary); display: block;">4-Stunden-SLA Reaktionszeit</strong>
-                  Ich melde mich werktags innerhalb von 4 Stunden bei Ihnen.
+                  <strong style="color: var(--color-text-primary); display: block;">Schnelle Rückmeldung an Werktagen</strong>
+                  Ich melde mich werktags schnellstmöglich bei Ihnen (&lt; 24h).
                 </div>
               </div>
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
@@ -202,8 +199,8 @@
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
                 <span style="color: var(--color-mint);">✓</span>
                 <div style="font-size: 0.85rem; color: var(--color-text-secondary);">
-                  <strong style="color: var(--color-text-primary); display: block;">Rechtssichere deutsche Rechnung</strong>
-                  Abrechnung nach § 14 UStG mit ausgewiesener Mehrwertsteuer.
+                  <strong style="color: var(--color-text-primary); display: block;">Ordnungsgemäße B2B-Rechnung</strong>
+                  Rechnungsstellung gemäß den gesetzlichen steuerlichen Bestimmungen.
                 </div>
               </div>
             </div>
@@ -229,7 +226,7 @@
           <span class="brand-text">Nevio Niebel</span>
         </a>
         <p class="footer-desc">
-          Freiberuflicher Softwareentwickler &amp; Data Engineer. Deterministische Scraper, API-Brücken und ETL-Pipelines mit 100% Testabdeckung.
+          Softwareentwickler &amp; Data Engineer aus Salzgitter (Region Braunschweig / Remote DACH). Deterministische Scraper, API-Brücken und ETL-Pipelines mit Fokus auf Regressionssicherheit und Clean Code.
         </p>
         <p class="footer-sub">
           Positioniert für Unternehmen in Deutschland, Österreich und der Schweiz (DACH / Remote).

@@ -1,12 +1,12 @@
-# Nevio Waldemar Niebel — Senior Software Engineer & Data Automation Specialist
+# Nevio Waldemar Niebel — Software Engineer & Data Automation Specialist
 
-> Freiberuflicher Softwareentwickler und Daten-Architekt mit Fokus auf den deutschsprachigen Raum (DACH / Remote). Spezialisiert auf resiliente Web-Scraper, FastAPI-Microservices, B2B-Daten-Pipelines und Prozessautomatisierung.
+> Softwareentwickler und Daten-Spezialist mit Sitz in Salzgitter (Region Braunschweig / DACH Remote). Spezialisiert auf resiliente Web-Scraper, FastAPI-Microservices, B2B-Daten-Pipelines und Prozessautomatisierung.
 
 ## Kernkompetenzen & Spezialisierung
-- **Web Scraping & Web Crawling**: Anti-Bot-Umgehung (Cloudflare, DataDome), rotierende Proxies, Playwright, HTTPX, BeautifulSoup, SHA-256 Fingerprint-Deduplizierung. (https://nevioniebel.tech/services.html#scraping)
+- **Web Scraping & Web Crawling**: Resiliente Datenextraktion, Proxies, Playwright, HTTPX, BeautifulSoup, SHA-256 Deduplizierung. (https://nevioniebel.tech/services.html#scraping)
 - **API-Integration & Microservices**: FastAPI, Pydantic v2 Typvalidierung, idempotente Webhooks, REST- und GraphQL-Konnektoren für Shopify, Shopware, DATEV, HubSpot, Stripe und PostgreSQL. (https://nevioniebel.tech/services.html#api)
 - **Automatisierte Daten-Pipelines (ETL)**: Dockerisierte Ingestion-Pipelines, automatische Datenbereinigung, Validierung, Fehlerbehandlung mit Exponential Backoff, tägliche Management-Reports via E-Mail und Slack. (https://nevioniebel.tech/services.html#pipeline)
-- **QA & Wartungs-Retainer**: 100% Unittest- und Pytest-Testabdeckung, Clean Code, 24/7 Monitoring mit < 4h SLA. (https://nevioniebel.tech/services.html#retainer)
+- **QA & Wartungs-Retainer**: Automatisierte Pytest-Testabdeckung, Clean Code, Monitoring und schnelle Rückmeldung an Werktagen. (https://nevioniebel.tech/services.html#retainer)
 - **Kostenloser Datenqualitäts- & Effizienz-Audit**: Browser-native Vorab-Prüfung von CSV- und Tabellendateien auf Dubletten, Formatfehler und manuelle Zeitverschwendung mit sofortiger ROI-Kalkulation. (https://nevioniebel.tech/#terminal-demo)
 
 ## Branchen & Anwendungsfälle
@@ -17,11 +17,11 @@
 ## Pakete & Preismodelle
 1. **Script Automation (350 € einmalig)**: Einmalige Extraktion, Skriptbereinigung oder Parser. Lieferzeit 24–48 Stunden, 14 Tage Support. (https://nevioniebel.tech/pricing.html)
 2. **B2B Data Pipeline (850 € einmalig)**: Schlüsselfertige Ingestion-Pipeline mit Datenbank-Upsert (PostgreSQL/SQLite), Multi-Source-Crawling, Slack/E-Mail-Reports, Docker-Container und 30 Tage Wartungsgarantie. (https://nevioniebel.tech/pricing.html)
-3. **Wartungs-Retainer (190 € / Monat)**: 24/7 Monitoring von Crawlern und APIs, Anpassung bei Web-Layout-Änderungen innerhalb von 4 Stunden SLA, bis zu 5 Entwicklerstunden inklusive, monatlich kündbar. (https://nevioniebel.tech/pricing.html)
-4. **Individuelles Consulting & Entwicklung (95,00 € / Std.)**: Transparente Abrechnung auf Rechnung mit ausgewiesener Umsatzsteuer.
+3. **Wartungs-Retainer (190 € / Monat)**: Monitoring von Crawlern und APIs, zügige Anpassung bei Web-Layout-Änderungen an Werktagen, bis zu 5 Entwicklerstunden inklusive, monatlich kündbar. (https://nevioniebel.tech/pricing.html)
+4. **Individuelles Consulting & Entwicklung (95,00 € / Std.)**: Transparente B2B-Abrechnung auf Rechnung.
 
 ## Qualitätsstandards & Arbeitsweise
-- **100% DSGVO-konform**: Lokale Datenverarbeitung, Einhaltung aller deutschen und europäischen Datenschutzrichtlinien.
+- **DSGVO-orientiert**: Lokale Datenverarbeitung, Einhaltung deutscher und europäischer Datenschutzstandards.
 - **100% Quellcode-Eigentum**: Alle Nutzungs- und Verwertungsrechte gehen nach vollständiger Bezahlung uneingeschränkt an den Auftraggeber über.
 - **50% Anzahlungsmodell**: 50% Anzahlung bei Projektstart per SEPA-Überweisung, 50% nach erfolgreicher Abnahme.
 
@@ -36,6 +36,6 @@
 
 ## Kontakt & Buchung
 - **Website**: https://nevioniebel.tech
-- **E-Mail**: dev@nevioniebel.tech
+- **E-Mail**: dev@nevioniebel.tech (sekundär: niebelnevio@icloud.com)
 - **GitHub**: https://github.com/NevioCore
-- **Einsatzbereich**: Remote (Deutschland, Österreich, Schweiz / DACH)
+- **Einsatzbereich**: Salzgitter, Region Braunschweig & Remote (DACH)
