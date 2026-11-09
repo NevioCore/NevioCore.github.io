@@ -400,6 +400,14 @@ function checkUrlPackageParameter() {
       }
     }
   }
+
+  // Auto-fill ROI notes if passed from ROI Calculator
+  const roiSavings = urlParams.get("roi_savings");
+  const hours = urlParams.get("hours");
+  const notesField = document.getElementById("portal-notes");
+  if (roiSavings && notesField && !notesField.value) {
+    notesField.value = `Berechnetes Einsparpotenzial aus ROI-Rechner: ca. ${parseInt(roiSavings, 10).toLocaleString('de-DE')} € Netto-Ersparnis pro Jahr (bei ca. ${hours || 10}h manuellem Aufwand/Woche). Bitte um Vorschlag zur Umsetzung.`;
+  }
 }
 
 /**
@@ -448,4 +456,56 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("terminal-offer-card")) {
     updateTerminalOfferCard(SCENARIOS.scraping);
   }
+
+  // Initialize ROI Calculator if present
+  initRoiCalculator();
 });
+
+/**
+ * Interactive ROI & Amortization Calculator Engine
+ */
+function initRoiCalculator() {
+  const hoursSlider = document.getElementById("roi-hours");
+  const rateSlider = document.getElementById("roi-rate");
+  if (!hoursSlider || !rateSlider) return;
+
+  const hoursVal = document.getElementById("roi-hours-val");
+  const rateVal = document.getElementById("roi-rate-val");
+  const costMonthly = document.getElementById("roi-cost-monthly");
+  const breakevenDays = document.getElementById("roi-breakeven-days");
+  const yearlySavings = document.getElementById("roi-yearly-savings");
+  const roiCta = document.getElementById("roi-cta-btn");
+
+  function recalculate() {
+    const hours = parseFloat(hoursSlider.value);
+    const rate = parseFloat(rateSlider.value);
+
+    if (hoursVal) hoursVal.textContent = `${hours} Std.`;
+    if (rateVal) rateVal.textContent = `${rate} €`;
+
+    // Monthly manual hours = weekly hours * 4.2 weeks
+    const monthlyHours = hours * 4.2;
+    const monthlyCost = monthlyHours * rate;
+    const projectInvestment = 850; // Standard B2B Pipeline package
+
+    // Days to break even: (projectInvestment / dailyCost)
+    const dailyCost = monthlyCost / 21; // 21 working days per month
+    const breakEven = Math.max(1, Math.round(projectInvestment / dailyCost));
+
+    // First year net savings: 12 months * monthlyCost - projectInvestment
+    const year1Savings = Math.round(monthlyCost * 12 - projectInvestment);
+
+    if (costMonthly) costMonthly.textContent = `${Math.round(monthlyCost).toLocaleString("de-DE")} € / Mo.`;
+    if (breakevenDays) breakevenDays.textContent = `${breakEven} Tagen`;
+    if (yearlySavings) yearlySavings.textContent = `${year1Savings.toLocaleString("de-DE")} €`;
+
+    if (roiCta) {
+      roiCta.textContent = `Jetzt ${year1Savings.toLocaleString("de-DE")} € Einsparpotenzial sichern →`;
+      roiCta.href = `booking.html?pkg=Business+Pipeline+(850+€)&roi_savings=${year1Savings}&hours=${hours}`;
+    }
+  }
+
+  hoursSlider.addEventListener("input", recalculate);
+  rateSlider.addEventListener("input", recalculate);
+  recalculate();
+}

@@ -433,6 +433,68 @@
           </a>
         </div>
 
+        <!-- Interactive ROI & Amortization Calculator -->
+        <div class="roi-calculator-box">
+          <div style="text-align: center; max-width: 680px; margin: 0 auto 2.5rem;">
+            <span class="section-tag">Mathematischer Business Case</span>
+            <h2 style="font-size: 2rem; margin-top: 0.5rem; margin-bottom: 0.75rem;">
+              Berechnen Sie Ihren <span class="highlight-mint">konkreten ROI</span>
+            </h2>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
+              Wie viel Zeit und Geld verbrennt Ihr Team jeden Monat mit manueller Dateneingabe, Copy-Paste oder fehleranfälligen Tabellen? Schieben Sie die Regler für Ihren individuellen Amortisationszeitpunkt:
+            </p>
+          </div>
+
+          <div class="roi-grid">
+            <div class="roi-controls">
+              
+              <div class="roi-slider-group">
+                <div class="roi-slider-header">
+                  <span>Wöchentlicher manueller Zeitaufwand:</span>
+                  <span class="roi-slider-val" id="roi-hours-val">10 Std.</span>
+                </div>
+                <input type="range" min="2" max="40" step="1" value="10" class="roi-range" id="roi-hours">
+                <small style="color: var(--color-text-muted); font-size: 0.8rem;">Zeit Ihres Teams für CSV-Bereinigung, Portal-Abgleiche &amp; manuelle Updates</small>
+              </div>
+
+              <div class="roi-slider-group">
+                <div class="roi-slider-header">
+                  <span>Kalkulatorischer Stundensatz:</span>
+                  <span class="roi-slider-val" id="roi-rate-val">45 €</span>
+                </div>
+                <input type="range" min="25" max="120" step="5" value="45" class="roi-range" id="roi-rate">
+                <small style="color: var(--color-text-muted); font-size: 0.8rem;">Durchschnittliche interne Bruttokosten pro Mitarbeiter-Stunde</small>
+              </div>
+
+            </div>
+
+            <div class="roi-results-card">
+              <div class="roi-stat-row">
+                <span class="roi-stat-label">Bisherige monatliche Arbeitskosten:</span>
+                <span class="roi-stat-val" id="roi-cost-monthly">1.890 € / Mo.</span>
+              </div>
+              <div class="roi-stat-row">
+                <span class="roi-stat-label">Einmalige Investition (Business Pipeline):</span>
+                <span class="roi-stat-val">850 € Festpreis</span>
+              </div>
+              <div class="roi-stat-row">
+                <span class="roi-stat-label">Vollständig amortisiert (Break-Even) nach:</span>
+                <span class="roi-stat-val highlight" id="roi-breakeven-days">13 Tagen</span>
+              </div>
+              <div class="roi-stat-row" style="border-bottom: none; padding-bottom: 0;">
+                <span class="roi-stat-label">Ihre Netto-Ersparnis im 1. Jahr:</span>
+                <span class="roi-stat-val highlight" id="roi-yearly-savings">21.830 €</span>
+              </div>
+
+              <div style="margin-top: 0.5rem;">
+                <a href="booking.html?pkg=Business+Pipeline+(850+€)" class="btn btn-primary btn-block" id="roi-cta-btn">
+                  Jetzt Einsparpotenzial sichern →
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
