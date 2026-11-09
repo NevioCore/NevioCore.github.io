@@ -1352,3 +1352,447 @@ select.form-control option {
   .roi-calculator-box { padding: 1.5rem; }
 }
 
+/* =========================================================================
+   Version 3.0: 3 Strictly Separated Modes & Real Audit Styling
+   ========================================================================= */
+
+/* SVG Badges in Trust Strip */
+.badge-icon-svg {
+  color: var(--color-mint);
+  flex-shrink: 0;
+}
+
+/* Tab 1: Scenarios View */
+.scenario-selector-bar {
+  display: flex;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+
+.scenario-tab-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  color: var(--color-text-secondary);
+  padding: 0.5rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition-smooth);
+}
+
+.scenario-tab-btn:hover {
+  color: var(--color-text-primary);
+  border-color: rgba(94, 255, 136, 0.3);
+}
+
+.scenario-tab-btn.active {
+  background: rgba(94, 255, 136, 0.12);
+  color: var(--color-mint);
+  border-color: var(--color-mint);
+  font-weight: 600;
+}
+
+.scenario-display-box {
+  padding: 1.75rem;
+}
+
+.scenario-meta-row {
+  margin-bottom: 1.25rem;
+}
+
+.scenario-heading {
+  font-size: 1.4rem;
+  margin: 0.5rem 0 0.25rem 0;
+  color: var(--color-text-primary);
+}
+
+.scenario-tagline {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Step by Step Visual Runner */
+.scenario-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  background: #060e11;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.scenario-step-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.scenario-step-row.pending {
+  opacity: 0.4;
+}
+
+.scenario-step-row.running {
+  opacity: 1;
+  background: rgba(94, 255, 136, 0.06);
+  border-left-color: var(--color-mint);
+}
+
+.scenario-step-row.completed {
+  opacity: 0.9;
+  border-left-color: #10b981;
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-secondary);
+}
+
+.scenario-step-row.completed .step-num {
+  background: var(--color-mint);
+  color: #03080a;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.step-detail {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+}
+
+.step-status-icon {
+  font-size: 0.85rem;
+}
+
+/* Explanation Cards */
+.scenario-explanation-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.scenario-exp-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+
+.scenario-exp-card h4 {
+  font-size: 0.95rem;
+  margin: 0.4rem 0 0.5rem 0;
+  color: var(--color-text-primary);
+}
+
+.scenario-exp-card p {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.exp-icon {
+  font-size: 1.25rem;
+}
+
+.exp-card-arrow {
+  color: var(--color-mint);
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+@media (max-width: 800px) {
+  .scenario-explanation-grid {
+    grid-template-columns: 1fr;
+  }
+  .exp-card-arrow {
+    display: none;
+  }
+}
+
+.scenario-tech-details {
+  margin-top: 1rem;
+  background: #050d0f;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: left;
+}
+
+/* Tab 2: Audit View */
+.audit-dropzone {
+  margin: 1.5rem;
+  border: 2px dashed rgba(94, 255, 136, 0.3);
+  border-radius: 1rem;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.audit-dropzone:hover, .audit-dropzone.dragover {
+  border-color: var(--color-mint);
+  background: rgba(94, 255, 136, 0.05);
+  transform: scale(1.005);
+}
+
+.dropzone-svg-icon {
+  color: var(--color-mint);
+  margin-bottom: 0.75rem;
+}
+
+.dropzone-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.dropzone-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto 1.25rem auto;
+}
+
+.dropzone-privacy-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 2rem;
+  padding: 0.35rem 0.85rem;
+  color: #34d399;
+  font-size: 0.78rem;
+  max-width: 620px;
+}
+
+.audit-progress-box {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.progress-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(94, 255, 136, 0.2);
+  border-top-color: var(--color-mint);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.progress-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.progress-track {
+  width: 100%;
+  max-width: 420px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-mint);
+  transition: width 0.2s ease;
+}
+
+/* Results Box */
+.audit-results-box {
+  padding: 1.5rem;
+}
+
+.audit-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.audit-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .audit-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.audit-metric-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.metric-num {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.metric-lbl {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.audit-metric-card small {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  display: block;
+}
+
+/* ROI Card */
+.audit-roi-card {
+  background: #061114;
+  border: 1px solid rgba(94, 255, 136, 0.25);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.roi-calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.roi-calc-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+}
+
+.roi-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .roi-calc-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+}
+
+.roi-val {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.roi-lbl {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+}
+
+.roi-note {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.audit-actions-bar {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.audit-lead-box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+/* Tab 3: CLI Screen */
+.cli-screen {
+  height: 280px;
+  background: #03080a;
+  padding: 1.25rem;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.cli-line {
+  margin-bottom: 0.35rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.text-mint { color: var(--color-mint); }
+
+/* Accessible Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+
