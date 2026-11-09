@@ -176,23 +176,24 @@
                 <span style="width: 11px; height: 11px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
                 <span style="width: 11px; height: 11px; border-radius: 50%; background: #eab308; display: inline-block;"></span>
                 <span style="width: 11px; height: 11px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
-                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-secondary); margin-left: 0.5rem;">pipeline.py — NevioCore Ingestion Engine</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-secondary); margin-left: 0.5rem;">sync_backend.py — Python &amp; SQLite Sync</span>
               </div>
-              <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-mint); background: rgba(94, 255, 136, 0.1); padding: 0.2rem 0.5rem; border-radius: 0.3rem;">v5.0 ACTIVE</span>
+              <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-mint); background: rgba(94, 255, 136, 0.1); padding: 0.2rem 0.5rem; border-radius: 0.3rem;">CODEBEISPIEL</span>
             </div>
 
             <div style="padding: 1.5rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.7; color: #e2e8f0;">
-              <div><span style="color: #38bdf8;">from</span> pydantic <span style="color: #38bdf8;">import</span> BaseModel, Field</div>
-              <div><span style="color: #38bdf8;">from</span> typing <span style="color: #38bdf8;">import</span> List, Optional</div>
-              <div style="color: var(--color-text-muted); margin: 0.4rem 0;"># Schlüsselfertige Datenharmonisierung für WaWi &amp; ERP</div>
-              <div><span style="color: #f43f5e;">async def</span> <span style="color: #a78bfa;">ingest_and_reconcile</span>(batch: List[B2BOrder]):</div>
-              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">cleaned</span> = await pipeline.clean_dataset(batch)</div>
-              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">deduped</span> = sha256_fingerprint_dedupe(cleaned)</div>
-              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">return</span> await erp_bridge.commit_transaction(deduped)</div>
+              <div><span style="color: #38bdf8;">import</span> hashlib, sqlite3, json</div>
+              <div><span style="color: #38bdf8;">from</span> datetime <span style="color: #38bdf8;">import</span> datetime</div>
+              <div style="color: var(--color-text-muted); margin: 0.4rem 0;"># Deterministische Idempotenz &amp; strukturierte Transaktion</div>
+              <div><span style="color: #f43f5e;">def</span> <span style="color: #a78bfa;">sync_record</span>(db: sqlite3.Connection, payload: dict):</div>
+              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">digest</span> = hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:16]</div>
+              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">cur</span> = db.execute(<span style="color: #a78bfa;">"SELECT payload_hash FROM sync_log WHERE id = ?"</span>, (payload[<span style="color: #a78bfa;">'id'</span>],))</div>
+              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">if</span> cur.fetchone() == (digest,): <span style="color: #38bdf8;">return</span> <span style="color: #a78bfa;">"idempotent_skip"</span></div>
+              <div style="padding-left: 1.25rem;">db.execute(<span style="color: #a78bfa;">"INSERT OR REPLACE INTO sync_log VALUES (?, ?, ?)"</span>, (payload[<span style="color: #a78bfa;">'id'</span>], digest, datetime.utcnow().isoformat()))</div>
               
               <div style="margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; border-radius: 0.35rem; font-size: 0.75rem;">
-                <span style="color: var(--color-mint); font-weight: 700;">✓ pytest test_suite.py: 14 passed in 0.04s</span><br>
-                <span style="color: var(--color-text-secondary);">Durchsatz: 480 Datensätze/s • Latenz: 32ms • Zero Data Loss</span>
+                <span style="color: var(--color-mint); font-weight: 700;">✓ Echte Verifikation: 5/5 Unittests bestanden (samples/fastapi_database_sync_sample.py)</span><br>
+                <span style="color: var(--color-text-secondary);">Idempotente Datenspeicherung • SHA-256 Hashing • Standardbibliothek &amp; SQLite</span>
               </div>
             </div>
 
@@ -747,6 +748,32 @@
                 <small style="color: var(--color-text-muted); font-size: 0.8rem;">Durchschnittliche interne Bruttokosten pro Mitarbeiter-Stunde</small>
               </div>
 
+              <div class="roi-slider-group">
+                <div class="roi-slider-header">
+                  <span>Angestrebte Automatisierungsquote:</span>
+                  <span class="roi-slider-val" id="roi-automation-val">75 % (Restprüfung: 25 %)</span>
+                </div>
+                <input type="range" min="20" max="90" step="5" value="75" class="roi-range" id="roi-automation">
+                <small style="color: var(--color-text-muted); font-size: 0.8rem;">Verbleibende Prozent verbleiben als menschliche Stichproben- &amp; Ausnahmebehandlung</small>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="roi-slider-group">
+                  <div class="roi-slider-header">
+                    <span style="font-size: 0.85rem;">Einmaliges Setup:</span>
+                    <span class="roi-slider-val" id="roi-setup-val" style="font-size: 0.95rem;">850 €</span>
+                  </div>
+                  <input type="range" min="400" max="2500" step="50" value="850" class="roi-range" id="roi-setup">
+                </div>
+                <div class="roi-slider-group">
+                  <div class="roi-slider-header">
+                    <span style="font-size: 0.85rem;">Wartung / Betrieb:</span>
+                    <span class="roi-slider-val" id="roi-maintenance-val" style="font-size: 0.95rem;">300 € / Jahr</span>
+                  </div>
+                  <input type="range" min="0" max="1200" step="50" value="300" class="roi-range" id="roi-maintenance">
+                </div>
+              </div>
+
             </div>
 
             <div class="roi-results-card">
@@ -755,20 +782,20 @@
                 <span class="roi-stat-val" id="roi-cost-monthly">1.890 € / Mo.</span>
               </div>
               <div class="roi-stat-row">
-                <span class="roi-stat-label">Einmalige Implementierung (Standard-Pipeline):</span>
-                <span class="roi-stat-val">850 € Festpreis</span>
+                <span class="roi-stat-label">Einmalige Implementierung:</span>
+                <span class="roi-stat-val" id="roi-res-setup">850 €</span>
               </div>
               <div class="roi-stat-row">
                 <span class="roi-stat-label">Geschätzter Break-Even:</span>
-                <span class="roi-stat-val highlight" id="roi-breakeven-days">ca. 1 Monat</span>
+                <span class="roi-stat-val highlight" id="roi-breakeven-days">ca. 1,1 Monaten</span>
               </div>
               <div class="roi-stat-row" style="border-bottom: none; padding-bottom: 0;">
                 <span class="roi-stat-label">Geschätzte Netto-Ersparnis im 1. Jahr:</span>
-                <span class="roi-stat-val highlight" id="roi-yearly-savings">ca. 15.000 €</span>
+                <span class="roi-stat-val highlight" id="roi-yearly-savings">ca. 15.874 €</span>
               </div>
 
               <p style="font-size: 0.72rem; color: var(--color-text-muted); line-height: 1.4; margin-top: 0.75rem;">
-                * Modellierte Schätzung bei realistischer 75% Automatisierungsquote (25% manuelle Restkontrolle) abzüglich 850 € Setup und 300 €/Jahr Wartungspuffer.
+                * Modellrechnung basierend auf Ihren Annahmen, keine Erfolgsgarantie. Realistische Modellierung unter Berücksichtigung von Einrichtungs- und laufenden Betriebskosten.
               </p>
 
               <div style="margin-top: 0.5rem;">

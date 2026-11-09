@@ -288,7 +288,12 @@ function sha256Utf8(str) {
  * - Accurately counts blank lines
  */
 function parseCsvAdvanced(text, delimiterHint) {
-  if (!text || typeof text !== "string") return { headers: [], rows: [], delimiter: ";", emptyLinesCount: 0 };
+  if (!text || typeof text !== "string") return { headers: [], rows: [], delimiter: ";", emptyLinesCount: 0, unclosedQuoteDetected: false };
+
+  // Strip UTF-8 BOM if present (\uFEFF)
+  if (text.charCodeAt(0) === 0xFEFF) {
+    text = text.slice(1);
+  }
 
   // 1. Delimiter auto-detection if not specified
   let delimiter = delimiterHint;
@@ -360,6 +365,8 @@ function parseCsvAdvanced(text, delimiterHint) {
     }
   }
 
+  const unclosedQuoteDetected = inQuotes;
+
   // Final field & row flush
   if (currentField.length > 0 || currentRow.length > 0) {
     currentRow.push(currentField.trim());
@@ -371,12 +378,12 @@ function parseCsvAdvanced(text, delimiterHint) {
     }
   }
 
-  if (rows.length === 0) return { headers: [], rows: [], delimiter, emptyLinesCount };
+  if (rows.length === 0) return { headers: [], rows: [], delimiter, emptyLinesCount, unclosedQuoteDetected };
 
   const headers = rows[0].map(h => h.trim());
   const dataRows = rows.slice(1);
 
-  return { headers, rows: dataRows, delimiter, emptyLinesCount };
+  return { headers, rows: dataRows, delimiter, emptyLinesCount, unclosedQuoteDetected };
 }
 
 /**
@@ -438,8 +445,20 @@ function cleanDatasetInMemory(dataset) {
     return res;
   }
 
-  function normalizePhone(str) {
+  function isPhoneCandidate(headerName, rawValue) {
+    const h = (headerName || "").toLowerCase();
+    if (/telefon|phone|tel|mobil|handy|fax|rufnummer|contact/i.test(h)) return true;
+    if (/plz|postleitzahl|zip|postal|id|nr|code|artikel|kundennummer|auftrag|ean/i.test(h)) return false;
+    // Explicit phone indicator (+49, 0049, or separators with length >= 7)
+    if (/^(\+49|0049)/.test(rawValue)) return true;
+    if (/[\/\(\)]/.test(rawValue) && rawValue.replace(/\D/g, "").length >= 7) return true;
+    if (/^0[1-9][0-9\s\-]{6,}$/.test(rawValue) && /[\s\-]/.test(rawValue)) return true;
+    return false;
+  }
+
+  function normalizePhone(str, headerName) {
     if (!str) return str;
+    if (!isPhoneCandidate(headerName, str)) return str;
     const clean = str.replace(/[\s\-\/\(\)]/g, "");
     if (/^(0049|\+49)[1-9][0-9]{4,14}$/.test(clean)) {
       return clean.replace(/^0049/, "+49");
@@ -452,6 +471,7 @@ function cleanDatasetInMemory(dataset) {
 
   const seenHashes = new Set();
   const cleanedRows = [];
+  const changePreview = [];
   let duplicatesRemoved = 0;
   let encodingFixedCount = 0;
   let phonesNormalizedCount = 0;
@@ -461,14 +481,33 @@ function cleanDatasetInMemory(dataset) {
 
   dataset.rows.forEach(row => {
     // 1. Repair fields
-    const cleanedRow = row.map(val => {
-      let v = String(val || "").trim();
+    const cleanedRow = row.map((val, colIdx) => {
+      let v = String(val !== null && val !== undefined ? val : "").trim();
       const repaired = repairEncoding(v);
-      if (repaired !== v) encodingFixedCount++;
+      if (repaired !== v) {
+        encodingFixedCount++;
+        if (changePreview.length < 15) {
+          changePreview.push({
+            type: "encoding_repair",
+            column: dataset.headers[colIdx] || `Spalte ${colIdx + 1}`,
+            before: v,
+            after: repaired
+          });
+        }
+      }
 
-      const phoneNormalized = normalizePhone(repaired);
+      const colHeader = dataset.headers ? dataset.headers[colIdx] : "";
+      const phoneNormalized = normalizePhone(repaired, colHeader);
       if (phoneNormalized !== repaired && phoneNormalized.startsWith("+49")) {
         phonesNormalizedCount++;
+        if (changePreview.length < 15) {
+          changePreview.push({
+            type: "phone_normalization",
+            column: colHeader || `Spalte ${colIdx + 1}`,
+            before: repaired,
+            after: phoneNormalized
+          });
+        }
         return phoneNormalized;
       }
       return repaired;
@@ -481,18 +520,26 @@ function cleanDatasetInMemory(dataset) {
 
     if (seenHashes.has(rowHash)) {
       duplicatesRemoved++;
+      if (changePreview.length < 15) {
+        changePreview.push({
+          type: "duplicate_dropped",
+          rowPreview: cleanedRow.slice(0, 3).join(" | "),
+          hash: rowHash.slice(0, 8) + "..."
+        });
+      }
     } else {
       seenHashes.add(rowHash);
       cleanedRows.push(cleanedRow);
     }
   });
 
-  // Re-encode cleaned dataset to CSV text with OWASP formula injection protection
+  // Re-encode cleaned dataset to CSV text with OWASP formula injection protection & leading zero preservation
   const delimiter = dataset.delimiter || ";";
   const headerLine = dataset.headers.map(h => sanitizeCsvCell(h)).join(delimiter);
   const dataLines = cleanedRows.map(r => r.map(f => {
     const sanitized = sanitizeCsvCell(f);
-    if (sanitized.includes(delimiter) || sanitized.includes("\"") || sanitized.includes("\n") || sanitized.includes("\r")) {
+    const hasLeadingZeroNum = /^0[0-9]+$/.test(sanitized);
+    if (sanitized.includes(delimiter) || sanitized.includes("\"") || sanitized.includes("\n") || sanitized.includes("\r") || hasLeadingZeroNum) {
       return `"${sanitized.replace(/"/g, '""')}"`;
     }
     return sanitized;
@@ -506,6 +553,7 @@ function cleanDatasetInMemory(dataset) {
     duplicatesRemoved,
     encodingFixedCount,
     phonesNormalizedCount,
+    changePreview,
     cleanedCsvText: fullCleanedCsv,
     originalRowCount: dataset.rows.length,
     newRowCount: cleanedRows.length
@@ -1526,53 +1574,89 @@ function initRoiCalculator() {
   const rateSlider = document.getElementById("roi-rate");
   if (!hoursSlider || !rateSlider) return;
 
+  const autoSlider = document.getElementById("roi-automation");
+  const setupInput = document.getElementById("roi-setup");
+  const maintInput = document.getElementById("roi-maintenance");
+
   const hoursVal = document.getElementById("roi-hours-val");
   const rateVal = document.getElementById("roi-rate-val");
+  const autoVal = document.getElementById("roi-automation-val");
+  const setupVal = document.getElementById("roi-setup-val");
+  const maintVal = document.getElementById("roi-maintenance-val");
+  const resSetup = document.getElementById("roi-res-setup");
+
   const costMonthly = document.getElementById("roi-cost-monthly");
   const breakevenDays = document.getElementById("roi-breakeven-days");
   const yearlySavings = document.getElementById("roi-yearly-savings");
   const roiCta = document.getElementById("roi-cta-btn");
 
   function recalculate() {
-    const hours = parseFloat(hoursSlider.value);
-    const rate = parseFloat(rateSlider.value);
+    const hours = parseFloat(hoursSlider.value) || 0;
+    const rate = parseFloat(rateSlider.value) || 0;
+    const autoPercent = autoSlider ? (parseFloat(autoSlider.value) || 75) : 75;
+    const setupCost = setupInput ? (parseFloat(setupInput.value) || 850) : 850;
+    const maintCost = maintInput ? (parseFloat(maintInput.value) || 300) : 300;
+
+    const residualManualPercent = 100 - autoPercent;
 
     if (hoursVal) hoursVal.textContent = `${hours} Std. / Woche`;
     if (rateVal) rateVal.textContent = `${rate} € / Std.`;
+    if (autoVal) autoVal.textContent = `${autoPercent} % (Restprüfung: ${residualManualPercent} %)`;
+    if (setupVal) setupVal.textContent = `${setupCost.toLocaleString("de-DE")} €`;
+    if (maintVal) maintVal.textContent = `${maintCost.toLocaleString("de-DE")} € / Jahr`;
+    if (resSetup) resSetup.textContent = `${setupCost.toLocaleString("de-DE")} €`;
 
     // Realistic automation model:
     // Manual hours/month = hours * 4.2 weeks
     const monthlyManualHours = hours * 4.2;
     const monthlyManualCost = monthlyManualHours * rate;
 
-    // Realistic automation factor: 75% automated, 25% residual manual review & exceptions
-    const automationRate = 0.75;
+    // Monthly gross savings from automation
+    const automationRate = autoPercent / 100.0;
     const monthlyAutomatedSavings = monthlyManualCost * automationRate;
 
-    // Initial setup investment (Paket D baseline: 850 €) & realistic annual maintenance buffer (300 €)
-    const projectInvestment = 850;
-    const annualMaintenance = 300;
-
-    // Net savings year 1
+    // Net savings year 1 (CAN BE NEGATIVE if setup + maintenance > gross savings)
     const annualGrossSavings = monthlyAutomatedSavings * 12;
-    const netSavingsYear1 = Math.max(0, Math.round(annualGrossSavings - projectInvestment - annualMaintenance));
+    const netSavingsYear1 = Math.round(annualGrossSavings - setupCost - maintCost);
 
     // Estimated break-even in months
-    const monthlyNetBenefit = monthlyAutomatedSavings - (annualMaintenance / 12);
-    const breakEvenMonths = monthlyNetBenefit > 0 ? (projectInvestment / monthlyNetBenefit).toFixed(1) : "N/A";
+    const monthlyNetBenefit = monthlyAutomatedSavings - (maintCost / 12);
+    let breakEvenText = "N/A";
+    if (monthlyNetBenefit <= 0) {
+      breakEvenText = "Keine Amortisation (Kosten übersteigen Ersparnis)";
+    } else {
+      const months = setupCost / monthlyNetBenefit;
+      if (months > 36) {
+        breakEvenText = `ca. ${months.toFixed(1)} Monaten (> 3 Jahre)`;
+      } else {
+        breakEvenText = `ca. ${months.toFixed(1)} Monaten`;
+      }
+    }
 
     if (costMonthly) costMonthly.textContent = `ca. ${Math.round(monthlyManualCost).toLocaleString("de-DE")} € / Mo.`;
-    if (breakevenDays) breakevenDays.textContent = `ca. ${breakEvenMonths} Monaten`;
-    if (yearlySavings) yearlySavings.textContent = `ca. ${netSavingsYear1.toLocaleString("de-DE")} €`;
+    if (breakevenDays) breakevenDays.textContent = breakEvenText;
+
+    if (yearlySavings) {
+      if (netSavingsYear1 < 0) {
+        yearlySavings.textContent = `${netSavingsYear1.toLocaleString("de-DE")} € (Defizit im 1. Jahr)`;
+        yearlySavings.style.color = "#ff6b6b";
+      } else {
+        yearlySavings.textContent = `ca. ${netSavingsYear1.toLocaleString("de-DE")} €`;
+        yearlySavings.style.color = "var(--color-mint)";
+      }
+    }
 
     if (roiCta) {
       roiCta.textContent = `Unverbindliches Angebot anfragen →`;
-      roiCta.href = `booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden&roi_savings=${netSavingsYear1}&hours=${hours}`;
+      roiCta.href = `booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden&roi_savings=${netSavingsYear1}&hours=${hours}&rate=${rate}&auto=${autoPercent}`;
     }
   }
 
   hoursSlider.addEventListener("input", recalculate);
   rateSlider.addEventListener("input", recalculate);
+  if (autoSlider) autoSlider.addEventListener("input", recalculate);
+  if (setupInput) setupInput.addEventListener("input", recalculate);
+  if (maintInput) maintInput.addEventListener("input", recalculate);
   recalculate();
 }
 
