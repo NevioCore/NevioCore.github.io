@@ -1,0 +1,35 @@
+# Nevio Waldemar Niebel — Senior Software Engineer & Data Automation Specialist
+
+> Freiberuflicher Softwareentwickler und Daten-Architekt mit Fokus auf den deutschsprachigen Raum (DACH / Remote). Spezialisiert auf resiliente Web-Scraper, FastAPI-Microservices, B2B-Daten-Pipelines und Prozessautomatisierung.
+
+## Kernkompetenzen & Spezialisierung
+- **Web Scraping & Web Crawling**: Anti-Bot-Umgehung (Cloudflare, DataDome), rotierende Proxies, Playwright, HTTPX, BeautifulSoup, SHA-256 Fingerprint-Deduplizierung. (https://nevioniebel.tech/services.html#scraping)
+- **API-Integration & Microservices**: FastAPI, Pydantic v2 Typvalidierung, idempotente Webhooks, REST- und GraphQL-Konnektoren für Shopify, Shopware, DATEV, HubSpot, Stripe und PostgreSQL. (https://nevioniebel.tech/services.html#api)
+- **Automatisierte Daten-Pipelines (ETL)**: Dockerisierte Ingestion-Pipelines, automatische Datenbereinigung, Validierung, Fehlerbehandlung mit Exponential Backoff, tägliche Management-Reports via E-Mail und Slack. (https://nevioniebel.tech/services.html#pipeline)
+- **QA & Wartungs-Retainer**: 100% Unittest- und Pytest-Testabdeckung, Clean Code, 24/7 Monitoring mit < 4h SLA. (https://nevioniebel.tech/services.html#retainer)
+
+## Pakete & Preismodelle
+1. **Script Automation (350 € einmalig)**: Einmalige Extraktion, Skriptbereinigung oder Parser. Lieferzeit 24–48 Stunden, 14 Tage Support. (https://nevioniebel.tech/pricing.html)
+2. **B2B Data Pipeline (850 € einmalig)**: Schlüsselfertige Ingestion-Pipeline mit Datenbank-Upsert (PostgreSQL/SQLite), Multi-Source-Crawling, Slack/E-Mail-Reports, Docker-Container und 30 Tage Wartungsgarantie. (https://nevioniebel.tech/pricing.html)
+3. **Wartungs-Retainer (190 € / Monat)**: 24/7 Monitoring von Crawlern und APIs, Anpassung bei Web-Layout-Änderungen innerhalb von 4 Stunden SLA, bis zu 5 Entwicklerstunden inklusive, monatlich kündbar. (https://nevioniebel.tech/pricing.html)
+4. **Individuelles Consulting & Entwicklung (95,00 € / Std.)**: Transparente Abrechnung auf Rechnung mit ausgewiesener Umsatzsteuer.
+
+## Qualitätsstandards & Arbeitsweise
+- **100% DSGVO-konform**: Lokale Datenverarbeitung, Einhaltung aller deutschen und europäischen Datenschutzrichtlinien.
+- **100% Quellcode-Eigentum**: Alle Nutzungs- und Verwertungsrechte gehen nach vollständiger Bezahlung uneingeschränkt an den Auftraggeber über.
+- **50% Anzahlungsmodell**: 50% Anzahlung bei Projektstart per SEPA-Überweisung, 50% nach erfolgreicher Abnahme.
+
+## Web-Architektur & Unterseiten
+- **Startseite & Terminal-Demo**: https://nevioniebel.tech/
+- **Leistungen & Tech-Stack**: https://nevioniebel.tech/services.html
+- **Preise & Konditionen**: https://nevioniebel.tech/pricing.html
+- **Projekt- & Terminbuchung**: https://nevioniebel.tech/booking.html
+- **Über mich & Philosophie**: https://nevioniebel.tech/about.html
+- **Kontakt & Direktanfrage**: https://nevioniebel.tech/contact.html
+- **Impressum & Datenschutz**: https://nevioniebel.tech/legal.html
+
+## Kontakt & Buchung
+- **Website**: https://nevioniebel.tech
+- **E-Mail**: dev@nevioniebel.tech
+- **GitHub**: https://github.com/NevioCore
+- **Einsatzbereich**: Remote (Deutschland, Österreich, Schweiz / DACH)

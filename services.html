@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leistungen &amp; Software-Lösungen | Nevio Niebel</title>
+  <meta name="description" content="Detaillierte Übersicht der Softwareentwicklungs-Leistungen von Nevio Niebel: Resilientes Web Scraping, FastAPI-Konnektoren, B2B Ingestion-Pipelines und 24/7 Wartungs-Retainer.">
+  <link rel="canonical" href="https://nevioniebel.tech/services.html">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="site-body">
+
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="top">
+    <div class="container nav-content">
+      <a href="index.html" class="brand">
+        <span class="brand-symbol">/&gt;</span>
+        <span class="brand-text">Nevio Niebel</span>
+      </a>
+      <nav class="nav-links" id="main-nav">
+        <a href="index.html">Startseite</a>
+        <a href="services.html" class="active">Leistungen</a>
+        <a href="pricing.html">Preise &amp; Pakete</a>
+        <a href="about.html">Über mich</a>
+        <a href="contact.html">Kontakt</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="booking.html" class="btn btn-primary btn-sm">Termin buchen</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Header Hero -->
+    <section class="section" style="padding-top: 8rem; padding-bottom: 3rem;">
+      <div class="container" style="text-align: center; max-width: 860px;">
+        <span class="section-tag">Industrielle Ingenieursarbeit</span>
+        <h1 class="hero-title" style="font-size: 3rem;">
+          Schlüsselfertige Software für <br>
+          <span class="highlight-mint">komplexe Daten- &amp; Systemflüsse</span>
+        </h1>
+        <p class="hero-subtitle">
+          Keine vagen Konzepte, sondern wartungsfreie Produktionssoftware. Hier erfahren Sie im Detail, wie meine 4 Kernlösungen aufgebaut sind und welche Architektur dahintersteckt.
+        </p>
+      </div>
+    </section>
+
+    <!-- Service Deep Dive 1: Web Scraping -->
+    <section id="scraping" class="section section-dark">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <span class="solution-category">Leistungsbereich 01</span>
+            <h2 class="section-title">Resilientes Web Scraping &amp; Crawler</h2>
+            <p class="paragraph">
+              Manuelle Datenübertragung aus Portalen, Marktplätzen oder Mitbewerber-Websites bindet wertvolle Arbeitszeit und führt unweigerlich zu Übertragungsfehlern. Ich entwickle robuste, automatisierte Extraktions-Engines, die auch unter schwierigen Bedingungen zuverlässig Daten liefern.
+            </p>
+            <div style="margin: 1.5rem 0;">
+              <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
+              <ul class="offer-features">
+                <li><span>✓</span> <strong>Anti-Bot-Resilienz:</strong> Umgehung moderner Schutzmechanismen (Cloudflare Turnstile, DataDome, Akamai) durch reale Browser-Fingerprints und TLS-Parität.</li>
+                <li><span>✓</span> <strong>Intelligente Proxy-Rotation:</strong> Dynamische Verteilung über weltweite IPv4/IPv6 Residential- und Datacenter-Proxies mit automatischem IP-Bann-Handling.</li>
+                <li><span>✓</span> <strong>SHA-256 Fingerprint-Hashing:</strong> Deterministische Erkennung und Filterung von Dubletten vor dem Speichern in Ihre Datenbank.</li>
+                <li><span>✓</span> <strong>Typsichere Daten-Validierung:</strong> Jedes Feld wird mittels Pydantic v2 validiert – keine fehlerhaften Datentypen in Ihren Berichten.</li>
+              </ul>
+            </div>
+            <a href="booking.html?pkg=Script+Automation+(350+€)" class="btn btn-primary">Dieses Projekt anfragen (ab 350 €)</a>
+          </div>
+          <div class="solution-card" style="border-radius: 1.25rem;">
+            <div class="solution-visual" style="height: 340px;">
+              <img src="assets/3d_data_cube.jpg" alt="Cryptographic 3D Data Cube">
+            </div>
+            <div class="solution-body">
+              <span class="solution-category">Tech-Stack</span>
+              <p class="solution-desc" style="margin-bottom: 1rem;">
+                Python 3.12 • Playwright • Asyncio • HTTPX • BeautifulSoup4 • Pydantic v2 • PostgreSQL
+              </p>
+              <div class="solution-tags">
+                <span>Headless Chromium</span>
+                <span>Anti-Fingerprinting</span>
+                <span>Sub-Second Latency</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Deep Dive 2: API Integration -->
+    <section id="api" class="section">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="solution-card" style="border-radius: 1.25rem;">
+            <div class="solution-visual" style="height: 340px;">
+              <img src="assets/3d_network_sphere.webp" alt="API & Microservices 3D Holographic Sphere">
+            </div>
+            <div class="solution-body">
+              <span class="solution-category">Tech-Stack</span>
+              <p class="solution-desc" style="margin-bottom: 1rem;">
+                FastAPI • Uvicorn • Redis • HMAC-SHA256 • Docker • SQLAlchemy • OpenAPI 3.1
+              </p>
+              <div class="solution-tags">
+                <span>Idempotente Endpoints</span>
+                <span>Asynchrone Queues</span>
+                <span>Zero Data Loss</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <span class="solution-category">Leistungsbereich 02</span>
+            <h2 class="section-title">API-Integrationen &amp; System-Sync</h2>
+            <p class="paragraph">
+              Unternehmensdaten leben oft in getrennten Silos: Webshop (Shopify, Shopware), CRM (HubSpot, Salesforce), ERP oder Buchhaltung (DATEV, sevdesk). Ich verbinde diese Systeme durch maßgeschneiderte, asynchrone Schnittstellen.
+            </p>
+            <div style="margin: 1.5rem 0;">
+              <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
+              <ul class="offer-features">
+                <li><span>✓</span> <strong>Idempotente Webhooks:</strong> Schutz vor doppelten Buchungen oder Datensätzen durch strenge Idempotency-Key-Validierung.</li>
+                <li><span>✓</span> <strong>Kryptographische Absicherung:</strong> Verifizierung aller eingehenden Payloads via HMAC-SHA256 Signaturen und Token-Validierung.</li>
+                <li><span>✓</span> <strong>Dead-Letter-Queues &amp; Retry:</strong> Schlägt ein Zielsystem temporär fehl, werden Aufträge sicher gepuffert und automatisch nachgeliefert.</li>
+                <li><span>✓</span> <strong>OpenAPI-Dokumentation:</strong> Interaktive Swagger-Dokumentation für mühelose Übergabe an interne IT-Teams.</li>
+              </ul>
+            </div>
+            <a href="booking.html?pkg=B2B+Data+Pipeline+(850+€)" class="btn btn-primary">Schnittstelle anfragen (850 €)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Deep Dive 3: Data Pipelines & ETL -->
+    <section id="pipeline" class="section section-dark">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <span class="solution-category">Leistungsbereich 03</span>
+            <h2 class="section-title">Automatisierte B2B Daten-Pipelines</h2>
+            <p class="paragraph">
+              Rohdaten aus mehreren Quellen zusammenführen, bereinigen und täglich pünktlich als fertige Entscheidungsgrundlage bereitstellen – vollständig ohne manuelles Zutun.
+            </p>
+            <div style="margin: 1.5rem 0;">
+              <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
+              <ul class="offer-features">
+                <li><span>✓</span> <strong>Multi-Source Aggregation:</strong> Zeitgleiche Abfrage von APIs, SQL-Datenbanken, SFTP-Servern und Web-Portalen.</li>
+                <li><span>✓</span> <strong>Automatisierte Normalisierung:</strong> Vereinheitlichung von Adressformaten, Telefonnummern (E.164), Umlaute-Encoding und Steuernummern.</li>
+                <li><span>✓</span> <strong>Integrierte Anomalie-Erkennung:</strong> Automatische Alarme bei ungewöhnlichen Datenabweichungen oder Null-Werten via Slack / E-Mail.</li>
+                <li><span>✓</span> <strong>Containerisierter Betrieb:</strong> Schlüsselfertiges Docker-Compose-Setup mit minimalem Ressourcenbedarf (auch auf kleinsten VPS lauffähig).</li>
+              </ul>
+            </div>
+            <a href="booking.html?pkg=B2B+Data+Pipeline+(850+€)" class="btn btn-primary">Pipeline anfragen (850 €)</a>
+          </div>
+          <div class="solution-card" style="border-radius: 1.25rem;">
+            <div class="solution-visual" style="height: 340px;">
+              <img src="assets/3d_pipeline_node.jpg" alt="ETL Data Pipelines 3D Microservice Node">
+            </div>
+            <div class="solution-body">
+              <span class="solution-category">Tech-Stack</span>
+              <p class="solution-desc" style="margin-bottom: 1rem;">
+                Docker • Python 3.12 • Polars / Pandas • SQLite / PostgreSQL • Slack Webhooks • Cron
+              </p>
+              <div class="solution-tags">
+                <span>Multi-Source ETL</span>
+                <span>Scheduled Ingestion</span>
+                <span>Instant Alerts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Deep Dive 4: Retainer & QA -->
+    <section id="retainer" class="section">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="solution-card" style="border-radius: 1.25rem;">
+            <div class="solution-visual" style="height: 340px;">
+              <img src="assets/3d_shield_security.jpg" alt="Cybersecurity & SLA Shield 3D Asset">
+            </div>
+            <div class="solution-body">
+              <span class="solution-category">Tech-Stack</span>
+              <p class="solution-desc" style="margin-bottom: 1rem;">
+                Pytest • GitHub Actions • Healthcheck-Daemons • Sentry • 4h-SLA Monitoring
+              </p>
+              <div class="solution-tags">
+                <span>24/7 Surveillance</span>
+                <span>Hotfix-Garantie</span>
+                <span>100% Test Coverage</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <span class="solution-category">Leistungsbereich 04</span>
+            <h2 class="section-title">Skript-Wartung &amp; 24/7 Monitoring-Retainer</h2>
+            <p class="paragraph">
+              Websites ändern ihr DOM-Layout, APIs aktualisieren Versionen, Schnittstellen brechen unbemerkt weg. Mit meinem Wartungs-Retainer sichern Sie Ihre geschäftskritischen Datenströme dauerhaft ab.
+            </p>
+            <div style="margin: 1.5rem 0;">
+              <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
+              <ul class="offer-features">
+                <li><span>✓</span> <strong>Dauerhafte Health-Checks:</strong> Autonome Pings überwachen den Status aller Crawler und Schnittstellen rund um die Uhr.</li>
+                <li><span>✓</span> <strong>Garantierte SLA &lt; 4 Stunden:</strong> Bricht ein Skript ab, erfolgt die Anpassung binnen weniger Stunden garantiert.</li>
+                <li><span>✓</span> <strong>5 Entwickler-Stunden monatlich inklusive:</strong> Für Anpassungen, neue Datenfelder oder kleinere Feature-Erweiterungen.</li>
+                <li><span>✓</span> <strong>Volle Kostentransparenz:</strong> 190,00 € Festpreis pro Monat, monatlich kündbar, keine Mindestvertragslaufzeit.</li>
+              </ul>
+            </div>
+            <a href="booking.html?pkg=Wartungs-Retainer+(190+€/Mo.)" class="btn btn-primary">Retainer buchen (190 € / Mo.)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="section section-dark" style="text-align: center; border-top: 1px solid var(--color-border);">
+      <div class="container" style="max-width: 800px;">
+        <span class="section-tag">Bereit für den nächsten Schritt?</span>
+        <h2 class="section-title">Lassen Sie uns Ihre Lösung realisieren</h2>
+        <p class="section-subtitle">
+          Buchen Sie ein unverbindliches 15-Minuten Gespräch direkt mit Entwickler Nevio Niebel.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="booking.html" class="btn btn-primary btn-lg">Projekt konfigurieren &amp; Termin reservieren</a>
+          <a href="pricing.html" class="btn btn-outline btn-lg">Preise vergleichen</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand-col">
+        <a href="index.html" class="brand">
+          <span class="brand-symbol">/&gt;</span>
+          <span class="brand-text">Nevio Niebel</span>
+        </a>
+        <p class="footer-desc">
+          Freiberuflicher Softwareentwickler &amp; Data Engineer. Deterministische Scraper, API-Brücken und ETL-Pipelines mit 100% Testabdeckung.
+        </p>
+        <p class="footer-sub">
+          Positioniert für Unternehmen in Deutschland, Österreich und der Schweiz (DACH / Remote).
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div>
+          <h4>Navigation</h4>
+          <a href="index.html">Startseite</a>
+          <a href="services.html">Leistungen</a>
+          <a href="pricing.html">Preise &amp; Pakete</a>
+          <a href="about.html">Über mich</a>
+          <a href="contact.html">Kontakt</a>
+        </div>
+        <div>
+          <h4>Lösungen</h4>
+          <a href="#scraping">Web Scraping</a>
+          <a href="#api">API-Integrationen</a>
+          <a href="#pipeline">Daten-Pipelines</a>
+          <a href="#retainer">Wartungs-Retainer</a>
+        </div>
+        <div>
+          <h4>Rechtliches</h4>
+          <a href="legal.html#impressum">Impressum (§ 5 DDG)</a>
+          <a href="legal.html#datenschutz">Datenschutz (DSGVO)</a>
+          <a href="llms.txt">AI Search Spec</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
