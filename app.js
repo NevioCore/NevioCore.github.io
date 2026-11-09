@@ -1401,3 +1401,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initRoiCalculator();
 });
+
+// Explicit window bindings for robust inline event triggers & cross-context verification
+window.switchTerminalMode = switchTerminalMode;
+window.playScenario = playScenario;
+window.toggleScenarioTechDetails = toggleScenarioTechDetails;
+window.loadSampleDataset = loadSampleDataset;
+window.cleanDatasetInMemory = cleanDatasetInMemory;
+window.downloadCleanedFile = downloadCleanedFile;
+window.downloadAuditReport = downloadAuditReport;
+window.handleAuditLeadSubmit = handleAuditLeadSubmit;
+window.handlePortalBookingSubmit = handlePortalBookingSubmit;
+window.handleContactSubmit = handleContactSubmit;
+window.executeTerminalCommand = executeTerminalCommand;
+window.getCurrentDataset = () => typeof currentDataset !== "undefined" ? currentDataset : null;
+window.getCleanedContent = () => typeof cleanedDatasetContent !== "undefined" ? cleanedDatasetContent : null;
