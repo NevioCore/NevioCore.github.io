@@ -845,46 +845,91 @@ function downloadBlob(blob, filename) {
 }
 
 /**
- * Unified Sovereign Lead Dispatcher (Dual Server + Mailto Delivery)
+ * Unified Sovereign Lead Dispatcher (Dual HTTPS Server + Direct Mail Fallback)
+ * Dispatches to Formsubmit HTTPS gateway and local lead server.
+ * Returns { delivered: boolean, receipt: string, statusMessage: string }
  */
 async function dispatchLeadData(payload) {
-  const endpoints = ["/api/lead", "http://127.0.0.1:8081/api/lead"];
   let delivered = false;
+  let receipt = payload.id;
+  let statusMessage = "";
 
-  for (const endpoint of endpoints) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      if (res.ok) {
+  // 1. Try public HTTPS endpoint: Formsubmit.co AJAX
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const formSubmitPayload = {
+      _subject: `Neue B2B-Anfrage [${payload.id}]: ${payload.company || payload.name}`,
+      name: payload.name || "Interessent",
+      email: payload.email,
+      company: payload.company || "k. A.",
+      message: payload.message || payload.notes || JSON.stringify(payload),
+      ref_id: payload.id,
+      source: payload.source,
+      _honey: ""
+    };
+
+    const res = await fetch("https://formsubmit.co/ajax/dev@nevioniebel.tech", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(formSubmitPayload),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success === "true" || data.success === true) {
         delivered = true;
-        break;
+        statusMessage = "Erfolgreich serverseitig zugestellt und im Postfach archiviert.";
       }
-    } catch (e) {
-      // Server endpoint unreachable on static hosting or offline, proceed to fallback
+    }
+  } catch (e) {
+    // Network error or blocked
+  }
+
+  // 2. If not yet delivered, try local backend server if reachable (development / local preview)
+  if (!delivered) {
+    const localEndpoints = ["/api/lead", "http://127.0.0.1:8081/api/lead"];
+    for (const ep of localEndpoints) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 1500);
+        const res = await fetch(ep, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.success) {
+            delivered = true;
+            statusMessage = "Erfolgreich über lokalen Inbound-Server registriert.";
+            break;
+          }
+        }
+      } catch (e) {}
     }
   }
 
+  // 3. Local state persistence
   try {
     const existing = JSON.parse(localStorage.getItem("nevioniebel_inbound_leads") || "[]");
     payload.deliveredToServer = delivered;
     existing.push(payload);
     localStorage.setItem("nevioniebel_inbound_leads", JSON.stringify(existing));
-  } catch (err) {
-    console.warn("Storage warning:", err);
-  }
+  } catch (err) {}
 
-  return delivered;
+  return { delivered, receipt, statusMessage };
 }
 
 /**
- * Audit Lead Submission with Dual-Delivery & Mailto Auto-Prompt
+ * Audit Lead Submission with Dual-Delivery & Honest Fallback
  */
 async function handleAuditLeadSubmit(event) {
   event.preventDefault();
@@ -933,15 +978,15 @@ async function handleAuditLeadSubmit(event) {
   if (refCodeEl) refCodeEl.textContent = leadRecord.id;
   if (mailtoBtn) mailtoBtn.href = mailtoUrl;
 
-  const delivered = await dispatchLeadData(leadRecord);
+  const dispatchResult = await dispatchLeadData(leadRecord);
 
   if (formBox) formBox.style.display = "none";
   if (successBox) successBox.style.display = "block";
 
-  if (delivered && statusMsg) {
+  if (dispatchResult.delivered && statusMsg) {
     statusMsg.innerHTML = `Ihre Anfrage wurde erfolgreich an den Server übermittelt (Vorgangs-ID: <strong class="highlight-mint">${leadRecord.id}</strong>). Ich melde mich innerhalb von 24h an Werktagen bei Ihnen.`;
-  } else {
-    // Prompt mail client open
+  } else if (statusMsg) {
+    statusMsg.innerHTML = `<strong>Direktübermittlung erforderlich:</strong> Ihre Angaben wurden mit Referenz <strong class="highlight-mint">${leadRecord.id}</strong> erfasst. Bitte klicken Sie unten auf <em>'Anfrage jetzt per E-Mail absenden'</em> oder schreiben Sie direkt an <a href="mailto:dev@nevioniebel.tech" style="color: var(--color-mint);">dev@nevioniebel.tech</a>.`;
     try { window.location.href = mailtoUrl; } catch (e) {}
   }
 }
@@ -1328,14 +1373,15 @@ async function handlePortalBookingSubmit(e) {
   if (refCodeEl) refCodeEl.textContent = bookingRecord.id;
   if (mailtoBtn) mailtoBtn.href = mailtoUrl;
 
-  const delivered = await dispatchLeadData(bookingRecord);
+  const dispatchResult = await dispatchLeadData(bookingRecord);
 
   if (formBox) formBox.style.display = "none";
   if (successBox) successBox.style.display = "block";
 
-  if (delivered && statusMsg) {
+  if (dispatchResult.delivered && statusMsg) {
     statusMsg.innerHTML = `Ihre Terminanfrage wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${bookingRecord.id}</strong>). Ich prüfe Ihre Angaben persönlich und melde mich binnen 24 Stunden an Werktagen bei Ihnen.`;
-  } else {
+  } else if (statusMsg) {
+    statusMsg.innerHTML = `<strong>Direktübermittlung erforderlich:</strong> Ihre Angaben wurden mit Referenz <strong style="color: var(--color-mint); font-family: var(--font-mono);">${bookingRecord.id}</strong> erfasst. Bitte klicken Sie unten auf <em>'Terminanfrage jetzt per E-Mail absenden'</em> oder senden Sie eine E-Mail direkt an <a href="mailto:dev@nevioniebel.tech" style="color: var(--color-mint);">dev@nevioniebel.tech</a>.`;
     try { window.location.href = mailtoUrl; } catch (err) {}
   }
 }
@@ -1430,14 +1476,15 @@ async function handleContactSubmit(e) {
   if (refCodeEl) refCodeEl.textContent = contactRecord.id;
   if (mailtoBtn) mailtoBtn.href = mailtoUrl;
 
-  const delivered = await dispatchLeadData(contactRecord);
+  const dispatchResult = await dispatchLeadData(contactRecord);
 
   if (formBox) formBox.style.display = "none";
   if (successBox) successBox.style.display = "block";
 
-  if (delivered && statusMsg) {
+  if (dispatchResult.delivered && statusMsg) {
     statusMsg.innerHTML = `Ihre Nachricht wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${contactRecord.id}</strong>). Ich melde mich innerhalb von 24 Stunden an Werktagen persönlich bei Ihnen.`;
-  } else {
+  } else if (statusMsg) {
+    statusMsg.innerHTML = `<strong>Direktübermittlung erforderlich:</strong> Ihre Nachricht wurde mit Referenz <strong style="color: var(--color-mint); font-family: var(--font-mono);">${contactRecord.id}</strong> erfasst. Bitte klicken Sie unten auf <em>'Nachricht jetzt per E-Mail absenden'</em> oder schreiben Sie direkt an <a href="mailto:dev@nevioniebel.tech" style="color: var(--color-mint);">dev@nevioniebel.tech</a>.`;
     try { window.location.href = mailtoUrl; } catch (err) {}
   }
 }
