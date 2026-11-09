@@ -1413,6 +1413,7 @@ window.downloadAuditReport = downloadAuditReport;
 window.handleAuditLeadSubmit = handleAuditLeadSubmit;
 window.handlePortalBookingSubmit = handlePortalBookingSubmit;
 window.handleContactSubmit = handleContactSubmit;
-window.executeTerminalCommand = executeTerminalCommand;
+window.executeCliCommand = executeCliCommand;
+window.executeTerminalCommand = executeCliCommand;
 window.getCurrentDataset = () => typeof currentDataset !== "undefined" ? currentDataset : null;
 window.getCleanedContent = () => typeof cleanedDatasetContent !== "undefined" ? cleanedDatasetContent : null;
