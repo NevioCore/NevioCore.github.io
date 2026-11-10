@@ -15,10 +15,12 @@
 - **Großhandel & B2B-Vertrieb**: Automatische Validierung und Normalisierung von Kundendateien, Beseitigung von Dubletten, Standardisierung von Rufnummern (E.164) und Adressen.
 
 ## Pakete & Preismodelle
-1. **Script Automation (350 € einmalig)**: Einmalige Extraktion, Skriptbereinigung oder Parser. Lieferzeit 24–48 Stunden, 14 Tage Support. (https://nevioniebel.tech/pricing.html)
-2. **B2B Data Pipeline (850 € einmalig)**: Schlüsselfertige Ingestion-Pipeline mit Datenbank-Upsert (PostgreSQL/SQLite), Multi-Source-Crawling, Slack/E-Mail-Reports, Docker-Container und 30 Tage Wartungsgarantie. (https://nevioniebel.tech/pricing.html)
-3. **Wartungs-Retainer (190 € / Monat)**: Monitoring von Crawlern und APIs, zügige Anpassung bei Web-Layout-Änderungen an Werktagen, bis zu 5 Entwicklerstunden inklusive, monatlich kündbar. (https://nevioniebel.tech/pricing.html)
-4. **Individuelles Consulting & Entwicklung (95,00 € / Std.)**: Transparente B2B-Abrechnung auf Rechnung.
+1. **Paket 1: Datenprüfung & Bereinigung (350 € Festpreis)**: Browser-Audit & tiefe Bereinigung von CSV/JSON/Excel-Datenbeständen, SHA-256 Deduplizierung, UTF-8-Reparatur, Adress- und Rufnummern-Normalisierung nach RFC 4180 und OWASP. Lieferzeit 24–48h. (https://nevioniebel.tech/pricing.html)
+2. **Paket 2: Routine-Automatisierung (ab 450 € Festpreis)**: Skriptbasierte Automatisierung wiederkehrender Aufgaben (Rechnungsversand, PDF-Generierung, Report-Erstellung, Datenextraktion). Lieferzeit 3–5 Werktage. (https://nevioniebel.tech/pricing.html)
+3. **Paket 3: Schnittstellen & Systeme verbinden (ab 850 € Festpreis)**: Schlüsselfertige Ingestion-Pipeline mit Datenbank-Upsert (PostgreSQL/SQLite), Multi-Source-Konnektoren (REST/Webhook), Fehlerbehandlung mit Exponential Backoff, Docker-Container und 30 Tage Funktionsgarantie. (https://nevioniebel.tech/pricing.html)
+4. **Paket 4: Individuelle Softwareentwicklung (95,00 € / Std.)**: Maßgeschneiderte Full-Stack- und Backend-Entwicklung, Microservices mit FastAPI/Node.js, flexible Sprint- und Stundenabrechnung mit minutengenauer Zeiterfassung. (https://nevioniebel.tech/pricing.html)
+5. **Retainer: Wartung & laufende Betreuung (ab 190 € / Monat)**: Kontinuierliches Monitoring von Datenströmen und APIs, proaktive Behebung von Formatbrüchen, bis zu 3 Stunden monatlich inklusive, monatlich kündbar. (https://nevioniebel.tech/pricing.html)
+6. **Consulting & Erstgespräch (Kostenlos / 95 € / Std.)**: 30-minütige Machbarkeitsanalyse via Videocall unverbindlich und kostenfrei. Vertiefende Architektur-Reviews auf Stundenbasis. (https://nevioniebel.tech/booking.html)
 
 ## Qualitätsstandards & Arbeitsweise
 - **DSGVO-orientiert**: Lokale Datenverarbeitung, Einhaltung deutscher und europäischer Datenschutzstandards.

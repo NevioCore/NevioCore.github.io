@@ -78,7 +78,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <link rel="stylesheet" href="style.css?v=6.0">
 </head>
 <body class="site-body">
 
@@ -105,104 +105,62 @@
   </header>
 
   <main>
-    <!-- Hero Section -->
+    <!-- Hero Section (Clean, Authoritative Typography Layout - No Code Cards, No 3D Overkill) -->
     <section class="hero-section">
       <div class="container">
-        <div class="hero-grid">
+        <div class="hero-content-single">
           
-          <div class="hero-text">
-            <span class="hero-studio-tag" style="display: inline-block; padding: 0.35rem 0.85rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 2rem; font-size: 0.8rem; font-weight: 500; color: var(--color-mint); margin-bottom: 1.5rem; letter-spacing: 0.02em;">
-              Softwareentwicklung &amp; Automatisierung • Salzgitter, Region Braunschweig &amp; Remote DACH
-            </span>
-
-            <h1 class="hero-title">
-              Schluss mit manueller Fleißarbeit:<br>
-              <span class="highlight-mint">Wir automatisieren Ihre Datenflüsse</span><br>
-              einfach, präzise und wartungsarm.
-            </h1>
-
-            <p class="hero-subtitle">
-              Von der automatischen Rechnungsübernahme bis zur direkten Synchronisation zwischen Webshop, Buchhaltung und Warenwirtschaft: Wir programmieren maßgeschneiderte Software-Schnittstellen, die Ihrem Team jede Woche Stunden an manueller Fleißarbeit sparen. Handwerklich sauber programmiert, testgetrieben abgesichert und schlüsselfertig übergeben.
-            </p>
-
-            <div class="hero-actions">
-              <a href="booking.html" class="btn btn-primary btn-lg">
-                <span>Erstgespräch vereinbaren</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-              <a href="#terminal-demo" class="btn btn-secondary btn-lg">
-                <span>Interaktive Demo testen ↓</span>
-              </a>
-            </div>
-
-            <!-- Trust Badges Strip with Clean SVG Icons -->
-            <div class="trust-strip">
-              <div class="trust-badge">
-                <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <div>
-                  <strong>DSGVO-orientiert</strong>
-                  <small>Deutsche Datenschutzstandards</small>
-                </div>
-              </div>
-              <div class="trust-badge">
-                <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <div>
-                  <strong>Sorgfältig getestet</strong>
-                  <small>Pytest &amp; strukturierte Validierung</small>
-                </div>
-              </div>
-              <div class="trust-badge">
-                <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <div>
-                  <strong>Schnelle Reaktionszeit</strong>
-                  <small>Verlässlicher persönlicher Kontakt</small>
-                </div>
-              </div>
-              <div class="trust-badge">
-                <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <div>
-                  <strong>Direkter Entwicklerkontakt</strong>
-                  <small>Nevio Niebel (Salzgitter / Region Braunschweig)</small>
-                </div>
-              </div>
-            </div>
-
+          <div class="hero-studio-tag">
+            Nevio Niebel • Softwareentwickler &amp; Automatisierung • Salzgitter, Region Braunschweig &amp; Remote DACH
           </div>
 
-          <!-- Hero Live Engineering Studio Preview -->
-          <div class="hero-visual-frame" style="background: linear-gradient(180deg, #071518 0%, #03080a 100%); border: 1px solid var(--color-border); border-radius: 1.25rem; overflow: hidden; box-shadow: var(--shadow-cyber);">
-            <div style="background: #0d1f23; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between;">
-              <div style="display: flex; gap: 0.45rem; align-items: center;">
-                <span style="width: 11px; height: 11px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
-                <span style="width: 11px; height: 11px; border-radius: 50%; background: #eab308; display: inline-block;"></span>
-                <span style="width: 11px; height: 11px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
-                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-secondary); margin-left: 0.5rem;">sync_backend.py — Python &amp; SQLite Sync</span>
-              </div>
-              <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-mint); background: rgba(94, 255, 136, 0.1); padding: 0.2rem 0.5rem; border-radius: 0.3rem;">CODEBEISPIEL</span>
-            </div>
+          <h1 class="hero-title">
+            Ich automatisiere wiederkehrende Aufgaben <br class="hero-br">
+            und verbinde Ihre Software.
+          </h1>
 
-            <div style="padding: 1.5rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.7; color: #e2e8f0;">
-              <div><span style="color: #38bdf8;">import</span> hashlib, sqlite3, json</div>
-              <div><span style="color: #38bdf8;">from</span> datetime <span style="color: #38bdf8;">import</span> datetime</div>
-              <div style="color: var(--color-text-muted); margin: 0.4rem 0;"># Deterministische Idempotenz &amp; strukturierte Transaktion</div>
-              <div><span style="color: #f43f5e;">def</span> <span style="color: #a78bfa;">sync_record</span>(db: sqlite3.Connection, payload: dict):</div>
-              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">digest</span> = hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:16]</div>
-              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">cur</span> = db.execute(<span style="color: #a78bfa;">"SELECT payload_hash FROM sync_log WHERE id = ?"</span>, (payload[<span style="color: #a78bfa;">'id'</span>],))</div>
-              <div style="padding-left: 1.25rem;"><span style="color: #38bdf8;">if</span> cur.fetchone() == (digest,): <span style="color: #38bdf8;">return</span> <span style="color: #a78bfa;">"idempotent_skip"</span></div>
-              <div style="padding-left: 1.25rem;">db.execute(<span style="color: #a78bfa;">"INSERT OR REPLACE INTO sync_log VALUES (?, ?, ?)"</span>, (payload[<span style="color: #a78bfa;">'id'</span>], digest, datetime.utcnow().isoformat()))</div>
-              
-              <div style="margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; border-radius: 0.35rem; font-size: 0.75rem;">
-                <span style="color: var(--color-mint); font-weight: 700;">✓ Echte Verifikation: 5/5 Unittests bestanden (samples/fastapi_database_sync_sample.py)</span><br>
-                <span style="color: var(--color-text-secondary);">Idempotente Datenspeicherung • SHA-256 Hashing • Standardbibliothek &amp; SQLite</span>
+          <p class="hero-subtitle">
+            Schluss mit Copy-Paste, fehlerhaften Tabellen und manuellen Zwischenschritten. Ich programmiere schlanke Schnittstellen und Daten-Pipelines, die Ihrem Team jede Woche Stunden an Routinearbeit abnehmen. Handwerklich sauber gebaut, testgetrieben abgesichert und schlüsselfertig übergeben.
+          </p>
+
+          <div class="hero-actions">
+            <a href="booking.html" class="btn btn-primary btn-lg">
+              <span>Projekt unverbindlich anfragen</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#terminal-demo" class="btn btn-secondary btn-lg">
+              <span>Eigene Datei kostenlos prüfen ↓</span>
+            </a>
+          </div>
+
+          <!-- Trust Badges Strip with Clean SVG Icons -->
+          <div class="trust-strip">
+            <div class="trust-badge">
+              <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div>
+                <strong>DSGVO-orientiert</strong>
+                <small>Deutsche Datenschutzstandards &amp; lokale Datenhaltung</small>
               </div>
             </div>
-
-            <div class="visual-badge" style="background: rgba(3, 8, 10, 0.95); border-top: 1px solid var(--color-border); padding: 0.85rem 1.25rem;">
-              <div style="font-weight: 600; color: var(--color-text-primary); font-size: 0.85rem;">
-                Nevio Waldemar Niebel • Software Engineering Studio
+            <div class="trust-badge">
+              <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <div>
+                <strong>Sorgfältig getestet</strong>
+                <small>Automatisierte Pytest-Unittests für jeden Datenstrom</small>
               </div>
-              <div style="color: var(--color-text-secondary); font-size: 0.75rem; margin-top: 0.2rem;">
-                Salzgitter (Region Braunschweig) • Deutschlandweit &amp; DACH Remote
+            </div>
+            <div class="trust-badge">
+              <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <div>
+                <strong>Schnelle Reaktionszeit</strong>
+                <small>Persönliche Rückmeldung an Werktagen binnen 24h</small>
+              </div>
+            </div>
+            <div class="trust-badge">
+              <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <div>
+                <strong>Direkter Entwicklerkontakt</strong>
+                <small>Nevio Niebel (Salzgitter / Region Braunschweig)</small>
               </div>
             </div>
           </div>
@@ -211,14 +169,14 @@
       </div>
     </section>
 
-    <!-- Interactive Data & Automation Labor (3 Strictly Separated Tabs) -->
+    <!-- Interactive Data Lab (2 Strictly Separated Modes: File Audit vs. Automation Demo) -->
     <section id="terminal-demo" class="section section-dark">
       <div class="container">
         <div class="section-header">
           <span class="section-tag">Interaktives Datenlabor</span>
           <h2 class="section-title">Echtes Handwerk: Erleben Sie, wie wir Daten bereinigen</h2>
           <p class="section-subtitle">
-            Keine leeren Versprechungen: Testen Sie unsere Datenverarbeitungs- und Automatisierungslogik direkt im Browser. Wählen Sie ein Szenario, prüfen Sie eine eigene Datei oder nutzen Sie die Entwicklerkonsole.
+            Keine leeren Versprechungen: Prüfen Sie Ihre eigene Datei direkt clientseitig im Browser auf Dubletten und Zeichensatzfehler, oder betrachten Sie konkrete Automatisierungsbeispiele im Vorher-Nachher-Vergleich.
           </p>
         </div>
 
@@ -237,125 +195,41 @@
               <span class="terminal-badge" id="terminal-status-badge">Bereit</span>
             </div>
 
-            <!-- Mode Switcher Tabs (3 Distinct Functional Modes) -->
+            <!-- Mode Switcher Tabs (2 Strictly Separated Functional Modes) -->
             <div class="terminal-mode-bar" role="tablist">
-              <button class="terminal-mode-btn active" id="tab-mode-scenarios" role="tab" aria-selected="true" onclick="switchTerminalMode('scenarios')">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                <span>1. Lösungen erleben</span>
-              </button>
-              <button class="terminal-mode-btn" id="tab-mode-audit" role="tab" aria-selected="false" onclick="switchTerminalMode('audit')">
+              <button class="terminal-mode-btn active" id="tab-mode-audit" role="tab" aria-selected="true" onclick="switchTerminalMode('audit')">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                <span>2. Kostenloser Daten-Audit (Drag &amp; Drop)</span>
+                <span>1. Eigene Datei prüfen (Kostenloser Audit)</span>
               </button>
-              <button class="terminal-mode-btn" id="tab-mode-cli" role="tab" aria-selected="false" onclick="switchTerminalMode('cli')">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-                <span>3. Entwicklerkonsole</span>
+              <button class="terminal-mode-btn" id="tab-mode-demo" role="tab" aria-selected="false" onclick="switchTerminalMode('demo')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>2. Automatisierung ansehen [DEMO-SIMULATION]</span>
               </button>
             </div>
 
             <!-- ======================================================== -->
-            <!-- VIEW 1: LÖSUNGEN ERLEBEN (SCENARIOS & PLAIN EXPLANATIONS)-->
+            <!-- MODE 1: KOSTENLOSER DATEN-AUDIT (REAL CLIENT-SIDE ENGINE) -->
             <!-- ======================================================== -->
-            <div id="view-scenarios" class="terminal-view-panel">
-              
-              <!-- Scenario Selector Bar -->
-              <div class="scenario-selector-bar">
-                <button class="scenario-tab-btn active" data-scenario="invoicing" onclick="playScenario('invoicing')">
-                  <span>📄 1. Rechnungen &amp; Belege</span>
-                </button>
-                <button class="scenario-tab-btn" data-scenario="dataclean" onclick="playScenario('dataclean')">
-                  <span>🧹 2. Datenbereinigung</span>
-                </button>
-                <button class="scenario-tab-btn" data-scenario="crmsync" onclick="playScenario('crmsync')">
-                  <span>📋 3. Kunden &amp; Aufträge</span>
-                </button>
-                <button class="scenario-tab-btn" data-scenario="apisync" onclick="playScenario('apisync')">
-                  <span>🔄 4. Systemintegration</span>
-                </button>
-                <button class="scenario-tab-btn" data-scenario="reporting" onclick="playScenario('reporting')">
-                  <span>📊 5. Automatische Reports</span>
-                </button>
-              </div>
-
-              <!-- Scenario Details Container -->
-              <div class="scenario-display-box">
-                <div class="scenario-meta-row">
-                  <div>
-                    <span class="badge badge-mint" id="scenario-detail-badge">Paket A • Büroarbeit automatisieren</span>
-                    <h3 class="scenario-heading" id="scenario-detail-title">Rechnungs- &amp; Dokumentenverarbeitung</h3>
-                    <p class="scenario-tagline" id="scenario-detail-tagline">Eingehende Rechnungen &amp; PDF-Belege fehlerfrei auslesen und buchen</p>
-                  </div>
-                </div>
-
-                <!-- Step by step visual process animation -->
-                <div class="scenario-steps-container" id="scenario-steps-container">
-                  <!-- Steps injected via app.js -->
-                </div>
-
-                <!-- Plain Language Human Explanation Cards Grid -->
-                <div class="scenario-explanation-grid">
-                  <div class="scenario-exp-card">
-                    <div class="exp-icon">❌</div>
-                    <h4>Das Problem im Alltag</h4>
-                    <p id="scenario-plain-problem">Mitarbeiter tippen jede Woche dutzende Rechnungen von Hand ab. Ein Zahlendreher führt zu falschen Überweisungen oder Fehlern in der Umsatzsteuervoranmeldung.</p>
-                  </div>
-                  <div class="exp-card-arrow">→</div>
-                  <div class="scenario-exp-card">
-                    <div class="exp-icon">⚙️</div>
-                    <h4>Unsere Lösung</h4>
-                    <p id="scenario-plain-solution">Eine schlanke Python-Pipeline liest die Belege in Sekundenbruchteilen aus, prüft die Rechenwege und bereitet die Buchungssätze vor.</p>
-                  </div>
-                  <div class="exp-card-arrow">→</div>
-                  <div class="scenario-exp-card">
-                    <div class="exp-icon">🎯</div>
-                    <h4>Ihr konkreter Nutzen</h4>
-                    <p id="scenario-plain-benefit">Bis zu 80% Zeitersparnis bei der vorbereitenden Buchhaltung, null Tippfehler und sofortige Übersicht über alle offenen Posten.</p>
-                  </div>
-                </div>
-
-                <!-- Technical Details Toggle -->
-                <div style="margin-top: 1.5rem; text-align: center;">
-                  <button type="button" class="btn btn-outline btn-sm" id="scenario-tech-toggle-btn" onclick="toggleScenarioTechDetails()">
-                    ▼ Technische Details &amp; Architektur anzeigen
-                  </button>
-                </div>
-
-                <div class="scenario-tech-details" id="scenario-tech-details" style="display: none;">
-                  <div class="tech-detail-box">
-                    <strong>Eingesetzte Technologien &amp; Standards:</strong>
-                    <p style="margin: 0.5rem 0 0 0; color: var(--color-text-secondary); font-size: 0.85rem; font-family: var(--font-mono);">
-                      Python 3.12 (Standardbibliothek-First) • Pydantic v2 Typvalidierung • PyPDF / pdfplumber • RFC 4180 CSV / DATEV-Format • SHA-256 Deduplizierung • Pytest Testabdeckung • Docker Container
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-
-            <!-- ======================================================== -->
-            <!-- VIEW 2: KOSTENLOSER DATEN-AUDIT (REAL IN-BROWSER ENGINE) -->
-            <!-- ======================================================== -->
-            <div id="view-audit" class="terminal-view-panel" style="display: none;">
+            <div id="view-audit" class="terminal-view-panel" style="display: block;">
               
               <!-- Dropzone -->
               <div class="audit-dropzone" id="audit-dropzone" onclick="triggerFileInput()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
                 <div class="dropzone-svg-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                 </div>
                 <div class="dropzone-title">CSV-, TSV-, JSON- oder Textdatei hier hineinziehen oder klicken</div>
                 <div class="dropzone-desc">
-                  Max. 25 MB. Unterstützt deutsche und internationale Zahlenformate, Trennzeichen in Anführungszeichen und multiline Datensätze.
+                  Max. 25 MB. Unterstützt deutsche und internationale Zahlenformate, Trennzeichen in Anführungszeichen und mehrzeilige Datensätze.
                 </div>
                 <div class="dropzone-privacy-pill">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  <span>Sicher &amp; Lokal: Die Analyse erfolgt clientseitig in Ihrem Webbrowser ohne Speicherung auf externen Servern.</span>
+                  <span>100% Sicher &amp; Lokal: Die Analyse erfolgt vollständig clientseitig in Ihrem Browser ohne Speicherung auf externen Servern.</span>
                 </div>
                 <input type="file" id="audit-file-input" accept=".csv,.tsv,.json,.txt" style="display: none;" onchange="handleFileSelect(event)">
                 
                 <div style="margin-top: 1.25rem;">
                   <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); loadSampleDataset();">
-                    🧪 Beispieldatei laden (Musterkatalog Großhandel mit typischen Fehlern)
+                    🧪 Großhandels-Musterkatalog laden (14 Zeilen mit typischen Datenfehlern)
                   </button>
                 </div>
               </div>
@@ -374,8 +248,8 @@
                 
                 <div class="audit-results-header">
                   <div>
-                    <span class="badge badge-success">✓ Audit abgeschlossen</span>
-                    <h3 style="font-size: 1.4rem; margin: 0.5rem 0 0.2rem 0;" id="audit-res-filename">Dateiname.csv</h3>
+                    <span class="badge badge-success">✓ Analyse abgeschlossen</span>
+                    <h3 style="font-size: 1.35rem; margin: 0.5rem 0 0.2rem 0;" id="audit-res-filename">Dateiname.csv</h3>
                     <p style="color: var(--color-text-secondary); font-size: 0.85rem; margin: 0;" id="audit-res-rowcount">0 Zeilen analysiert</p>
                   </div>
                   <button type="button" class="btn btn-outline btn-sm" onclick="resetAuditDropzone()">
@@ -388,17 +262,17 @@
                   <div class="audit-metric-card">
                     <div class="metric-num text-warn" id="audit-metric-dupes">0</div>
                     <div class="metric-lbl">Redundante Dubletten (SHA-256)</div>
-                    <small>Identische Datensätze unter unterschiedlichen IDs</small>
+                    <small>Identische Datensätze unter abweichenden Artikelnummern</small>
                   </div>
                   <div class="audit-metric-card">
                     <div class="metric-num text-danger" id="audit-metric-encoding">0</div>
                     <div class="metric-lbl">Korrumpierte Umlaute &amp; Zeichen</div>
-                    <small>UTF-8 / ISO Zeichensatzfehler (z.B. 'MÃ¼ller')</small>
+                    <small>UTF-8 / ISO Zeichensatzfehler (z. B. 'MÃ¼ller' statt 'Müller')</small>
                   </div>
                   <div class="audit-metric-card">
                     <div class="metric-num text-warn" id="audit-metric-phones">0</div>
                     <div class="metric-lbl">Inkonsistente Telefonnummern</div>
-                    <small>Nicht nach E.164 Standard formatiert</small>
+                    <small>Nicht nach internationalem E.164-Standard formatiert</small>
                   </div>
                   <div class="audit-metric-card">
                     <div class="metric-num text-info" id="audit-metric-missing">0</div>
@@ -411,7 +285,7 @@
                 <div class="audit-roi-card">
                   <div class="roi-calc-header">
                     <h4>⏱️ Berechneter manueller Zeitaufwand &amp; Kostenverschwendung</h4>
-                    <span class="badge badge-outline">Transparente Kalkulation</span>
+                    <span class="badge badge-outline">Transparente Modellrechnung</span>
                   </div>
                   <div class="roi-calc-grid">
                     <div>
@@ -428,10 +302,10 @@
                     </div>
                   </div>
                   <div class="roi-note">
-                    <strong>Hinweis zu den Zahlen:</strong> Die Fehleranzahl entspricht den exakt gemessenen Datenqualitätsproblemen in Ihrer Datei. Der Zeitaufwand beruht auf einer vorsichtigen, transparenten Schätzung von durchschnittlich 2 Minuten manuellem Korrekturaufwand pro Fehlerfall (Recherche, Korrektur und Rücksprache).
+                    <strong>Hinweis zur Berechnung:</strong> Die Fehleranzahl entspricht den exakt gemessenen Datenproblemen in Ihrer Datei. Der Zeitaufwand basiert auf einem vorsichtigen Richtwert von durchschnittlich 2 Minuten Recherche und manuellem Korrekturaufwand pro Fehlerfall.
                   </div>
                   <div id="audit-sample-note" style="display: none; margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-mint);">
-                    ℹ️ Hinweis zum Musterdatensatz: Zeigt 14 repräsentative Katalogzeilen mit typischen Datenfehlern aus dem deutschen Großhandel.
+                    ℹ️ Musterdatensatz: Zeigt 14 repräsentative Katalogzeilen mit typischen Zeichensatz- und Dublettenfehlern aus dem deutschen Großhandel.
                   </div>
                 </div>
 
@@ -476,7 +350,7 @@
                       <div class="form-group form-check" style="margin-top: 0.75rem;">
                         <input type="checkbox" id="audit-lead-consent" required>
                         <label for="audit-lead-consent" style="font-size: 0.8rem; color: var(--color-text-secondary);">
-                          Ich willige ein, dass Nevio Niebel meine Angaben zur Beantwortung dieser Anfrage speichert und verarbeitet. Kein Newsletter, kein Spam. Widerruf jederzeit möglich. (<a href="legal.html#datenschutz" target="_blank" style="color: var(--color-mint);">Datenschutz</a>)
+                          Ich willige ein, dass Nevio Niebel meine Angaben zur Beantwortung dieser Anfrage verarbeitet. Kein Newsletter, kein Spam. Widerruf jederzeit möglich. (<a href="legal.html#datenschutz" target="_blank" style="color: var(--color-mint);">Datenschutz</a>)
                         </label>
                       </div>
                       <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">
@@ -517,35 +391,91 @@
             </div>
 
             <!-- ======================================================== -->
-            <!-- VIEW 3: ENTWICKLERKONSOLE (FULL CLI COMMAND LINE)         -->
+            <!-- MODE 2: AUTOMATISIERUNG ANSEHEN [DEMO-SIMULATION]        -->
             <!-- ======================================================== -->
-            <div id="view-cli" class="terminal-view-panel" style="display: none;">
+            <div id="view-demo" class="terminal-view-panel" style="display: none;">
               
-              <!-- CLI Output Screen -->
-              <div class="cli-screen" id="cli-screen">
-                <div class="cli-line"><span class="prompt-user">gast@besucher</span>:<span class="prompt-path">~/labor</span>$ <span class="text-cmd">help</span></div>
-                <div class="cli-line text-log">[INFO] Interaktive Entwicklerkonsole aktiv.</div>
-                <div class="cli-line text-log">[INFO] Tippen Sie 'sample' zum Laden von Testdaten, 'audit' zum Prüfen oder 'clean' zur Bereinigung.</div>
+              <div style="text-align: center; margin-bottom: 2rem;">
+                <span class="badge badge-mint" style="font-size: 0.75rem;">[DEMO-SIMULATION]</span>
+                <h3 style="font-size: 1.4rem; margin-top: 0.5rem; margin-bottom: 0.4rem;">
+                  Vorher-Nachher-Vergleich: So entlastet Automatisierung Ihren Betrieb
+                </h3>
+                <p style="color: var(--color-text-secondary); font-size: 0.9rem; max-width: 640px; margin: 0 auto;">
+                  Hier sehen Sie 3 typische Alltagsszenarien aus mittelständischen Betrieben und wie eine schlanke Python-Lösung den manuellen Aufwand dauerhaft beseitigt.
+                </p>
               </div>
 
-              <!-- Quick Action Command Pills Bar (Exclusively in CLI tab!) -->
-              <div class="terminal-pills-bar">
-                <span class="pill-label">Schnellbefehle:</span>
-                <button type="button" class="quick-cmd-pill" onclick="executeCliCommand('help')">help</button>
-                <button type="button" class="quick-cmd-pill" onclick="executeCliCommand('sample')">sample</button>
-                <button type="button" class="quick-cmd-pill" onclick="executeCliCommand('audit')">audit</button>
-                <button type="button" class="quick-cmd-pill" onclick="executeCliCommand('clean')">clean</button>
-                <button type="button" class="quick-cmd-pill" onclick="executeCliCommand('summary')">summary</button>
-                <button type="button" class="quick-cmd-pill" onclick="executeCliCommand('duplicates')">duplicates</button>
-                <button type="button" class="quick-cmd-pill" onclick="executeCliCommand('roi')">roi</button>
-                <button type="button" class="quick-cmd-pill" onclick="executeCliCommand('clear')">clear</button>
+              <!-- 3 Workflow Comparison Cards -->
+              <div class="demo-workflows-grid">
+                
+                <!-- Card 1: Invoicing -->
+                <div class="demo-workflow-card">
+                  <div class="demo-workflow-header">
+                    <span class="demo-tag">Szenario 1 • Büro &amp; Buchhaltung</span>
+                    <h4>Rechnungen &amp; PDF-Belege verarbeiten</h4>
+                  </div>
+                  <div class="demo-comparison-box">
+                    <div class="demo-side demo-before">
+                      <div class="side-label text-danger">❌ Bisher (Manuell)</div>
+                      <p>Mitarbeiter öffnen jede PDF-Rechnung einzeln, tippen Beträge, USt-IdNr. und Rechnungsnummern von Hand in das Buchhaltungsprogramm ab. Tippfehler führen zu falschen Überweisungen.</p>
+                    </div>
+                    <div class="demo-side demo-after">
+                      <div class="side-label text-mint">⚙️ Automatisiert</div>
+                      <p>Ein Hintergrundskript scannt das Rechnungs-Postfach, liest alle Pflichtdaten nach § 14 UStG strukturiert aus, prüft Netto/MwSt/Brutto mathematisch und übergibt fertige DATEV-Buchungssätze.</p>
+                    </div>
+                  </div>
+                  <div class="demo-benefit-bar">
+                    <strong>Konkreter Nutzen:</strong> Bis zu 80% weniger Zeitaufwand in der vorbereitenden Buchhaltung, null Tippfehler.
+                  </div>
+                </div>
+
+                <!-- Card 2: Catalog Data -->
+                <div class="demo-workflow-card">
+                  <div class="demo-workflow-header">
+                    <span class="demo-tag">Szenario 2 • Handel &amp; Artikel</span>
+                    <h4>Großhändler-Kataloge &amp; Datanorm bereinigen</h4>
+                  </div>
+                  <div class="demo-comparison-box">
+                    <div class="demo-side demo-before">
+                      <div class="side-label text-danger">❌ Bisher (Manuell)</div>
+                      <p>Lieferanten senden Preislisten mit kaputten Umlauten (z. B. 'MÃ¼ller'), doppelten Artikeln und abweichenden Spalten. Vor dem Import in WaWi oder Shop müssen Tabellen stundenlang manuell repariert werden.</p>
+                    </div>
+                    <div class="demo-side demo-after">
+                      <div class="side-label text-mint">⚙️ Automatisiert</div>
+                      <p>Ein automatischer Validator prüft 5.000 Artikelzeilen in unter 2 Sekunden. SHA-256 Hashing filtert Dubletten kollisionsfrei heraus, Zeichensätze werden repariert und Preise standardisiert.</p>
+                    </div>
+                  </div>
+                  <div class="demo-benefit-bar">
+                    <strong>Konkreter Nutzen:</strong> Stets aktuelle Preise im System, keine Falschbestellungen, null manuelle Tabellenarbeit.
+                  </div>
+                </div>
+
+                <!-- Card 3: API Integration -->
+                <div class="demo-workflow-card">
+                  <div class="demo-workflow-header">
+                    <span class="demo-tag">Szenario 3 • Systemintegration</span>
+                    <h4>Webshop, WaWi &amp; CRM synchronisieren</h4>
+                  </div>
+                  <div class="demo-comparison-box">
+                    <div class="demo-side demo-before">
+                      <div class="side-label text-danger">❌ Bisher (Manuell)</div>
+                      <p>Programme arbeiten isoliert. Bestellungen aus dem Webshop (Shopware/Shopify) müssen manuell in die Warenwirtschaft übertragen werden. Bestände weichen ab, Lieferungen verzögern sich.</p>
+                    </div>
+                    <div class="demo-side demo-after">
+                      <div class="side-label text-mint">⚙️ Automatisiert</div>
+                      <p>Ein asynchroner FastAPI-Konnektor verbindet die Systeme über sichere Webhooks. Eingehende Aufträge werden in Millisekunden transaktionssicher verbucht – inklusive automatischem Retry bei Netzausfall.</p>
+                    </div>
+                  </div>
+                  <div class="demo-benefit-bar">
+                    <strong>Konkreter Nutzen:</strong> Schnellere Auftragsabwicklung, keine Doppelarbeiten, verlässliche Bestände in Echtzeit.
+                  </div>
+                </div>
+
               </div>
 
-              <!-- CLI Input Bar (Exclusively in CLI tab!) -->
-              <div class="terminal-cli-bar">
-                <span class="prompt-user">gast@besucher</span>:<span class="prompt-path">~/labor</span>$&nbsp;
-                <input type="text" id="terminal-cli-input" class="terminal-cli-input" placeholder="Befehl eingeben (z.B. 'help', 'sample', 'audit', 'clean', 'roi')..." onkeydown="handleCliKeyDown(event)">
-                <button type="button" class="terminal-cli-submit" onclick="submitCliCommand()">Ausführen ↵</button>
+              <!-- Tech Details Note -->
+              <div style="margin-top: 1.5rem; text-align: center; padding: 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0.75rem; font-size: 0.85rem; color: var(--color-text-secondary);">
+                <span>🛠️ <strong>Echte Code-Basis:</strong> Python 3 (Standardbibliothek-First) • FastAPI • SQLite / PostgreSQL • Pytest abgesichert. Belegbare Referenz: <code style="color: var(--color-mint);">samples/fastapi_database_sync_sample.py</code> (5/5 Unittests bestanden).</span>
               </div>
 
             </div>
@@ -556,29 +486,29 @@
           <div class="terminal-offer-card" id="terminal-offer-card">
             <div class="offer-info">
               <div class="offer-header">
-                <span class="offer-badge" id="offer-badge">Schlüsselfertig • 24–48h Prototyp</span>
+                <span class="offer-badge" id="offer-badge">Paket 1 • Schnelle Ergebnisse</span>
               </div>
-              <h3 class="offer-title" id="offer-title">Rechnungs- &amp; Dokumentenverarbeitung</h3>
+              <h3 class="offer-title" id="offer-title">Datenprüfung &amp; Bereinigung</h3>
               <p class="offer-desc" id="offer-desc">
-                Automatische Extraktion von Rechnungsbeträgen, IBAN, USt-IdNr. und Positionen aus PDFs oder E-Mails. Übergabe direkt an Ihr Buchhaltungsprogramm (DATEV, sevdesk) oder ERP.
+                Einmalige Analyse und Bereinigung fehlerhafter Datensätze, Adressbestände oder Artikelkataloge. Inklusive ausführlichem Prüfbericht, bereinigter CSV/Excel-Datei und konkreten Empfehlungen.
               </p>
               <ul class="offer-features" id="offer-features">
-                <li><span>✓</span> Automatischer Postfach-Scan oder Drag &amp; Drop Upload</li>
-                <li><span>✓</span> Strukturierte Extraktion aller Pflichtfelder nach § 14 UStG</li>
-                <li><span>✓</span> Plausibilitätsprüfung (Netto + MwSt = Brutto, IBAN-Prüfziffer)</li>
-                <li><span>✓</span> Direkter Export in CSV, Excel oder API-Übergabe an DATEV / sevdesk</li>
-                <li><span>✓</span> Spart 5 bis 15 Arbeitsstunden pro Woche im kaufmännischen Bereich</li>
+                <li><span>✓</span> Kollisionsfreie SHA-256 Deduplizierung über Datensatzmerkmale</li>
+                <li><span>✓</span> Vollständige Reparatur defekter Zeichensätze (UTF-8 / ISO-8859)</li>
+                <li><span>✓</span> Normalisierung von Telefonnummern (E.164) und Adressfeldern</li>
+                <li><span>✓</span> Neutralisierung potenzieller Formelinjektionen (OWASP-konform)</li>
+                <li><span>✓</span> Bereitstellung schlüsselfertiger, direkt importierbarer Daten</li>
               </ul>
             </div>
             
             <div class="offer-cta-box">
-              <div class="offer-price-tag" id="offer-price-tag">450 € – 850 €</div>
-              <div class="offer-price-sub" id="offer-price-sub">Festpreis (keine versteckten IT-Monatsknebel)</div>
-              <a href="booking.html?pkg=Paket+A:+Büroarbeit+automatisieren" class="btn btn-primary btn-block btn-lg" id="offer-cta-btn">
+              <div class="offer-price-tag" id="offer-price-tag">350 €</div>
+              <div class="offer-price-sub" id="offer-price-sub">Festpreis (schlüsselfertige Bereinigung)</div>
+              <a href="booking.html?pkg=Paket+1:+Datenprüfung+und+Bereinigung+(350+€)" class="btn btn-primary btn-block btn-lg" id="offer-cta-btn">
                 Jetzt unverbindlich anfragen →
               </a>
               <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--color-text-muted);">
-                50% Anzahlung per SEPA-Rechnung • 30 Tage Nachbesserungs- &amp; Zufriedenheitsgarantie
+                50% Anzahlung per SEPA-Rechnung • 30 Tage Nachbesserungsgarantie
               </div>
             </div>
           </div>
@@ -587,124 +517,131 @@
       </div>
     </section>
 
-    <!-- Productized Offerings (Pakete A - E) -->
+    <!-- Standardized Pricing & Packages Catalog (Pakete 1 - 4 + Retainer + Consulting) -->
     <section class="section">
       <div class="container">
         <div class="section-header">
           <span class="section-tag">Verständliche Dienstleistungen</span>
           <h2 class="section-title">Klare Lösungen für echte Unternehmen</h2>
           <p class="section-subtitle">
-            Keine unverständlichen IT-Fachbegriffe, sondern konkrete Entlastung für Ihren Geschäftsalltag. Wir lösen wiederkehrende Engpässe mit schlanker, maßgeschneiderter Software.
+            Keine unverständlichen IT-Fachbegriffe, sondern konkrete Entlastung für Ihren Geschäftsalltag. Wir lösen wiederkehrende Engpässe mit schlanker, maßgeschneiderter Software zu fairen Festpreisen.
           </p>
         </div>
 
-        <div class="solutions-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="solutions-grid">
           
-          <!-- Paket A -->
+          <!-- Paket 1 -->
           <div class="solution-card">
             <div class="solution-body">
-              <span class="solution-category">Paket A • Festpreis ab 450 €</span>
-              <h3 class="solution-title">Büroarbeit automatisieren</h3>
+              <span class="solution-category">Paket 1 • Festpreis</span>
+              <div class="solution-price">350 €</div>
+              <h3 class="solution-title">Datenprüfung &amp; Bereinigung</h3>
               <p class="solution-desc">
-                Regelmäßig anfallende Tabellen, E-Mails, Rechnungsdaten oder Lieferscheine automatisch erfassen und strukturieren. Schluss mit mühsamem Copy-Paste und Tippfehlern.
+                Einmalige Prüfung und Bereinigung fehlerhafter Datensätze, Adressbestände oder Artikelkataloge. Beseitigt Dubletten, defekte Umlaute und unvollständige Felder.
+              </p>
+              <div class="solution-tags">
+                <span>SHA-256 Dedupe</span>
+                <span>Umlaut-Korrektur</span>
+                <span>E.164 Telefon</span>
+                <span>CSV / Excel Export</span>
+              </div>
+              <a href="booking.html?pkg=Paket+1:+Datenprüfung+und+Bereinigung+(350+€)" class="btn btn-secondary btn-sm" style="margin-top: auto;">Paket 1 anfragen →</a>
+            </div>
+          </div>
+
+          <!-- Paket 2 -->
+          <div class="solution-card">
+            <div class="solution-body">
+              <span class="solution-category">Paket 2 • Festpreis</span>
+              <div class="solution-price">ab 450 €</div>
+              <h3 class="solution-title">Routine-Automatisierung</h3>
+              <p class="solution-desc">
+                Regelmäßig anfallende Büroaufgaben, Rechnungs-PDFs, E-Mail-Anhänge oder Tabellen automatisch erfassen und ablegen. Schluss mit manuellem Abtippen und Copy-Paste.
               </p>
               <div class="solution-tags">
                 <span>PDF-Extraktion</span>
-                <span>Excel / CSV</span>
-                <span>DATEV / ERP</span>
                 <span>Postfach-Scan</span>
+                <span>DATEV / sevdesk</span>
+                <span>Excel-Abgleiche</span>
               </div>
-              <a href="booking.html?pkg=Paket+A:+Büroarbeit+automatisieren" class="btn btn-secondary btn-sm" style="margin-top: auto;">Paket A anfragen →</a>
+              <a href="booking.html?pkg=Paket+2:+Routine-Automatisierung+(ab+450+€)" class="btn btn-secondary btn-sm" style="margin-top: auto;">Paket 2 anfragen →</a>
             </div>
           </div>
 
-          <!-- Paket B -->
-          <div class="solution-card">
+          <!-- Paket 3 (Featured) -->
+          <div class="solution-card solution-featured">
+            <div class="featured-tag">Beliebtes Paket</div>
             <div class="solution-body">
-              <span class="solution-category">Paket B • Festpreis ab 650 €</span>
-              <h3 class="solution-title">Website &amp; digitale Anfragen</h3>
+              <span class="solution-category">Paket 3 • Festpreis</span>
+              <div class="solution-price">ab 850 €</div>
+              <h3 class="solution-title">Schnittstellen &amp; Systeme verbinden</h3>
               <p class="solution-desc">
-                Professionelle Webauftritte, barrierearme Kontaktprozesse und automatische Vorqualifizierung von Kundenanfragen. Schnelle Ladezeiten, datenschutzkonform nach DSGVO-Standards.
+                Direkte Anbindung zwischen Webshop, Buchhaltung, CRM und Warenwirtschaft. Asynchrone REST-APIs, Webhooks, Dateisynchronisation und Docker-Setup.
               </p>
               <div class="solution-tags">
-                <span>Webauftritt</span>
-                <span>Kontakt-Funnel</span>
-                <span>Terminbuchung</span>
-                <span>SEO &amp; GEO</span>
-              </div>
-              <a href="booking.html?pkg=Paket+B:+Website+und+digitale+Kundenanfragen" class="btn btn-secondary btn-sm" style="margin-top: auto;">Paket B anfragen →</a>
-            </div>
-          </div>
-
-          <!-- Paket C -->
-          <div class="solution-card">
-            <div class="solution-body">
-              <span class="solution-category">Paket C • Festpreis ab 850 €</span>
-              <h3 class="solution-title">Kunden- &amp; Auftragsverwaltung</h3>
-              <p class="solution-desc">
-                Wiederkehrende Eingaben reduzieren, Kundenanfragen zentral bündeln und Auftragsfortschritte transparent nachverfolgen. Schlank und ohne teure Monats-Lizenzen pro Mitarbeiter.
-              </p>
-              <div class="solution-tags">
-                <span>Auftragsboard</span>
-                <span>Wiedervorlage</span>
-                <span>Lead-Tracking</span>
-                <span>E-Mail-Alerts</span>
-              </div>
-              <a href="booking.html?pkg=Paket+C:+Kunden-+und+Auftragsverwaltung" class="btn btn-secondary btn-sm" style="margin-top: auto;">Paket C anfragen →</a>
-            </div>
-          </div>
-
-          <!-- Paket D -->
-          <div class="solution-card">
-            <div class="solution-body">
-              <span class="solution-category">Paket D • Festpreis ab 850 €</span>
-              <h3 class="solution-title">Daten &amp; Systeme verbinden</h3>
-              <p class="solution-desc">
-                Schnittstellen, Dateisynchronisation, automatisierte Großhändler-Kataloge und sichere Daten-Pipelines. Verbindet Ihren Webshop, WaWi und externe Portale in Echtzeit.
-              </p>
-              <div class="solution-tags">
-                <span>FastAPI</span>
-                <span>Datanorm / CSV</span>
+                <span>FastAPI / Python</span>
                 <span>Webhooks</span>
-                <span>PostgreSQL</span>
+                <span>Shopware / WaWi</span>
+                <span>Docker Container</span>
               </div>
-              <a href="booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden" class="btn btn-secondary btn-sm" style="margin-top: auto;">Paket D anfragen →</a>
+              <a href="booking.html?pkg=Paket+3:+Schnittstellen+und+Systeme+verbinden+(ab+850+€)" class="btn btn-primary btn-sm" style="margin-top: auto;">Paket 3 anfragen →</a>
             </div>
           </div>
 
-          <!-- Paket E -->
+          <!-- Paket 4 -->
           <div class="solution-card">
             <div class="solution-body">
-              <span class="solution-category">Paket E • Retainer ab 190 €/Mo.</span>
-              <h3 class="solution-title">Wartung &amp; laufende Betreuung</h3>
+              <span class="solution-category">Paket 4 • Nach Aufwand</span>
+              <div class="solution-price">95 € <span style="font-size: 0.9rem; font-weight: normal; color: var(--color-text-secondary);">/ Std.</span></div>
+              <h3 class="solution-title">Individuelle Softwareentwicklung</h3>
               <p class="solution-desc">
-                Zuverlässiges Monitoring, schnelle Anpassung bei Schnittstellen-Änderungen und kontinuierliche Weiterentwicklung Ihrer Automatisierungen mit garantierten Reaktionszeiten.
+                Maßgeschneiderte Softwareentwicklung, Backend-Entwicklung, Refactoring von Altsystemen oder Code-Reviews für Ihr bestehendes Inhouse-Team.
               </p>
               <div class="solution-tags">
-                <span>Monitoring</span>
-                <span>Updates</span>
-                <span>Reaktionsgarantie</span>
-                <span>Monatlich kündbar</span>
-              </div>
-              <a href="booking.html?pkg=Paket+E:+Wartung+und+laufende+Betreuung" class="btn btn-secondary btn-sm" style="margin-top: auto;">Paket E anfragen →</a>
-            </div>
-          </div>
-
-          <!-- Individuelle Beratung -->
-          <div class="solution-card" style="border-color: rgba(94, 255, 136, 0.3);">
-            <div class="solution-body">
-              <span class="solution-category">Individuelle Entwicklung</span>
-              <h3 class="solution-title">Spezialprojekte &amp; Consulting</h3>
-              <p class="solution-desc">
-                Sie haben ein spezielles Software-Vorhaben, eine Altanwendung zum Refactoring oder benötigen erfahrene Unterstützung für Ihr Inhouse-Entwicklerteam?
-              </p>
-              <div class="solution-tags">
-                <span>95 € / Std.</span>
-                <span>Python / Backend</span>
+                <span>Python Backend</span>
                 <span>Code-Reviews</span>
+                <span>Architekturberatung</span>
                 <span>Salzgitter &amp; Remote</span>
               </div>
-              <a href="booking.html?pkg=Individuelle+Anfrage+/+Consulting+(95+€/h)" class="btn btn-primary btn-sm" style="margin-top: auto;">Projekt besprechen →</a>
+              <a href="booking.html?pkg=Paket+4:+Individuelle+Softwareentwicklung+(95+€/h)" class="btn btn-secondary btn-sm" style="margin-top: auto;">Projekt besprechen →</a>
+            </div>
+          </div>
+
+          <!-- Retainer -->
+          <div class="solution-card">
+            <div class="solution-body">
+              <span class="solution-category">Retainer • Monatlich kündbar</span>
+              <div class="solution-price">ab 190 € <span style="font-size: 0.9rem; font-weight: normal; color: var(--color-text-secondary);">/ Mo.</span></div>
+              <h3 class="solution-title">Wartung &amp; laufende Betreuung</h3>
+              <p class="solution-desc">
+                Zuverlässiges Monitoring, schnelle Anpassungen bei API-Änderungen und kontinuierliche Wartung Ihrer Automatisierungen mit verlässlicher Reaktionszeit.
+              </p>
+              <div class="solution-tags">
+                <span>Monitoring &amp; Pings</span>
+                <span>API-Updates</span>
+                <span>Monatlich kündbar</span>
+                <span>Feste Ansprechperson</span>
+              </div>
+              <a href="booking.html?pkg=Retainer:+Wartung+und+laufende+Betreuung+(ab+190+€/Mo.)" class="btn btn-secondary btn-sm" style="margin-top: auto;">Retainer anfragen →</a>
+            </div>
+          </div>
+
+          <!-- Spezialprojekte -->
+          <div class="solution-card">
+            <div class="solution-body">
+              <span class="solution-category">Consulting &amp; Beratung</span>
+              <div class="solution-price">Kostenlos</div>
+              <h3 class="solution-title">Unverbindliches Erstgespräch</h3>
+              <p class="solution-desc">
+                Sie möchten klären, ob sich eine Automatisierung für Ihren konkreten Fall rechnet? In 15 Minuten prüfen wir gemeinsam Machbarkeit und Wirtschaftlichkeit.
+              </p>
+              <div class="solution-tags">
+                <span>15 Min. Call</span>
+                <span>Ehrliche Einschätzung</span>
+                <span>Kein Verkaufsdruck</span>
+                <span>Transparenter Festpreis</span>
+              </div>
+              <a href="booking.html?pkg=Individuelle+Anfrage+/+Consulting+(95+€/h)" class="btn btn-primary btn-sm" style="margin-top: auto;">Termin reservieren →</a>
             </div>
           </div>
 
@@ -713,7 +650,7 @@
       </div>
     </section>
 
-    <!-- Interactive ROI & Amortization Calculator -->
+    <!-- Interactive ROI & Amortization Calculator (Clean 2-Column Layout, 5 Inputs) -->
     <section class="section section-dark">
       <div class="container">
         <div class="roi-calculator-box">
@@ -723,7 +660,7 @@
               Berechnen Sie das <span class="highlight-mint">Einsparpotenzial</span> für Ihren Betrieb
             </h2>
             <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
-              Wie viel Zeit und Geld bindet Ihr Team monatlich mit manueller Dateneingabe, Copy-Paste oder fehleranfälligen Tabellen? Schieben Sie die Regler für eine realistische Modellierung:
+              Wie viel Zeit und Geld bindet Ihr Team monatlich mit manueller Dateneingabe, Copy-Paste oder fehleranfälligen Tabellen? Schieben Sie die Regler für eine realistische Modellrechnung:
             </p>
           </div>
 
@@ -757,13 +694,13 @@
                 <small style="color: var(--color-text-muted); font-size: 0.8rem;">Verbleibende Prozent verbleiben als menschliche Stichproben- &amp; Ausnahmebehandlung</small>
               </div>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="roi-params-row">
                 <div class="roi-slider-group">
                   <div class="roi-slider-header">
                     <span style="font-size: 0.85rem;">Einmaliges Setup:</span>
                     <span class="roi-slider-val" id="roi-setup-val" style="font-size: 0.95rem;">850 €</span>
                   </div>
-                  <input type="range" min="400" max="2500" step="50" value="850" class="roi-range" id="roi-setup">
+                  <input type="range" min="350" max="2500" step="50" value="850" class="roi-range" id="roi-setup">
                 </div>
                 <div class="roi-slider-group">
                   <div class="roi-slider-header">
@@ -787,7 +724,7 @@
               </div>
               <div class="roi-stat-row">
                 <span class="roi-stat-label">Geschätzter Break-Even:</span>
-                <span class="roi-stat-val highlight" id="roi-breakeven-days">ca. 1,1 Monaten</span>
+                <span class="roi-stat-val highlight" id="roi-breakeven-days">ca. 1,1 Monate</span>
               </div>
               <div class="roi-stat-row" style="border-bottom: none; padding-bottom: 0;">
                 <span class="roi-stat-label">Geschätzte Netto-Ersparnis im 1. Jahr:</span>
@@ -798,8 +735,8 @@
                 * Modellrechnung basierend auf Ihren Annahmen, keine Erfolgsgarantie. Realistische Modellierung unter Berücksichtigung von Einrichtungs- und laufenden Betriebskosten.
               </p>
 
-              <div style="margin-top: 0.5rem;">
-                <a href="booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden" class="btn btn-primary btn-block" id="roi-cta-btn">
+              <div style="margin-top: 1rem;">
+                <a href="booking.html?pkg=Paket+3:+Schnittstellen+und+Systeme+verbinden+(ab+850+€)" class="btn btn-primary btn-block" id="roi-cta-btn">
                   Unverbindliches Angebot anfragen →
                 </a>
               </div>
@@ -820,36 +757,36 @@
           </p>
         </div>
 
-        <div class="principles-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+        <div class="principles-grid">
           
-          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1.25rem; padding: 2rem;">
-            <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">🤝</div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">Faire Partnerschaft auf Augenhöhe</h3>
-            <p style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          <div class="principle-card">
+            <div class="principle-icon">🤝</div>
+            <h3 class="principle-title">Faire Partnerschaft auf Augenhöhe</h3>
+            <p class="principle-desc">
               Keine aufgeblähten IT-Großprojekte und keine versteckten Kosten. Sie investieren einmalig in ein Werkzeug, das sich nachweisbar für Sie rechnet. Sollte eine Automatisierung für Ihren konkreten Fall wirtschaftlich keinen Sinn ergeben, sage ich Ihnen das offen und ehrlich im ersten Gespräch.
             </p>
           </div>
 
-          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1.25rem; padding: 2rem;">
-            <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">🛡️</div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">50% Anzahlungsmodell &amp; 30 Tage Zufriedenheit</h3>
-            <p style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          <div class="principle-card">
+            <div class="principle-icon">🛡️</div>
+            <h3 class="principle-title">50% Anzahlungsmodell &amp; 30 Tage Zufriedenheit</h3>
+            <p class="principle-desc">
               Geringes Risiko: Sie leisten zu Beginn lediglich eine 50% Anzahlung. Die restlichen 50% werden erst fällig, wenn die Lösung in Ihrem Betriebsalltag reibungslos läuft, alle Tests besteht und von Ihnen freigegeben wurde. Inklusive 30 Tagen kostenloser Nachbesserung.
             </p>
           </div>
 
-          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1.25rem; padding: 2rem;">
-            <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">⏱️</div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">Schluss mit frustrierender Routine-Arbeit</h3>
-            <p style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
-              Ihre Fachkräfte wurden eingestellt, um Kunden zu beraten, Projekte abzuwickeln und Wertschöpfung zu betreiben – nicht, um Artikelnummern, Preise oder Tabellenzeilen manuell abzutippen. Ich befreie Ihr Team von stumpfer Fleißarbeit, damit Sie sich wieder auf Ihr Kerngeschäft konzentrieren können.
+          <div class="principle-card">
+            <div class="principle-icon">⏱️</div>
+            <h3 class="principle-title">Schluss mit frustrierender Routine-Arbeit</h3>
+            <p class="principle-desc">
+              Ihre Fachkräfte wurden eingestellt, um Kunden zu beraten, Aufträge abzuwickeln und Wertschöpfung zu betreiben – nicht, um Artikelnummern, Preise oder Tabellenzeilen manuell abzutippen. Ich befreie Ihr Team von stumpfer Fleißarbeit, damit Sie sich wieder auf Ihr Kerngeschäft konzentrieren können.
             </p>
           </div>
 
-          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1.25rem; padding: 2rem;">
-            <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">📍</div>
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">Regionaler Ansprechpartner aus Salzgitter</h3>
-            <p style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          <div class="principle-card">
+            <div class="principle-icon">📍</div>
+            <h3 class="principle-title">Regionaler Ansprechpartner aus Salzgitter</h3>
+            <p class="principle-desc">
               Kein Callcenter, keine anonyme Agentur und kein Stille-Post-Prinzip. Sie sprechen direkt mit mir – ansässig in Salzgitter, regional im Raum Braunschweig, Wolfenbüttel, Peine und Goslar sowie deutschlandweit remote für Sie im Einsatz.
             </p>
           </div>
@@ -907,25 +844,25 @@
 
         <div>
           <h4>Lösungen</h4>
-          <a href="services.html#buero">Büroarbeit automatisieren</a>
-          <a href="services.html#kataloge">Katalog- &amp; Datenbereinigung</a>
-          <a href="services.html#crm">Kunden- &amp; Auftragsverwaltung</a>
-          <a href="services.html#api">Systemintegration &amp; Schnittstellen</a>
-          <a href="services.html#wartung">Laufende Betreuung</a>
+          <a href="services.html#buero">Paket 1: Datenprüfung</a>
+          <a href="services.html#buero">Paket 2: Büro-Routine</a>
+          <a href="services.html#api">Paket 3: Schnittstellen</a>
+          <a href="services.html#custom">Paket 4: Softwareentwicklung</a>
+          <a href="services.html#wartung">Retainer: Wartung</a>
         </div>
 
         <div>
           <h4>Rechtliches &amp; Profil</h4>
           <a href="legal.html#impressum">Impressum (§ 5 DDG)</a>
           <a href="legal.html#datenschutz">Datenschutz (DSGVO)</a>
-          <a href="https://github.com/NevioCore" target="_blank">GitHub (@NevioCore)</a>
-          <a href="https://www.freelancermap.de/profil/nevio-waldemar-niebel" target="_blank">freelancermap Profil</a>
+          <a href="https://github.com/NevioCore" target="_blank" rel="noopener noreferrer">GitHub (@NevioCore)</a>
+          <a href="https://www.freelancermap.de/profil/nevio-waldemar-niebel" target="_blank" rel="noopener noreferrer">freelancermap Profil</a>
           <a href="llms.txt">AI Search Spec (llms.txt)</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <script src="app.js?v=5.0"></script>
+  <script src="app.js?v=6.0"></script>
 </body>
 </html>

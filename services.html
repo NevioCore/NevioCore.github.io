@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Leistungen &amp; Software-Lösungen | Nevio Niebel</title>
-  <meta name="description" content="Detaillierte Übersicht der Softwareentwicklungs-Leistungen von Nevio Niebel: Resilientes Web Scraping, FastAPI-Konnektoren, B2B Ingestion-Pipelines und Wartungs-Retainer.">
+  <meta name="description" content="Detaillierte Übersicht der Softwareentwicklungs-Leistungen von Nevio Niebel: Datenbereinigung, Routine-Automatisierung, FastAPI-Schnittstellen und Wartungs-Retainer.">
   <link rel="canonical" href="https://nevioniebel.tech/services.html">
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <link rel="stylesheet" href="style.css?v=6.0">
 </head>
 <body class="site-body">
 
@@ -37,47 +37,72 @@
         <span class="section-tag">Industrielle Ingenieursarbeit</span>
         <h1 class="hero-title" style="font-size: 3rem;">
           Schlüsselfertige Software für <br>
-          <span class="highlight-mint">komplexe Daten- &amp; Systemflüsse</span>
+          <span class="highlight-mint">verlässliche Daten- &amp; Systemflüsse</span>
         </h1>
         <p class="hero-subtitle">
-          Keine vagen Konzepte, sondern wartungsfreie Produktionssoftware. Hier erfahren Sie im Detail, wie meine 4 Kernlösungen aufgebaut sind und welche Architektur dahintersteckt.
+          Keine vagen Konzepte, sondern wartungsarme Produktionssoftware. Erfahren Sie im Detail, wie meine 4 standardisierten Kernpakete aufgebaut sind und welche saubere Architektur dahintersteckt.
         </p>
       </div>
     </section>
 
-    <!-- Service Deep Dive 1: Web Scraping -->
-    <section id="scraping" class="section section-dark">
+    <!-- Service Deep Dive 1: Datenprüfung & Bereinigung (Paket 1) -->
+    <section id="bereinigung" class="section section-dark">
       <div class="container">
         <div class="hero-grid">
           <div>
-            <span class="solution-category">Leistungsbereich 01</span>
-            <h2 class="section-title">Resilientes Web Scraping &amp; Crawler</h2>
+            <span class="solution-category">Leistungsbereich 01 • Paket 1</span>
+            <h2 class="section-title">Datenprüfung &amp; Katalog-Harmonisierung</h2>
             <p class="paragraph">
-              Manuelle Datenübertragung aus Portalen, Marktplätzen oder Mitbewerber-Websites bindet wertvolle Arbeitszeit und führt unweigerlich zu Übertragungsfehlern. Ich entwickle robuste, automatisierte Extraktions-Engines, die auch unter schwierigen Bedingungen zuverlässig Daten liefern.
+              Manuelle Datenkorrekturen in Großhändler-Listen, CSV-Dateien oder Kundendatenbanken binden jede Woche wertvolle Arbeitszeit und führen zu teuren Übertragungsfehlern. Ich entwickle deterministische Bereinigungsroutinen, die unvollständige Einträge, fehlerhafte Umlaute und Dubletten in Sekundenschnelle bereinigen.
             </p>
             <div style="margin: 1.5rem 0;">
               <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
               <ul class="offer-features">
-                <li><span>✓</span> <strong>Anti-Bot-Resilienz:</strong> Umgehung moderner Schutzmechanismen (Cloudflare Turnstile, DataDome, Akamai) durch reale Browser-Fingerprints und TLS-Parität.</li>
-                <li><span>✓</span> <strong>Intelligente Proxy-Rotation:</strong> Dynamische Verteilung über weltweite IPv4/IPv6 Residential- und Datacenter-Proxies mit automatischem IP-Bann-Handling.</li>
-                <li><span>✓</span> <strong>SHA-256 Fingerprint-Hashing:</strong> Deterministische Erkennung und Filterung von Dubletten vor dem Speichern in Ihre Datenbank.</li>
-                <li><span>✓</span> <strong>Typsichere Daten-Validierung:</strong> Jedes Feld wird mittels Pydantic v2 validiert – keine fehlerhaften Datentypen in Ihren Berichten.</li>
+                <li><span>✓</span> <strong>Kollisionsfreie SHA-256 Deduplizierung:</strong> Eindeutige Erkennung und Filterung doppelter Datensätze über Inhaltsmerkmale.</li>
+                <li><span>✓</span> <strong>Deterministische Zeichensatzreparatur:</strong> Behebung korrumpierter UTF-8 / ISO-Zeichenfolgen (z. B. 'MÃ¼ller' -> 'Müller').</li>
+                <li><span>✓</span> <strong>Typsichere Feld-Validierung:</strong> Pydantic-v2 Validierung aller Pflichtdaten und Standardisierung von Telefonnummern (E.164).</li>
+                <li><span>✓</span> <strong>OWASP Formelschutz:</strong> Neutralisierung potenzieller Formelinjektionen in exportierten CSV- und Excel-Dateien.</li>
               </ul>
             </div>
-            <a href="booking.html?pkg=Script+Automation+(350+€)" class="btn btn-primary">Dieses Projekt anfragen (ab 350 €)</a>
+            <a href="booking.html?pkg=Paket+1:+Datenprüfung+und+Bereinigung+(350+€)" class="btn btn-primary">Paket 1 anfragen (350 € Festpreis)</a>
           </div>
+          
+          <!-- Clean Architecture Diagram Card (No 3D Images) -->
           <div class="solution-card" style="border-radius: 1.25rem;">
-            <div class="solution-visual" style="height: 340px;">
-              <img src="assets/3d_data_cube.jpg" alt="Cryptographic 3D Data Cube">
+            <div class="diagram-visual-box">
+              <svg viewBox="0 0 400 240" class="diagram-svg" width="100%" height="220" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="30" width="100" height="60" rx="8" fill="#0f2226" stroke="#5eff88" stroke-width="1.5"/>
+                <text x="70" y="58" fill="#f8fafc" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Rohdaten</text>
+                <text x="70" y="74" fill="#9db2b5" font-size="10" font-family="sans-serif" text-anchor="middle">CSV / JSON / WaWi</text>
+
+                <path d="M 120 60 L 160 60" stroke="#5eff88" stroke-width="2" marker-end="url(#arrow)"/>
+
+                <rect x="160" y="20" width="120" height="80" rx="8" fill="#132a2f" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="220" y="50" fill="#38bdf8" font-size="12" font-family="monospace" text-anchor="middle" font-weight="700">clean_engine</text>
+                <text x="220" y="68" fill="#f8fafc" font-size="10" font-family="sans-serif" text-anchor="middle">SHA-256 Dedupe</text>
+                <text x="220" y="84" fill="#9db2b5" font-size="9" font-family="sans-serif" text-anchor="middle">Encoding Fix (UTF-8)</text>
+
+                <path d="M 280 60 L 320 60" stroke="#5eff88" stroke-width="2"/>
+
+                <rect x="320" y="30" width="60" height="60" rx="8" fill="#0f2226" stroke="#5eff88" stroke-width="1.5"/>
+                <text x="350" y="58" fill="#5eff88" font-size="11" font-family="sans-serif" text-anchor="middle" font-weight="600">Export</text>
+                <text x="350" y="74" fill="#9db2b5" font-size="9" font-family="sans-serif" text-anchor="middle">Valide CSV</text>
+
+                <!-- Status Row -->
+                <rect x="20" y="130" width="360" height="80" rx="8" fill="#061012" stroke="rgba(94,255,136,0.2)" stroke-width="1"/>
+                <text x="40" y="155" fill="#5eff88" font-size="11" font-family="monospace">✓ 16/16 RFC-4180 Unittests bestanden</text>
+                <text x="40" y="175" fill="#9db2b5" font-size="10" font-family="sans-serif">Verarbeitungsgeschwindigkeit: 5.000 Zeilen in unter 100 ms</text>
+                <text x="40" y="195" fill="#627b7f" font-size="10" font-family="sans-serif">100% deterministisch, keine Datenverluste, typsicher</text>
+              </svg>
             </div>
             <div class="solution-body">
               <span class="solution-category">Tech-Stack</span>
               <p class="solution-desc" style="margin-bottom: 1rem;">
-                Python 3.12 • Playwright • Asyncio • HTTPX • BeautifulSoup4 • Pydantic v2 • PostgreSQL
+                Python 3.12 • Polars / Pandas • Pydantic v2 • SHA-256 Hashing • RFC 4180 CSV-Engine
               </p>
               <div class="solution-tags">
-                <span>Headless Chromium</span>
-                <span>Anti-Fingerprinting</span>
+                <span>Deterministisch</span>
+                <span>SHA-256 Fingerprint</span>
                 <span>Sub-Second Latency</span>
               </div>
             </div>
@@ -86,81 +111,131 @@
       </div>
     </section>
 
-    <!-- Service Deep Dive 2: API Integration -->
-    <section id="api" class="section">
+    <!-- Service Deep Dive 2: Routine-Automatisierung (Paket 2) -->
+    <section id="buero" class="section">
       <div class="container">
         <div class="hero-grid">
+          
+          <!-- Architecture Diagram Card (Left) -->
           <div class="solution-card" style="border-radius: 1.25rem;">
-            <div class="solution-visual" style="height: 340px;">
-              <img src="assets/3d_network_sphere.webp" alt="API & Microservices 3D Holographic Sphere">
+            <div class="diagram-visual-box">
+              <svg viewBox="0 0 400 240" class="diagram-svg" width="100%" height="220" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="30" width="90" height="60" rx="8" fill="#0f2226" stroke="#5eff88" stroke-width="1.5"/>
+                <text x="65" y="58" fill="#f8fafc" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">E-Mail / PDF</text>
+                <text x="65" y="74" fill="#9db2b5" font-size="10" font-family="sans-serif" text-anchor="middle">Rechnungen</text>
+
+                <path d="M 110 60 L 150 60" stroke="#5eff88" stroke-width="2"/>
+
+                <rect x="150" y="20" width="130" height="80" rx="8" fill="#132a2f" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="215" y="48" fill="#38bdf8" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">pdf_parser</text>
+                <text x="215" y="66" fill="#f8fafc" font-size="10" font-family="sans-serif" text-anchor="middle">Betragsprüfung § 14</text>
+                <text x="215" y="82" fill="#9db2b5" font-size="9" font-family="sans-serif" text-anchor="middle">IBAN / Netto / USt / Brutto</text>
+
+                <path d="M 280 60 L 320 60" stroke="#5eff88" stroke-width="2"/>
+
+                <rect x="320" y="30" width="60" height="60" rx="8" fill="#0f2226" stroke="#5eff88" stroke-width="1.5"/>
+                <text x="350" y="58" fill="#5eff88" font-size="11" font-family="sans-serif" text-anchor="middle" font-weight="600">DATEV</text>
+                <text x="350" y="74" fill="#9db2b5" font-size="9" font-family="sans-serif" text-anchor="middle">sevdesk / ERP</text>
+
+                <rect x="20" y="130" width="360" height="80" rx="8" fill="#061012" stroke="rgba(94,255,136,0.2)" stroke-width="1"/>
+                <text x="40" y="155" fill="#5eff88" font-size="11" font-family="monospace">✓ Mathematische Validierung: Netto + USt = Brutto</text>
+                <text x="40" y="175" fill="#9db2b5" font-size="10" font-family="sans-serif">IBAN-Prüfziffernvalidierung nach ISO 13616</text>
+                <text x="40" y="195" fill="#627b7f" font-size="10" font-family="sans-serif">Automatische Ablage im Monatsordner des Steuerberaters</text>
+              </svg>
             </div>
             <div class="solution-body">
               <span class="solution-category">Tech-Stack</span>
               <p class="solution-desc" style="margin-bottom: 1rem;">
-                FastAPI • Uvicorn • Redis • HMAC-SHA256 • Docker • SQLAlchemy • OpenAPI 3.1
+                Python 3.12 • PyPDF / pdfplumber • IMAP / Microsoft Graph • DATEV-Format • Pytest
               </p>
               <div class="solution-tags">
-                <span>Idempotente Endpoints</span>
-                <span>Asynchrone Queues</span>
-                <span>Transaktionssicherheit</span>
+                <span>Postfach-Scan</span>
+                <span>DATEV-Ready</span>
+                <span>Plausibilitätsprüfung</span>
               </div>
             </div>
           </div>
+
           <div>
-            <span class="solution-category">Leistungsbereich 02</span>
-            <h2 class="section-title">API-Integrationen &amp; System-Sync</h2>
+            <span class="solution-category">Leistungsbereich 02 • Paket 2</span>
+            <h2 class="section-title">Routine-Automatisierung für Büro &amp; Verwaltung</h2>
             <p class="paragraph">
-              Unternehmensdaten leben oft in getrennten Silos: Webshop (Shopify, Shopware), CRM (HubSpot, Salesforce), ERP oder Buchhaltung (DATEV, sevdesk). Ich verbinde diese Systeme durch maßgeschneiderte, asynchrone Schnittstellen.
+              Eingehende Rechnungen, Lieferscheine oder Auftragsbestätigungen manuell abzutippen bindet wertvolle Kapazitäten Ihrer Fachkräfte. Ich erstelle schlanke Hintergrundskripte, die eingehende Belege automatisch erfassen, rechnerisch prüfen und strukturiert für Ihre Buchhaltung aufbereiten.
             </p>
             <div style="margin: 1.5rem 0;">
               <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
               <ul class="offer-features">
-                <li><span>✓</span> <strong>Idempotente Webhooks:</strong> Schutz vor doppelten Buchungen oder Datensätzen durch strenge Idempotency-Key-Validierung.</li>
-                <li><span>✓</span> <strong>Kryptographische Absicherung:</strong> Verifizierung aller eingehenden Payloads via HMAC-SHA256 Signaturen und Token-Validierung.</li>
+                <li><span>✓</span> <strong>Automatischer Postfach-Scan:</strong> Überwachung definierter E-Mail-Postfächer und automatischer Download von Rechnungs-Anhängen.</li>
+                <li><span>✓</span> <strong>Strukturierte Extraktion:</strong> Zuverlässiges Auslesen von Lieferant, Datum, Rechnungsnummer, Steuersätzen und IBAN.</li>
+                <li><span>✓</span> <strong>Mathematische Plausibilitätsprüfung:</strong> Netto + MwSt = Brutto sowie IBAN-Prüfziffern-Validierung verhindern Fehlüberweisungen.</li>
+                <li><span>✓</span> <strong>DATEV- &amp; sevdesk-Export:</strong> Erstellung direkt einlesbarer Buchungssätze für Ihren Steuerberater.</li>
+              </ul>
+            </div>
+            <a href="booking.html?pkg=Paket+2:+Routine-Automatisierung+(ab+450+€)" class="btn btn-primary">Paket 2 anfragen (ab 450 €)</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Deep Dive 3: Schnittstellen & Systeme verbinden (Paket 3) -->
+    <section id="api" class="section section-dark">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <span class="solution-category">Leistungsbereich 03 • Paket 3</span>
+            <h2 class="section-title">Schnittstellen &amp; Systemintegration</h2>
+            <p class="paragraph">
+              Unternehmensdaten leben oft in getrennten Silos: Webshop (Shopify, Shopware), Warenwirtschaft, CRM oder Buchhaltung. Ich verbinde diese Systeme durch maßgeschneiderte, asynchrone REST-APIs und Webhooks für nahtlosen Datenaustausch in Echtzeit.
+            </p>
+            <div style="margin: 1.5rem 0;">
+              <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
+              <ul class="offer-features">
+                <li><span>✓</span> <strong>Idempotente Webhooks:</strong> Schutz vor doppelten Buchungen durch strenge Hashing- und Idempotenz-Validierung.</li>
+                <li><span>✓</span> <strong>Kryptographische Absicherung:</strong> Verifizierung aller Payloads via HMAC-SHA256 Signaturen und Token-Validierung.</li>
                 <li><span>✓</span> <strong>Dead-Letter-Queues &amp; Retry:</strong> Schlägt ein Zielsystem temporär fehl, werden Aufträge sicher gepuffert und automatisch nachgeliefert.</li>
-                <li><span>✓</span> <strong>OpenAPI-Dokumentation:</strong> Interaktive Swagger-Dokumentation für mühelose Übergabe an interne IT-Teams.</li>
+                <li><span>✓</span> <strong>Containerisierter Docker-Betrieb:</strong> Schlüsselfertiges Setup mit minimalem Ressourcenbedarf, lauffähig auf Standard-Servern.</li>
               </ul>
             </div>
-            <a href="booking.html?pkg=B2B+Data+Pipeline+(850+€)" class="btn btn-primary">Schnittstelle anfragen (850 €)</a>
+            <a href="booking.html?pkg=Paket+3:+Schnittstellen+und+Systeme+verbinden+(ab+850+€)" class="btn btn-primary">Paket 3 anfragen (ab 850 €)</a>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Service Deep Dive 3: Data Pipelines & ETL -->
-    <section id="pipeline" class="section section-dark">
-      <div class="container">
-        <div class="hero-grid">
-          <div>
-            <span class="solution-category">Leistungsbereich 03</span>
-            <h2 class="section-title">Automatisierte B2B Daten-Pipelines</h2>
-            <p class="paragraph">
-              Rohdaten aus mehreren Quellen zusammenführen, bereinigen und täglich pünktlich als fertige Entscheidungsgrundlage bereitstellen – vollständig ohne manuelles Zutun.
-            </p>
-            <div style="margin: 1.5rem 0;">
-              <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
-              <ul class="offer-features">
-                <li><span>✓</span> <strong>Multi-Source Aggregation:</strong> Zeitgleiche Abfrage von APIs, SQL-Datenbanken, SFTP-Servern und Web-Portalen.</li>
-                <li><span>✓</span> <strong>Automatisierte Normalisierung:</strong> Vereinheitlichung von Adressformaten, Telefonnummern (E.164), Umlaute-Encoding und Steuernummern.</li>
-                <li><span>✓</span> <strong>Integrierte Anomalie-Erkennung:</strong> Automatische Alarme bei ungewöhnlichen Datenabweichungen oder Null-Werten via Slack / E-Mail.</li>
-                <li><span>✓</span> <strong>Containerisierter Betrieb:</strong> Schlüsselfertiges Docker-Compose-Setup mit minimalem Ressourcenbedarf (auch auf kleinsten VPS lauffähig).</li>
-              </ul>
-            </div>
-            <a href="booking.html?pkg=B2B+Data+Pipeline+(850+€)" class="btn btn-primary">Pipeline anfragen (850 €)</a>
-          </div>
+          <!-- Architecture Diagram Card (Right) -->
           <div class="solution-card" style="border-radius: 1.25rem;">
-            <div class="solution-visual" style="height: 340px;">
-              <img src="assets/3d_pipeline_node.jpg" alt="ETL Data Pipelines 3D Microservice Node">
+            <div class="diagram-visual-box">
+              <svg viewBox="0 0 400 240" class="diagram-svg" width="100%" height="220" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="30" width="90" height="60" rx="8" fill="#0f2226" stroke="#5eff88" stroke-width="1.5"/>
+                <text x="65" y="58" fill="#f8fafc" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Webshop</text>
+                <text x="65" y="74" fill="#9db2b5" font-size="10" font-family="sans-serif" text-anchor="middle">Shopware/Shopify</text>
+
+                <path d="M 110 60 L 150 60" stroke="#5eff88" stroke-width="2"/>
+
+                <rect x="150" y="20" width="130" height="80" rx="8" fill="#132a2f" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="215" y="48" fill="#38bdf8" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">fastapi_sync</text>
+                <text x="215" y="66" fill="#f8fafc" font-size="10" font-family="sans-serif" text-anchor="middle">HMAC Validierung</text>
+                <text x="215" y="82" fill="#9db2b5" font-size="9" font-family="sans-serif" text-anchor="middle">Idempotente Queue</text>
+
+                <path d="M 280 60 L 320 60" stroke="#5eff88" stroke-width="2"/>
+
+                <rect x="320" y="30" width="60" height="60" rx="8" fill="#0f2226" stroke="#5eff88" stroke-width="1.5"/>
+                <text x="350" y="58" fill="#5eff88" font-size="11" font-family="sans-serif" text-anchor="middle" font-weight="600">ERP / WaWi</text>
+                <text x="350" y="74" fill="#9db2b5" font-size="9" font-family="sans-serif" text-anchor="middle">SQL / DATEV</text>
+
+                <rect x="20" y="130" width="360" height="80" rx="8" fill="#061012" stroke="rgba(94,255,136,0.2)" stroke-width="1"/>
+                <text x="40" y="155" fill="#5eff88" font-size="11" font-family="monospace">✓ Echte Verifikation: samples/fastapi_database_sync_sample.py</text>
+                <text x="40" y="175" fill="#9db2b5" font-size="10" font-family="sans-serif">Transaktionssicherheit: Rollback bei Verbindungsabbruch</text>
+                <text x="40" y="195" fill="#627b7f" font-size="10" font-family="sans-serif">Latenz: &lt; 50 ms pro Webhook-Transaktion</text>
+              </svg>
             </div>
             <div class="solution-body">
               <span class="solution-category">Tech-Stack</span>
               <p class="solution-desc" style="margin-bottom: 1rem;">
-                Docker • Python 3.12 • Polars / Pandas • SQLite / PostgreSQL • Slack Webhooks • Cron
+                FastAPI • Python 3.12 • Docker • SQLite / PostgreSQL • HMAC-SHA256 • OpenAPI 3.1
               </p>
               <div class="solution-tags">
-                <span>Multi-Source ETL</span>
-                <span>Scheduled Ingestion</span>
-                <span>Instant Alerts</span>
+                <span>Idempotent</span>
+                <span>Asynchrone Queues</span>
+                <span>Transaktionssicher</span>
               </div>
             </div>
           </div>
@@ -168,43 +243,69 @@
       </div>
     </section>
 
-    <!-- Service Deep Dive 4: Retainer & QA -->
+    <!-- Service Deep Dive 4: Wartung & Monitoring Retainer -->
     <section id="retainer" class="section">
       <div class="container">
         <div class="hero-grid">
+          
+          <!-- Architecture Diagram Card (Left) -->
           <div class="solution-card" style="border-radius: 1.25rem;">
-            <div class="solution-visual" style="height: 340px;">
-              <img src="assets/3d_shield_security.jpg" alt="Cybersecurity & SLA Shield 3D Asset">
+            <div class="diagram-visual-box">
+              <svg viewBox="0 0 400 240" class="diagram-svg" width="100%" height="220" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="30" width="100" height="60" rx="8" fill="#0f2226" stroke="#5eff88" stroke-width="1.5"/>
+                <text x="70" y="58" fill="#f8fafc" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Health-Daemon</text>
+                <text x="70" y="74" fill="#9db2b5" font-size="10" font-family="sans-serif" text-anchor="middle">5-Minuten Pings</text>
+
+                <path d="M 120 60 L 160 60" stroke="#5eff88" stroke-width="2"/>
+
+                <rect x="160" y="20" width="120" height="80" rx="8" fill="#132a2f" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="220" y="48" fill="#38bdf8" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">status_check</text>
+                <text x="220" y="66" fill="#f8fafc" font-size="10" font-family="sans-serif" text-anchor="middle">HTTP 200 / Schema</text>
+                <text x="220" y="82" fill="#9db2b5" font-size="9" font-family="sans-serif" text-anchor="middle">Latenz-Monitoring</text>
+
+                <path d="M 280 60 L 320 60" stroke="#5eff88" stroke-width="2"/>
+
+                <rect x="320" y="30" width="60" height="60" rx="8" fill="#0f2226" stroke="#5eff88" stroke-width="1.5"/>
+                <text x="350" y="58" fill="#5eff88" font-size="11" font-family="sans-serif" text-anchor="middle" font-weight="600">Alerts</text>
+                <text x="350" y="74" fill="#9db2b5" font-size="9" font-family="sans-serif" text-anchor="middle">E-Mail / SMS</text>
+
+                <rect x="20" y="130" width="360" height="80" rx="8" fill="#061012" stroke="rgba(94,255,136,0.2)" stroke-width="1"/>
+                <text x="40" y="155" fill="#5eff88" font-size="11" font-family="monospace">✓ Laufende Betriebsüberwachung ohne Datenstau</text>
+                <text x="40" y="175" fill="#9db2b5" font-size="10" font-family="sans-serif">Reaktionszeit an Werktagen: Schnelle Fehlerbehebung</text>
+                <text x="40" y="195" fill="#627b7f" font-size="10" font-family="sans-serif">5 Entwickler-Stunden monatlich für Anpassungen inklusive</text>
+              </svg>
             </div>
             <div class="solution-body">
               <span class="solution-category">Tech-Stack</span>
               <p class="solution-desc" style="margin-bottom: 1rem;">
-                Pytest • GitHub Actions • Healthcheck-Daemons • Sentry • Monitoring
+                Python Healthchecks • Pytest • GitHub Actions • Systemd / Cron • Uptime-Alerts
               </p>
               <div class="solution-tags">
                 <span>Monitoring</span>
                 <span>Wartung &amp; Fixes</span>
-                <span>Pytest Abdeckung</span>
+                <span>Monatlich kündbar</span>
               </div>
             </div>
           </div>
+
           <div>
-            <span class="solution-category">Leistungsbereich 04</span>
-            <h2 class="section-title">Skript-Wartung &amp; Monitoring-Retainer</h2>
+            <span class="solution-category">Leistungsbereich 04 • Retainer</span>
+            <h2 class="section-title">Wartung &amp; laufende Betreuung</h2>
             <p class="paragraph">
-              Websites ändern ihr DOM-Layout, APIs aktualisieren Versionen, Schnittstellen brechen unbemerkt weg. Mit meinem Wartungs-Retainer sichern Sie Ihre geschäftskritischen Datenströme dauerhaft ab.
+              APIs aktualisieren ihre Versionen, Websites ändern Datenstrukturen oder Schnittstellen brechen unbemerkt weg. Mit meinem Wartungs-Retainer sichern Sie Ihre geschäftskritischen Datenströme dauerhaft und planbar ab.
             </p>
             <div style="margin: 1.5rem 0;">
               <h4 style="color: var(--color-mint); margin-bottom: 0.75rem;">Architekturmerkmale:</h4>
               <ul class="offer-features">
-                <li><span>✓</span> <strong>Dauerhafte Health-Checks:</strong> Autonome Pings überwachen den Status aller Crawler und Schnittstellen verlässlich.</li>
-                <li><span>✓</span> <strong>Schnelle Rückmeldung an Werktagen:</strong> Bricht ein Skript ab, erfolgt die Fehleranalyse und Anpassung zügig an Werktagen.</li>
+                <li><span>✓</span> <strong>Dauerhafte Health-Checks:</strong> Autonome Pings überwachen den Status aller Konnektoren und Schnittstellen verlässlich.</li>
+                <li><span>✓</span> <strong>Schnelle Rückmeldung an Werktagen:</strong> Bricht eine Schnittstelle ab, erfolgt die Fehleranalyse und Anpassung zügig an Werktagen.</li>
                 <li><span>✓</span> <strong>5 Entwickler-Stunden monatlich inklusive:</strong> Für Anpassungen, neue Datenfelder oder kleinere Feature-Erweiterungen.</li>
-                <li><span>✓</span> <strong>Volle Kostentransparenz:</strong> 190,00 € Festpreis pro Monat, monatlich kündbar, keine Mindestvertragslaufzeit.</li>
+                <li><span>✓</span> <strong>Volle Kostentransparenz:</strong> Ab 190,00 € Festpreis pro Monat, monatlich kündbar, keine Mindestvertragslaufzeit.</li>
               </ul>
             </div>
-            <a href="booking.html?pkg=Wartungs-Retainer+(190+€/Mo.)" class="btn btn-primary">Retainer buchen (190 € / Mo.)</a>
+            <a href="booking.html?pkg=Retainer:+Wartung+und+laufende+Betreuung+(ab+190+€/Mo.)" class="btn btn-primary">Retainer buchen (ab 190 € / Mo.)</a>
           </div>
+
         </div>
       </div>
     </section>
@@ -234,7 +335,7 @@
           <span class="brand-text">Nevio Niebel</span>
         </a>
         <p class="footer-desc">
-          Softwareentwickler &amp; Data Engineer aus Salzgitter (Region Braunschweig / Remote DACH). Deterministische Scraper, API-Brücken und ETL-Pipelines mit Fokus auf Regressionssicherheit und Clean Code.
+          Softwareentwickler &amp; Data Engineer aus Salzgitter (Region Braunschweig / Remote DACH). Deterministische Schnittstellen, Daten-Pipelines und Prozessautomatisierung mit Fokus auf Regressionssicherheit und Clean Code.
         </p>
         <p class="footer-sub">
           Positioniert für Unternehmen in Deutschland, Österreich und der Schweiz (DACH / Remote).
@@ -252,10 +353,10 @@
         </div>
         <div>
           <h4>Lösungen</h4>
-          <a href="#scraping">Web Scraping</a>
-          <a href="#api">API-Integrationen</a>
-          <a href="#pipeline">Daten-Pipelines</a>
-          <a href="#retainer">Wartungs-Retainer</a>
+          <a href="#bereinigung">Paket 1: Datenprüfung</a>
+          <a href="#buero">Paket 2: Routine-Automatisierung</a>
+          <a href="#api">Paket 3: Schnittstellen</a>
+          <a href="#retainer">Retainer: Wartung</a>
         </div>
         <div>
           <h4>Rechtliches</h4>
@@ -267,6 +368,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=5.0"></script>
+  <script src="app.js?v=6.0"></script>
 </body>
 </html>

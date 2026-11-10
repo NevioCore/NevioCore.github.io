@@ -239,57 +239,37 @@ body.site-body {
   width: 100%;
 }
 
-/* Hero Section (Ethiack Grid Layout with 3D Cyber Asset) */
+/* Hero Section (Clean, Authoritative Typography Layout) */
 .hero-section {
   padding: 9.5rem 0 5rem 0;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 3.5rem;
-  align-items: center;
+.hero-content-single {
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.hero-text {
-  text-align: left;
-}
-
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.45rem 1.1rem;
+.hero-studio-tag {
+  display: inline-block;
+  padding: 0.4rem 1.1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 9999px;
-  background-color: rgba(94, 255, 136, 0.08);
-  border: 1px solid rgba(94, 255, 136, 0.25);
-  color: var(--color-mint);
   font-size: 0.8rem;
   font-weight: 500;
+  color: var(--color-mint);
   margin-bottom: 2rem;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-mint);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--color-mint);
-  animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.8; }
+  letter-spacing: 0.02em;
 }
 
 .hero-title {
-  font-size: 3.25rem;
+  font-size: 3.4rem;
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.04em;
   margin-bottom: 1.5rem;
+  color: var(--color-text-primary);
 }
 
 .highlight-mint {
@@ -298,64 +278,20 @@ body.site-body {
 }
 
 .hero-subtitle {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: var(--color-text-secondary);
   line-height: 1.7;
-  margin-bottom: 2.5rem;
+  max-width: 780px;
+  margin: 0 auto 2.5rem auto;
 }
 
 .hero-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1.25rem;
   margin-bottom: 3.5rem;
   flex-wrap: wrap;
-}
-
-/* Hero 3D Visual Frame */
-.hero-visual-frame {
-  position: relative;
-  border-radius: 1.25rem;
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-cyber);
-  background: var(--color-surface);
-}
-
-.hero-visual-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.hero-visual-frame:hover .hero-visual-img {
-  transform: scale(1.03);
-}
-
-.visual-badge {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  background: rgba(5, 12, 13, 0.85);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
-  padding: 0.75rem 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  font-family: var(--font-mono);
-}
-
-.visual-badge-status {
-  color: var(--color-mint);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
 }
 
 /* Trust Badges Strip */
@@ -849,7 +785,46 @@ body.site-body {
   font-size: 0.75rem;
   color: var(--color-mint);
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+.solution-price {
+  font-family: var(--font-mono);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--color-mint);
+  margin: 0.25rem 0 0.65rem 0;
+}
+
+.solution-featured {
+  border-color: rgba(94, 255, 136, 0.4);
+  box-shadow: 0 0 25px rgba(94, 255, 136, 0.1);
+  position: relative;
+}
+
+.featured-tag {
+  position: absolute;
+  top: -0.75rem;
+  right: 1.5rem;
+  background: var(--color-mint);
+  color: #050c0d;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.25rem 0.85rem;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+.diagram-visual-box {
+  background: #040a0c;
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .solution-title {
@@ -1040,11 +1015,23 @@ body.site-body {
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 860px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.roi-params-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
 @media (max-width: 680px) {
-  .form-row {
+  .roi-params-row {
     grid-template-columns: 1fr;
   }
 }
@@ -1085,22 +1072,21 @@ select.form-control {
   -webkit-appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235eff88' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right 0.75rem center;
+  background-position: right 1rem center;
   background-size: 1rem;
-  padding-right: 2.2rem;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 0.85rem;
+  padding-right: 2.5rem;
+  font-size: 0.9rem;
   cursor: pointer;
   min-width: 0;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 select.form-control option {
   background-color: var(--color-surface);
   color: var(--color-text-primary);
-  padding: 0.5rem;
+  padding: 0.65rem;
+  font-size: 0.9rem;
 }
 
 .form-control:focus {
@@ -1120,10 +1106,12 @@ select.form-control option {
 .package-radio-card {
   border: 1px solid var(--color-border);
   border-radius: 0.75rem;
-  padding: 1rem;
+  padding: 1.1rem;
   background: var(--color-surface-input);
   cursor: pointer;
   transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
 }
 
 .package-radio-card:hover {
@@ -1137,14 +1125,22 @@ select.form-control option {
 
 .pkg-name {
   font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
 }
 
 .pkg-price {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--color-mint);
+  font-weight: 600;
+}
+
+.pkg-desc {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.35rem;
+  line-height: 1.4;
 }
 
 /* Footer */
@@ -1548,6 +1544,129 @@ select.form-control option {
   border-radius: 0.5rem;
   padding: 1rem;
   text-align: left;
+}
+
+/* Mode 2: Demo Workflows Grid (Before/After Comparison) */
+.demo-workflows-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 900px) {
+  .demo-workflows-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.demo-workflow-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.demo-workflow-header {
+  margin-bottom: 1rem;
+}
+
+.demo-workflow-header h4 {
+  font-size: 1.15rem;
+  color: var(--color-text-primary);
+  margin: 0;
+  font-weight: 700;
+}
+
+.demo-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-mint);
+  display: block;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.demo-comparison-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.demo-side {
+  padding: 0.85rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.83rem;
+  line-height: 1.55;
+}
+
+.demo-before {
+  background: rgba(244, 63, 94, 0.06);
+  border-left: 3px solid var(--color-rose);
+}
+
+.demo-after {
+  background: rgba(94, 255, 136, 0.06);
+  border-left: 3px solid var(--color-mint);
+}
+
+.side-label {
+  font-weight: 700;
+  font-size: 0.78rem;
+  margin-bottom: 0.3rem;
+}
+
+.demo-benefit-bar {
+  padding: 0.75rem 1rem;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+/* Principles Grid */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 800px) {
+  .principles-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.principle-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  padding: 2rem;
+}
+
+.principle-icon {
+  font-size: 2rem;
+  margin-bottom: 0.85rem;
+}
+
+.principle-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.principle-desc {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.65;
 }
 
 /* Tab 2: Audit View */

@@ -622,43 +622,66 @@ function analyzeDataQuality(headers, rows) {
 }
 
 // =========================================================================
-// 6. TERMINAL TABS CONTROLLER (STRICT SEPARATION)
+// 6. TERMINAL TABS CONTROLLER (2 DISTINCT FUNCTIONAL MODES)
 // =========================================================================
 
 function switchTerminalMode(mode) {
-  const tabScenarios = document.getElementById("tab-mode-scenarios");
   const tabAudit = document.getElementById("tab-mode-audit");
-  const tabCli = document.getElementById("tab-mode-cli");
+  const tabDemo = document.getElementById("tab-mode-demo");
 
-  const viewScenarios = document.getElementById("view-scenarios");
   const viewAudit = document.getElementById("view-audit");
-  const viewCli = document.getElementById("view-cli");
+  const viewDemo = document.getElementById("view-demo");
+
+  const badgeEl = document.getElementById("terminal-status-badge");
 
   // Reset tab active states
-  if (tabScenarios) tabScenarios.classList.remove("active");
   if (tabAudit) tabAudit.classList.remove("active");
-  if (tabCli) tabCli.classList.remove("active");
+  if (tabDemo) tabDemo.classList.remove("active");
 
   // Hide all view containers
-  if (viewScenarios) viewScenarios.style.display = "none";
   if (viewAudit) viewAudit.style.display = "none";
-  if (viewCli) viewCli.style.display = "none";
+  if (viewDemo) viewDemo.style.display = "none";
 
-  if (mode === "audit") {
+  if (mode === "demo") {
+    if (tabDemo) tabDemo.classList.add("active");
+    if (viewDemo) viewDemo.style.display = "block";
+    if (badgeEl) badgeEl.textContent = "Simulation";
+    updateOfferCardForDemo();
+  } else {
+    // Mode 1: Audit (Default)
     if (tabAudit) tabAudit.classList.add("active");
     if (viewAudit) viewAudit.style.display = "block";
+    if (badgeEl) badgeEl.textContent = "Bereit";
     updateOfferCardForAudit();
-  } else if (mode === "cli") {
-    if (tabCli) tabCli.classList.add("active");
-    if (viewCli) viewCli.style.display = "block";
-    const cliInp = document.getElementById("terminal-cli-input");
-    if (cliInp) cliInp.focus();
-    printCliLog("[KONSOLE AKTIV] Tippen Sie 'help' für eine Übersicht aller Befehle. Verwenden Sie Pfeiltasten ↑/↓ für die Historie.");
-  } else {
-    // Default: scenarios
-    if (tabScenarios) tabScenarios.classList.add("active");
-    if (viewScenarios) viewScenarios.style.display = "block";
-    updateTerminalOfferCard(SCENARIOS[activeScenarioId] || SCENARIOS.invoicing);
+  }
+}
+
+function updateOfferCardForDemo() {
+  const badgeEl = document.getElementById("offer-badge");
+  const titleEl = document.getElementById("offer-title");
+  const descEl = document.getElementById("offer-desc");
+  const priceTagEl = document.getElementById("offer-price-tag");
+  const priceSubEl = document.getElementById("offer-price-sub");
+  const featuresEl = document.getElementById("offer-features");
+  const ctaBtn = document.getElementById("offer-cta-btn");
+
+  if (badgeEl) badgeEl.textContent = "Paket 3 • Beliebt für Mittelstand";
+  if (titleEl) titleEl.textContent = "Schnittstellen & Systeme verbinden";
+  if (descEl) descEl.textContent = "Verbinden Sie Ihren Webshop, die Warenwirtschaft und Buchhaltung über maßgeschneiderte, asynchrone Schnittstellen und Webhooks.";
+  if (priceTagEl) priceTagEl.textContent = "ab 850 €";
+  if (priceSubEl) priceSubEl.textContent = "Festpreis (schlüsselfertig inkl. Docker & Quellcode)";
+  if (featuresEl) {
+    featuresEl.innerHTML = `
+      <li><span>✓</span> Asynchrone REST-APIs & Webhooks (FastAPI / Python)</li>
+      <li><span>✓</span> Idempotente Payloads mit HMAC-SHA256 Signaturprüfung</li>
+      <li><span>✓</span> Dead-Letter-Queues & automatisches Retry bei Verbindungsabbruch</li>
+      <li><span>✓</span> Docker-Container für schlüsselfertigen, ausfallsicheren Betrieb</li>
+      <li><span>✓</span> 30 Tage Nachbetreuung & vollständige Quellcode-Übergabe</li>
+    `;
+  }
+  if (ctaBtn) {
+    ctaBtn.textContent = "Jetzt Paket 3 anfragen (ab 850 €) →";
+    ctaBtn.href = "booking.html?pkg=Paket+3:+Schnittstellen+und+Systeme+verbinden+(ab+850+€)";
   }
 }
 
@@ -1171,33 +1194,46 @@ function updateOfferCardForAudit(stats, fileName, annualLoss) {
   const ctaBtn = document.getElementById("offer-cta-btn");
 
   if (!stats) {
-    if (badgeEl) badgeEl.textContent = "Kostenloser Daten-Audit";
-    if (titleEl) titleEl.textContent = "Datenbereinigung & Pipeline-Automatisierung";
-    if (descEl) descEl.textContent = "Laden Sie oben Ihre Datei hoch, um Dubletten, defekte Zeichensätze und manuelle Zeitverschwendung transparent zu identifizieren.";
-    if (priceTagEl) priceTagEl.textContent = "ab 650 €";
-    if (priceSubEl) priceSubEl.textContent = "Festpreis nach Aufwand";
+    if (badgeEl) badgeEl.textContent = "Paket 1 • Schnelle Ergebnisse";
+    if (titleEl) titleEl.textContent = "Datenprüfung & Bereinigung";
+    if (descEl) descEl.textContent = "Einmalige Analyse und Bereinigung fehlerhafter Datensätze, Adressbestände oder Artikelkataloge. Inklusive ausführlichem Prüfbericht und bereinigter CSV/Excel-Datei.";
+    if (priceTagEl) priceTagEl.textContent = "350 €";
+    if (priceSubEl) priceSubEl.textContent = "Festpreis (schlüsselfertige Bereinigung)";
+    if (featuresEl) {
+      featuresEl.innerHTML = `
+        <li><span>✓</span> Kollisionsfreie SHA-256 Deduplizierung über Datensatzmerkmale</li>
+        <li><span>✓</span> Vollständige Reparatur defekter Zeichensätze (UTF-8 / ISO-8859)</li>
+        <li><span>✓</span> Normalisierung von Telefonnummern (E.164) und Adressfeldern</li>
+        <li><span>✓</span> Neutralisierung potenzieller Formelinjektionen (OWASP-konform)</li>
+        <li><span>✓</span> Bereitstellung schlüsselfertiger, direkt importierbarer Daten</li>
+      `;
+    }
+    if (ctaBtn) {
+      ctaBtn.textContent = "Jetzt unverbindlich anfragen (350 €) →";
+      ctaBtn.href = "booking.html?pkg=Paket+1:+Datenprüfung+und+Bereinigung+(350+€)";
+    }
     return;
   }
 
   if (badgeEl) badgeEl.textContent = `Audit-Ergebnis: ${stats.totalDefects} Reibungspunkte erkannt`;
-  if (titleEl) titleEl.textContent = `Maßgeschneiderte Pipeline für '${fileName}'`;
-  if (descEl) descEl.textContent = `Beseitigen Sie diese ${stats.totalDefects} wiederkehrenden Datenfehler dauerhaft. Wir implementieren eine wartungsfreie Python-Pipeline, die diese Datei vollautomatisch und fehlerfrei einliest.`;
-  if (priceTagEl) priceTagEl.textContent = "650 € – 850 €";
+  if (titleEl) titleEl.textContent = `Maßgeschneiderte Bereinigung für '${fileName}'`;
+  if (descEl) descEl.textContent = `Beseitigen Sie diese ${stats.totalDefects} wiederkehrenden Datenfehler dauerhaft. Wir bereinigen Ihren Datensatz und implementieren auf Wunsch eine wartungsarme Pipeline.`;
+  if (priceTagEl) priceTagEl.textContent = "350 € – 850 €";
   if (priceSubEl) priceSubEl.textContent = "Festpreis (amortisiert sich in wenigen Wochen)";
 
   if (featuresEl) {
     featuresEl.innerHTML = `
       <li><span>✓</span> Beseitigt ${stats.duplicates} redundante Dubletten automatisch (SHA-256)</li>
-      <li><span>✓</span> Repariert alle korrumpierten Umlaute & Sonderzeichen</li>
-      <li><span>✓</span> Standardisiert Telefonnummern nach internationalem E.164 Standard</li>
+      <li><span>✓</span> Repariert alle ${stats.encodingErrors} korrumpierten Umlaute & Sonderzeichen</li>
+      <li><span>✓</span> Standardisiert ${stats.unnormalizedPhones} Telefonnummern nach internationalem E.164 Standard</li>
       <li><span>✓</span> Berechnetes Einsparpotenzial: ca. ${annualLoss ? annualLoss.toLocaleString("de-DE") : "0"} € pro Jahr</li>
-      <li><span>✓</span> DSGVO-orientiert, lokal oder auf Ihrem Server betreibbar</li>
+      <li><span>✓</span> 100% DSGVO-orientiert, lokal oder auf Ihrem Server betreibbar</li>
     `;
   }
 
   if (ctaBtn) {
-    ctaBtn.textContent = `Diese Pipeline anfragen (spart ca. ${annualLoss ? annualLoss.toLocaleString("de-DE") : "0"} €/Jahr) →`;
-    ctaBtn.href = `booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden&audit_defects=${stats.totalDefects}&file=${encodeURIComponent(fileName)}`;
+    ctaBtn.textContent = `Bereinigung anfragen (spart ca. ${annualLoss ? annualLoss.toLocaleString("de-DE") : "0"} €/Jahr) →`;
+    ctaBtn.href = `booking.html?pkg=Paket+1:+Datenprüfung+und+Bereinigung+(350+€)&audit_defects=${stats.totalDefects}&file=${encodeURIComponent(fileName)}`;
   }
 }
 
@@ -1458,7 +1494,7 @@ function selectPackageCard(cardElement, packageName, priceValue) {
   cardElement.classList.add("selected");
 
   const hiddenInput = document.getElementById("selected-package");
-  if (hiddenInput) hiddenInput.value = packageName;
+  if (hiddenInput) hiddenInput.value = `${packageName} (${priceValue})`;
 
   const summaryPkg = document.getElementById("summary-package-name");
   const summaryPrice = document.getElementById("summary-package-price");
@@ -1472,6 +1508,8 @@ function selectPackageCard(cardElement, packageName, priceValue) {
     const num = parseInt(numericMatch[1], 10);
     const deposit = Math.round(num * 0.5);
     summaryDeposit.textContent = `${deposit} €`;
+  } else if (summaryDeposit) {
+    summaryDeposit.textContent = "nach Absprache";
   }
 }
 
@@ -1480,11 +1518,21 @@ function checkUrlPackageParameter() {
   const pkgParam = urlParams.get("pkg");
   if (!pkgParam) return;
 
+  const normalized = pkgParam.toLowerCase();
   const packageCards = document.querySelectorAll(".package-radio-card");
+  let matched = false;
+
   packageCards.forEach(card => {
-    const cardPkg = card.getAttribute("data-package");
-    if (cardPkg && (cardPkg.includes(pkgParam) || pkgParam.includes(cardPkg))) {
+    const cardPkg = (card.getAttribute("data-package") || "").toLowerCase();
+    if (!matched && (cardPkg.includes(normalized) || normalized.includes(cardPkg) ||
+        (normalized.includes("paket 1") && cardPkg.includes("paket 1")) ||
+        (normalized.includes("paket 2") && cardPkg.includes("paket 2")) ||
+        (normalized.includes("paket 3") && cardPkg.includes("paket 3")) ||
+        (normalized.includes("paket 4") && cardPkg.includes("paket 4")) ||
+        (normalized.includes("retainer") && cardPkg.includes("retainer")) ||
+        (normalized.includes("consulting") && cardPkg.includes("consulting")))) {
       card.click();
+      matched = true;
     }
   });
 
@@ -1492,7 +1540,7 @@ function checkUrlPackageParameter() {
   const auditDefects = urlParams.get("audit_defects");
   const auditFile = urlParams.get("file");
   if (auditDefects && notesField && !notesField.value) {
-    notesField.value = `Ergebnis des Daten-Audits für '${auditFile || "unsere Datei"}': ${auditDefects} identifizierte Fehler/Dubletten. Wir möchten diesen Datenstrom mit einer schlüsselfertigen Pipeline automatisieren.`;
+    notesField.value = `Ergebnis des Daten-Audits für '${auditFile || "unsere Datei"}': ${auditDefects} identifizierte Fehler/Dubletten. Wir möchten diesen Datenbestand schlüsselfertig bereinigen und ggf. automatisieren.`;
   }
 }
 
@@ -1500,7 +1548,7 @@ async function handlePortalBookingSubmit(e) {
   e.preventDefault();
 
   const pkgInput = document.getElementById("selected-package");
-  const pkg = pkgInput ? pkgInput.value : "Paket D: Daten und Systeme verbinden (850 €)";
+  const pkg = pkgInput ? pkgInput.value : "Paket 3: Schnittstellen & Systeme verbinden (ab 850 €)";
   const day = document.getElementById("portal-day") ? document.getElementById("portal-day").value : "Schnellstmöglich";
   const time = document.getElementById("portal-time") ? document.getElementById("portal-time").value : "Vormittags";
   const name = document.getElementById("portal-name").value.trim();
@@ -1626,10 +1674,13 @@ function initRoiCalculator() {
       breakEvenText = "Keine Amortisation (Kosten übersteigen Ersparnis)";
     } else {
       const months = setupCost / monthlyNetBenefit;
+      const formattedMonths = months.toFixed(1).replace(".", ",");
       if (months > 36) {
-        breakEvenText = `ca. ${months.toFixed(1)} Monaten (> 3 Jahre)`;
+        breakEvenText = `nach ca. ${formattedMonths} Monaten (> 3 Jahre)`;
+      } else if (Math.abs(months - 1.0) < 0.08) {
+        breakEvenText = `nach ca. 1 Monat`;
       } else {
-        breakEvenText = `ca. ${months.toFixed(1)} Monaten`;
+        breakEvenText = `nach ca. ${formattedMonths} Monaten`;
       }
     }
 
@@ -1648,7 +1699,7 @@ function initRoiCalculator() {
 
     if (roiCta) {
       roiCta.textContent = `Unverbindliches Angebot anfragen →`;
-      roiCta.href = `booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden&roi_savings=${netSavingsYear1}&hours=${hours}&rate=${rate}&auto=${autoPercent}`;
+      roiCta.href = `booking.html?pkg=Paket+3:+Schnittstellen+und+Systeme+verbinden&roi_savings=${netSavingsYear1}&hours=${hours}&rate=${rate}&auto=${autoPercent}`;
     }
   }
 
