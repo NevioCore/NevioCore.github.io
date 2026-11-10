@@ -35,152 +35,112 @@ const SAMPLE_B2B_DATASET = `Artikel_ID;Lieferant;Produktbezeichnung;Kategorie;EA
 40113;Weser Werkzeuge & Maschinen;Akku-Bohrschrauber 18V Brushless;Werkzeuge;4066554433221;115.00;;0421-998811;12;Lieferbar
 40114;Weser Werkzeuge & Maschinen;Akku-Bohrschrauber 18V Brushless;Werkzeuge;4066554433221;115.00;189.00;+49 421 998811;12;Lieferbar`;
 
-// 5 Core Solutions
-const SCENARIOS = {
-  invoicing: {
-    id: "invoicing",
-    title: "Rechnungs- & Dokumentenverarbeitung",
-    badge: "Paket A • Büroarbeit automatisieren",
-    tagline: "Eingehende Rechnungen & PDF-Belege fehlerfrei auslesen und buchen",
-    desc: "Automatische Extraktion von Rechnungsbeträgen, IBAN, USt-IdNr., Steuersätzen und Positionen aus PDFs oder E-Mails. Übergabe direkt an Ihr Buchhaltungsprogramm (DATEV, sevdesk, Lexware) oder ERP.",
-    price: "450 € – 850 €",
-    priceSub: "Festpreis (schlüsselfertige Automatisierung)",
-    packageName: "Paket A: Büroarbeit automatisieren (450 € - 850 €)",
-    bookingUrl: "booking.html?pkg=Paket+A:+Büroarbeit+automatisieren",
-    features: [
-      "Automatischer Postfach-Scan oder Drag & Drop Upload",
-      "Strukturierte Extraktion aller steuerrelevanten Felder nach § 14 UStG",
-      "Plausibilitätsprüfung (Netto + MwSt = Brutto, IBAN-Prüfziffer)",
-      "Direkter Export in CSV, Excel oder API-Übergabe an DATEV / sevdesk",
-      "Spart 5 bis 15 Arbeitsstunden pro Woche im kaufmännischen Bereich"
-    ],
-    steps: [
-      { step: "Posteingang prüfen", detail: "PDF-Rechnung 'Rechnung_2026_0891.pdf' erkannt..." },
-      { step: "Daten auslesen", detail: "Lieferant, Rechnungsnummer, Datum, Netto/USt/Brutto extrahiert..." },
-      { step: "Mathematische Prüfung", detail: "Prüfe Beträge: 1.250,00 € + 237,50 € (19%) = 1.487,50 € ✓ Korrekt." },
-      { step: "Buchung vorbereiten", detail: "DATEV-Format erzeugt, Buchungssatz schlüsselfertig bereitgestellt." }
-    ],
-    plainExplanation: {
-      problem: "Mitarbeiter tippen jede Woche dutzende Rechnungen von Hand ab. Ein Zahlendreher führt zu falschen Überweisungen oder Fehlern in der Umsatzsteuervoranmeldung.",
-      solution: "Eine schlanke Python-Pipeline liest die Belege in Sekundenbruchteilen aus, prüft die Rechenwege und bereitet die Buchungssätze vor.",
-      benefit: "Bis zu 80% Zeitersparnis bei der vorbereitenden Buchhaltung, null Tippfehler und sofortige Übersicht über alle offenen Posten."
-    }
+// =========================================================================
+// 1. CENTRAL PRODUCT & SERVICE CATALOG (SINGLE SOURCE OF TRUTH)
+// =========================================================================
+
+const PRODUCT_CATALOG = {
+  "paket-1": {
+    id: "paket-1",
+    aliases: ["paket 1", "datenprüfung", "bereinigung", "paket-1"],
+    title: "Paket 1: Datenprüfung & Bereinigung",
+    shortTitle: "Paket 1: Datenprüfung",
+    tagline: "SHA-256 Dedupe • UTF-8 Reparatur • CSV-Export",
+    priceTag: "350 € Festpreis",
+    priceValue: "350 €",
+    priceSub: "Einmaliger Festpreis (schlüsselfertige Bereinigung)",
+    pricingType: "fixed",
+    requiresDeposit: true,
+    depositPct: 50,
+    depositAmount: "175 €",
+    depositLabel: "50% Anzahlung:",
+    depositNote: "50% SEPA-Anzahlung vor Projektstart (175,00 €)",
+    bookingUrl: "booking.html?pkg=paket-1"
   },
-  dataclean: {
-    id: "dataclean",
-    title: "Datenbereinigung & Katalog-Aufbereitung",
-    badge: "Paket D • Daten & Systeme verbinden",
-    tagline: "Großhändler-Kataloge, Datanorm & Artikelstammdaten harmonisieren",
-    desc: "Beseitigen Sie unvollständige Artikel, kaputte Umlaute, inkonsistente Preise und redundante Dubletten vollautomatisch aus Ihren Tabellen.",
-    price: "650 € – 1.250 €",
-    priceSub: "Festpreis (inklusive Unittests & 30 Tage Betreuung)",
-    packageName: "Paket D: Daten und Systeme verbinden (850 €)",
-    bookingUrl: "booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden",
-    features: [
-      "Kollisionsfreie SHA-256 Deduplizierung über Artikelmerkmale",
-      "Automatische Reparatur korrumpierter Zeichensätze (UTF-8 / ISO-8859)",
-      "Normalisierung von Telefonnummern (E.164) und Postanschriften",
-      "Datanorm v4 / v5 und BMEcat Konvertierungsroutinen",
-      "Verhindert fehlerhafte Bestellungen und veraltete Kundenpreise"
-    ],
-    steps: [
-      { step: "Katalog einlesen", detail: "Importiere 1.250 Großhändler-Artikelzeilen..." },
-      { step: "Umlaute reparieren", detail: "Korrumpierte Zeichenketten behoben (z.B. 'MÃ¼ller' -> 'Müller')..." },
-      { step: "Dubletten entfernen", detail: "SHA-256 Fingerprints verglichen: 142 redundante Zeilen eliminiert..." },
-      { step: "Export bereitstellen", detail: "Bereinigter Katalog validiert und im Zielformat exportiert." }
-    ],
-    plainExplanation: {
-      problem: "Lieferanten senden Preislisten mit abweichenden Spalten, falschen Umlauten und doppelten Artikeln. Vor dem Import in den Shop oder die WaWi müssen Tabellen mühsam bereinigt werden.",
-      solution: "Ein automatisierter Validator bereinigt alle Felder in unter 2 Sekunden nach festen Regeln und meldet Ausreißer sofort.",
-      benefit: "Aktuelle Preise im System, keine Reklamationen durch veraltete Katalogdaten und keine manuelle Tabellenarbeit mehr."
-    }
+  "paket-2": {
+    id: "paket-2",
+    aliases: ["paket 2", "routine-automatisierung", "routine-büro", "paket-2"],
+    title: "Paket 2: Routine-Automatisierung",
+    shortTitle: "Paket 2: Routine-Büro",
+    tagline: "PDF-Rechnungen • DATEV/sevdesk • E-Mail-Scan",
+    priceTag: "ab 450 € Festpreis",
+    priceValue: "ab 450 €",
+    priceSub: "Festpreis nach Aufwandsschätzung (schlüsselfertig)",
+    pricingType: "fixed_from",
+    requiresDeposit: true,
+    depositPct: 50,
+    depositAmount: "ab 225 €",
+    depositLabel: "50% Anzahlung:",
+    depositNote: "50% SEPA-Anzahlung vor Projektstart (ab 225,00 €)",
+    bookingUrl: "booking.html?pkg=paket-2"
   },
-  crmsync: {
-    id: "crmsync",
-    title: "Kunden- & Auftragsverwaltung",
-    badge: "Paket C • Kunden- & Auftragsverwaltung",
-    tagline: "Anfragen, Termine und Kundendaten zentral bündeln",
-    desc: "Führen Sie Website-Anfragen, E-Mails und Aufträge an einem Ort zusammen. Keine verlorenen Zettel, keine unbeantworteten Interessenten.",
-    price: "850 € – 1.850 €",
-    priceSub: "Festpreis (Maßgeschneidertes CRM / Auftrags-Board)",
-    packageName: "Paket C: Kunden- und Auftragsverwaltung (850 € - 1.850 €)",
-    bookingUrl: "booking.html?pkg=Paket+C:+Kunden-+und+Auftragsverwaltung",
-    features: [
-      "Zentrale Übersicht über alle Kunden, Angebote und Projektstände",
-      "Automatische Benachrichtigung bei neuen Kundenanfragen per E-Mail/SMS",
-      "Status-Tracking: Von der Anfrage über das Angebot bis zum Geldeingang",
-      "Wiedervorlage-Funktion: Nie wieder ein wichtiges Nachfassen vergessen",
-      "Einfache Bedienung ohne monatliche teure Lizenzgebühren pro Benutzer"
-    ],
-    steps: [
-      { step: "Anfrage erfassen", detail: "Neue Kundenanfrage über Webformular eingegangen..." },
-      { step: "Dubletten-Check", detail: "Kundenstamm geprüft: Neuer Interessent, Kontaktdaten angelegt..." },
-      { step: "Benachrichtigung", detail: "Sofort-Benachrichtigung an Vertriebsleitung gesendet..." },
-      { step: "Status setzen", detail: "Status 'QUALIFIED' im Dashboard gesetzt, Wiedervorlage in 48h geplant." }
-    ],
-    plainExplanation: {
-      problem: "Anfragen landen in verschiedenen Postfächern, Angebote geraten in Vergessenheit und es fehlt der Überblick, welche Aufträge bereits abgerechnet sind.",
-      solution: "Ein klares, unkompliziertes System erfasst jede Anfrage automatisch, erinnert an Fristen und zeigt den genauen Auftragsstatus.",
-      benefit: "Mehr Abschlüsse durch pünktliches Nachfassen, zufriedene Kunden und volle Transparenz über alle offenen Umsätze."
-    }
+  "paket-3": {
+    id: "paket-3",
+    aliases: ["paket 3", "schnittstellen & systeme verbinden", "schnittstellen", "paket-3"],
+    title: "Paket 3: Schnittstellen & Systeme verbinden",
+    shortTitle: "Paket 3: Schnittstellen",
+    tagline: "FastAPI • WaWi & Shop • Webhooks • Docker",
+    priceTag: "ab 850 € Festpreis",
+    priceValue: "ab 850 €",
+    priceSub: "Festpreis (schlüsselfertig inkl. Docker & Quellcode)",
+    pricingType: "fixed_from",
+    requiresDeposit: true,
+    depositPct: 50,
+    depositAmount: "ab 425 €",
+    depositLabel: "50% Anzahlung:",
+    depositNote: "50% SEPA-Anzahlung vor Projektstart (ab 425,00 €)",
+    bookingUrl: "booking.html?pkg=paket-3"
   },
-  apisync: {
-    id: "apisync",
-    title: "Systemintegration & Datensynchronisation",
-    badge: "Paket D • Daten & Systeme verbinden",
-    tagline: "Vorhandene Programme und externe Plattformen nahtlos verknüpfen",
-    desc: "Verbinden Sie Ihren Onlineshop, Ihr ERP-System und externe Schnittstellen über sichere, ausfallsichere FastAPI-Konnektoren mit Zero-Downtime.",
-    price: "850 € – 2.400 €",
-    priceSub: "Festpreis (schlüsselfertig inkl. Dokumentation & Docker)",
-    packageName: "Paket D: Daten und Systeme verbinden (850 € - 2.400 €)",
-    bookingUrl: "booking.html?pkg=Paket+D:+Daten+und+Systeme+verbinden",
-    features: [
-      "Asynchrones FastAPI / Python Backend mit extrem kurzen Latenzen",
-      "Sichere Authentifizierung (API-Keys, HMAC-SHA256 Signaturprüfung)",
-      "Bidirektionaler Datenabgleich (z. B. Shopware/Shopify <-> WaWi)",
-      "Automatisches Retry-Handling mit Fehlerspeicher (kein Datenverlust bei Netzausfall)",
-      "Lokal oder auf Ihrem eigenen Server betreibbar"
-    ],
-    steps: [
-      { step: "Webhook empfangen", detail: "Eingehender Auftrag aus Webshop eingetroffen..." },
-      { step: "Signatur prüfen", detail: "HMAC-SHA256 Krypto-Signatur validiert: Payload integer & echt..." },
-      { step: "Daten transformieren", detail: "Shop-JSON in ERP-taugliches Schema übersetzt..." },
-      { step: "Transaktion buchen", detail: "Auftrag transaktionssicher im Zielsystem verbucht (Latenz: 42ms)." }
-    ],
-    plainExplanation: {
-      problem: "Programme arbeiten isoliert voneinander. Aufträge aus dem Shop müssen von Hand in die Warenwirtschaft eingetragen werden. Das verzögert den Versand.",
-      solution: "Eine automatische Schnittstelle überträgt Daten in Echtzeit zwischen den Programmen, sobald ein Ereignis eintritt.",
-      benefit: "Schnellere Lieferzeiten, null Doppelarbeiten und vollständige Datenkonsistenz über alle Unternehmensbereiche hinweg."
-    }
+  "paket-4": {
+    id: "paket-4",
+    aliases: ["paket 4", "individuelle softwareentwicklung", "softwareentwicklung", "paket-4"],
+    title: "Paket 4: Individuelle Softwareentwicklung",
+    shortTitle: "Paket 4: Softwareentwicklung",
+    tagline: "Python Backend • Code-Reviews • Refactoring",
+    priceTag: "95 € / Stunde",
+    priceValue: "95 € / Std.",
+    priceSub: "Abrechnung nach tatsächlichem Stundenaufwand",
+    pricingType: "hourly",
+    requiresDeposit: false,
+    depositPct: 0,
+    depositAmount: "Keine Anzahlung",
+    depositLabel: "Anzahlung:",
+    depositNote: "Keine Anzahlung (Abrechnung nach Aufwand mit Zeiterfassung)",
+    bookingUrl: "booking.html?pkg=paket-4"
   },
-  reporting: {
-    id: "reporting",
-    title: "Automatische Berichterstellung",
-    badge: "Paket E • Wartung & laufende Betreuung",
-    tagline: "Wöchentliche Auswertungen & Kennzahlen pünktlich auf dem Tisch",
-    desc: "Schluss mit stundenlangem Zusammensuchen von Zahlen aus verschiedenen Systemen. Automatisch generierte PDF- und Excel-Berichte jeden Montagmorgen um 07:00 Uhr.",
-    price: "ab 190 € / Monat",
-    priceSub: "Monatlicher Retainer (laufende Überwachung & Updates)",
-    packageName: "Paket E: Wartung und laufende Betreuung (190 €/Mo.)",
-    bookingUrl: "booking.html?pkg=Paket+E:+Wartung+und+laufende+Betreuung",
-    features: [
-      "Automatische Aggregation von Umsätzen, Beständen und Auftragseingängen",
-      "Kompakter PDF-Management-Report pünktlich jeden Montagmorgen",
-      "Frühwarnsystem bei Schwellenwert-Überschreitungen (z. B. Lieferengpässe)",
-      "Verlässliche Reaktionszeiten bei technischen Fragen oder Anpassungen",
-      "Monatlich kündbar, transparente Abrechnung nach § 14 UStG"
-    ],
-    steps: [
-      { step: "Datenquellen abfragen", detail: "Umsatz-, Lager- und Auftragsdatenbanken abgefragt..." },
-      { step: "KPIs berechnen", detail: "Wochenumsatz, Deckungsbeitrag und Durchlaufzeiten aggregiert..." },
-      { step: "Report generieren", detail: "Übersichtlicher 2-seitiger PDF-Bericht mit Diagrammen erstellt..." },
-      { step: "Versand ausführen", detail: "Report per E-Mail an Geschäftsleitung zugestellt (07:00 Uhr)." }
-    ],
-    plainExplanation: {
-      problem: "Montagmorgen verbringt die Geschäftsleitung oder Assistenz Stunden damit, Zahlen aus verschiedenen Tabellen zusammenzukopieren, um den Wochenstatus zu kennen.",
-      solution: "Ein geplanter Hintergrund-Service sammelt die Kennzahlen nachts vollautomatisch und liefert den fertigen Bericht um 07:00 Uhr ins Postfach.",
-      benefit: "Fundierte Geschäftsentscheidungen auf Knopfdruck, sofortige Erkennung von Trends und mehr Zeit für das Kerngeschäft."
-    }
+  "retainer": {
+    id: "retainer",
+    aliases: ["retainer", "wartung & laufende betreuung", "wartung", "retainer"],
+    title: "Retainer: Wartung & laufende Betreuung",
+    shortTitle: "Retainer: Wartung",
+    tagline: "Health-Monitoring • Updates • Monatlich kündbar",
+    priceTag: "ab 190 € / Monat",
+    priceValue: "ab 190 € / Mo.",
+    priceSub: "Monatlicher Betreuungs- und Bereitschaftsvertrag",
+    pricingType: "retainer",
+    requiresDeposit: false,
+    depositPct: 0,
+    depositAmount: "Keine Anzahlung",
+    depositLabel: "Anzahlung:",
+    depositNote: "Keine Anzahlung (Monatliche Abrechnung zum Monatsanfang)",
+    bookingUrl: "booking.html?pkg=retainer"
+  },
+  "consulting": {
+    id: "consulting",
+    aliases: ["consulting", "individuelle anfrage", "erstgespräch", "beratung"],
+    title: "Erstgespräch / Individuelle Beratung",
+    shortTitle: "Erstgespräch / Consulting",
+    tagline: "15 Min. Call • Machbarkeit & Festpreisangebot",
+    priceTag: "Kostenloses Erstgespräch",
+    priceValue: "0 € (Kostenlos)",
+    priceSub: "Unverbindliche Ersteinschätzung Ihres Vorhabens",
+    pricingType: "free_consultation",
+    requiresDeposit: false,
+    depositPct: 0,
+    depositAmount: "0,00 €",
+    depositLabel: "Anzahlung:",
+    depositNote: "100% kostenfrei und unverbindlich — kein Kaufvertrag",
+    bookingUrl: "booking.html?pkg=consulting"
   }
 };
 
@@ -193,8 +153,6 @@ let cleanedDatasetContent = null; // Cleaned CSV or JSON text for download
 let lastAuditReportText = null;   // Audit text report for download
 let cliHistory = [];              // CLI command history
 let cliHistoryIndex = -1;         // Index for up/down navigation
-let activeScenarioId = "invoicing";
-let isSimulating = false;
 
 // =========================================================================
 // 3. CRYPTOGRAPHIC SHA-256 & RFC 4180 COMPLIANT PARSER (CSV, TSV, JSON)
@@ -634,23 +592,29 @@ function switchTerminalMode(mode) {
 
   const badgeEl = document.getElementById("terminal-status-badge");
 
-  // Reset tab active states
-  if (tabAudit) tabAudit.classList.remove("active");
-  if (tabDemo) tabDemo.classList.remove("active");
+  const isAudit = mode === "audit";
 
-  // Hide all view containers
-  if (viewAudit) viewAudit.style.display = "none";
-  if (viewDemo) viewDemo.style.display = "none";
+  // Accessible tab aria attributes and active classes
+  if (tabAudit) {
+    tabAudit.classList.toggle("active", isAudit);
+    tabAudit.setAttribute("aria-selected", isAudit ? "true" : "false");
+    tabAudit.tabIndex = isAudit ? 0 : -1;
+  }
+  if (tabDemo) {
+    tabDemo.classList.toggle("active", !isAudit);
+    tabDemo.setAttribute("aria-selected", !isAudit ? "true" : "false");
+    tabDemo.tabIndex = !isAudit ? 0 : -1;
+  }
 
-  if (mode === "demo") {
-    if (tabDemo) tabDemo.classList.add("active");
-    if (viewDemo) viewDemo.style.display = "block";
+  // Toggle view containers
+  if (viewAudit) viewAudit.style.display = isAudit ? "block" : "none";
+  if (viewDemo) viewDemo.style.display = !isAudit ? "block" : "none";
+
+  if (!isAudit) {
     if (badgeEl) badgeEl.textContent = "Simulation";
     updateOfferCardForDemo();
   } else {
     // Mode 1: Audit (Default)
-    if (tabAudit) tabAudit.classList.add("active");
-    if (viewAudit) viewAudit.style.display = "block";
     if (badgeEl) badgeEl.textContent = "Bereit";
     updateOfferCardForAudit();
   }
@@ -665,7 +629,7 @@ function updateOfferCardForDemo() {
   const featuresEl = document.getElementById("offer-features");
   const ctaBtn = document.getElementById("offer-cta-btn");
 
-  if (badgeEl) badgeEl.textContent = "Paket 3 • Beliebt für Mittelstand";
+  if (badgeEl) badgeEl.textContent = "Paket 3 • Schlüsselfertige Integration";
   if (titleEl) titleEl.textContent = "Schnittstellen & Systeme verbinden";
   if (descEl) descEl.textContent = "Verbinden Sie Ihren Webshop, die Warenwirtschaft und Buchhaltung über maßgeschneiderte, asynchrone Schnittstellen und Webhooks.";
   if (priceTagEl) priceTagEl.textContent = "ab 850 €";
@@ -681,103 +645,12 @@ function updateOfferCardForDemo() {
   }
   if (ctaBtn) {
     ctaBtn.textContent = "Jetzt Paket 3 anfragen (ab 850 €) →";
-    ctaBtn.href = "booking.html?pkg=Paket+3:+Schnittstellen+und+Systeme+verbinden+(ab+850+€)";
+    ctaBtn.href = "booking.html?pkg=paket-3";
   }
 }
 
 // =========================================================================
-// 7. TAB 1: LÖSUNGEN ERLEBEN (SCENARIOS & PLAIN EXPLANATIONS)
-// =========================================================================
-
-function playScenario(scenarioId) {
-  if (isSimulating) return;
-  const scenario = SCENARIOS[scenarioId];
-  if (!scenario) return;
-
-  activeScenarioId = scenarioId;
-
-  // Highlight active scenario selector button
-  document.querySelectorAll(".scenario-tab-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.getAttribute("data-scenario") === scenarioId);
-  });
-
-  const titleEl = document.getElementById("scenario-detail-title");
-  const badgeEl = document.getElementById("scenario-detail-badge");
-  const taglineEl = document.getElementById("scenario-detail-tagline");
-  const problemEl = document.getElementById("scenario-plain-problem");
-  const solutionEl = document.getElementById("scenario-plain-solution");
-  const benefitEl = document.getElementById("scenario-plain-benefit");
-  const stepsContainer = document.getElementById("scenario-steps-container");
-
-  if (titleEl) titleEl.textContent = scenario.title;
-  if (badgeEl) badgeEl.textContent = scenario.badge;
-  if (taglineEl) taglineEl.textContent = scenario.tagline;
-  if (problemEl) problemEl.textContent = scenario.plainExplanation.problem;
-  if (solutionEl) solutionEl.textContent = scenario.plainExplanation.solution;
-  if (benefitEl) benefitEl.textContent = scenario.plainExplanation.benefit;
-
-  // Render steps with progress simulation
-  if (stepsContainer) {
-    stepsContainer.innerHTML = "";
-    isSimulating = true;
-
-    scenario.steps.forEach((st, idx) => {
-      const stepRow = document.createElement("div");
-      stepRow.className = "scenario-step-row pending";
-      stepRow.id = `step-row-${idx}`;
-      stepRow.innerHTML = `
-        <div class="step-num">${idx + 1}</div>
-        <div class="step-content">
-          <div class="step-label">${escapeHtml(st.step)}</div>
-          <div class="step-detail">${escapeHtml(st.detail)}</div>
-        </div>
-        <div class="step-status-icon">⏳</div>
-      `;
-      stepsContainer.appendChild(stepRow);
-    });
-
-    // Animate progress sequentially
-    let currentStep = 0;
-    function runNextStep() {
-      if (currentStep < scenario.steps.length) {
-        const row = document.getElementById(`step-row-${currentStep}`);
-        if (row) {
-          row.classList.remove("pending");
-          row.classList.add("running");
-          const icon = row.querySelector(".step-status-icon");
-          if (icon) icon.textContent = "⚡";
-
-          setTimeout(() => {
-            row.classList.remove("running");
-            row.classList.add("completed");
-            if (icon) icon.textContent = "✓";
-            currentStep++;
-            runNextStep();
-          }, 350);
-        }
-      } else {
-        isSimulating = false;
-        updateTerminalOfferCard(scenario);
-      }
-    }
-    setTimeout(runNextStep, 200);
-  } else {
-    updateTerminalOfferCard(scenario);
-  }
-}
-
-function toggleScenarioTechDetails() {
-  const box = document.getElementById("scenario-tech-details");
-  const btn = document.getElementById("scenario-tech-toggle-btn");
-  if (!box || !btn) return;
-
-  const isHidden = box.style.display === "none" || !box.style.display;
-  box.style.display = isHidden ? "block" : "none";
-  btn.textContent = isHidden ? "▲ Technische Details ausblenden" : "▼ Technische Details & Stack anzeigen";
-}
-
-// =========================================================================
-// 8. TAB 2: KOSTENLOSER DATEN-AUDIT (REAL ENGINE & CLEANING)
+// 7. TAB 2: KOSTENLOSER DATEN-AUDIT (REAL ENGINE & CLEANING)
 // =========================================================================
 
 function triggerFileInput() {
@@ -999,9 +872,10 @@ function buildAuditReportText(dataset, stats, hoursPerMonth, monthlyCost, annual
     `   • Berechneter jährlicher Verlust:      ca. ${annualLoss.toLocaleString("de-DE")} €`,
     "",
     "4. EMPFOHLENE LÖSUNG:",
-    "   • Automatisierte Python-Pipeline (Paket D: Daten und Systeme verbinden)",
-    "   • 100% automatische SHA-256 Deduplizierung und E.164 Normalisierung",
-    "   • Einmaliger Festpreis ab 650 € netto (amortisiert sich in wenigen Wochen)",
+    "   • Automatisierte Python-Pipeline (Paket 1: Datenprüfung & Bereinigung ab 350 €)",
+    "   • Schlüsselfertige Schnittstellenintegration (Paket 3 ab 850 €)",
+    "   • Kollisionsfreie SHA-256 Deduplizierung und E.164 Normalisierung",
+    "   • Transparente Festpreisangebote nach Aufwandsschätzung",
     "",
     "5. KONTAKT & BERATUNG:",
     "   Nevio Waldemar Niebel | dev@nevioniebel.tech | https://nevioniebel.tech",
@@ -1102,7 +976,7 @@ async function dispatchLeadData(payload) {
       const data = await res.json();
       if (data && (data.success === "true" || data.success === true)) {
         delivered = true;
-        statusMessage = "Erfolgreich serverseitig zugestellt und im Postfach archiviert.";
+        statusMessage = "Ihre Anfrage wurde erfolgreich übermittelt. Ich prüfe Ihre Angaben persönlich und melde mich zeitnah bei Ihnen.";
       }
     }
   } catch (e) {
@@ -1210,7 +1084,7 @@ function updateOfferCardForAudit(stats, fileName, annualLoss) {
     }
     if (ctaBtn) {
       ctaBtn.textContent = "Jetzt unverbindlich anfragen (350 €) →";
-      ctaBtn.href = "booking.html?pkg=Paket+1:+Datenprüfung+und+Bereinigung+(350+€)";
+      ctaBtn.href = "booking.html?pkg=paket-1";
     }
     return;
   }
@@ -1227,13 +1101,13 @@ function updateOfferCardForAudit(stats, fileName, annualLoss) {
       <li><span>✓</span> Repariert alle ${stats.encodingErrors} korrumpierten Umlaute & Sonderzeichen</li>
       <li><span>✓</span> Standardisiert ${stats.unnormalizedPhones} Telefonnummern nach internationalem E.164 Standard</li>
       <li><span>✓</span> Berechnetes Einsparpotenzial: ca. ${annualLoss ? annualLoss.toLocaleString("de-DE") : "0"} € pro Jahr</li>
-      <li><span>✓</span> 100% DSGVO-orientiert, lokal oder auf Ihrem Server betreibbar</li>
+      <li><span>✓</span> Datenschutzbewusst, clientseitige Analyse im Browser</li>
     `;
   }
 
   if (ctaBtn) {
     ctaBtn.textContent = `Bereinigung anfragen (spart ca. ${annualLoss ? annualLoss.toLocaleString("de-DE") : "0"} €/Jahr) →`;
-    ctaBtn.href = `booking.html?pkg=Paket+1:+Datenprüfung+und+Bereinigung+(350+€)&audit_defects=${stats.totalDefects}&file=${encodeURIComponent(fileName)}`;
+    ctaBtn.href = `booking.html?pkg=paket-1&audit_defects=${stats.totalDefects}&file=${encodeURIComponent(fileName)}`;
   }
 }
 
@@ -1459,82 +1333,118 @@ function printCliLog(text) {
 // 10. SYNCHRONIZE OFFER CARDS & BOOKING HELPERS
 // =========================================================================
 
-function updateTerminalOfferCard(scenario) {
-  const card = document.getElementById("terminal-offer-card");
-  if (!card || !scenario) return;
+// =========================================================================
+// 10. PRODUCT SELECTOR & BOOKING PORTAL LOGIC (CENTRAL CATALOG DRIVEN)
+// =========================================================================
 
-  const badgeEl = document.getElementById("offer-badge");
-  const titleEl = document.getElementById("offer-title");
-  const descEl = document.getElementById("offer-desc");
-  const priceTagEl = document.getElementById("offer-price-tag");
-  const priceSubEl = document.getElementById("offer-price-sub");
-  const featuresEl = document.getElementById("offer-features");
-  const ctaBtn = document.getElementById("offer-cta-btn");
+function selectPackage(pkgId) {
+  let pkg = PRODUCT_CATALOG[pkgId];
+  if (!pkg) {
+    const search = String(pkgId).toLowerCase();
+    for (const key in PRODUCT_CATALOG) {
+      const candidate = PRODUCT_CATALOG[key];
+      if (candidate.aliases.some(alias => search.includes(alias)) || candidate.title.toLowerCase().includes(search)) {
+        pkg = candidate;
+        break;
+      }
+    }
+  }
+  if (!pkg) pkg = PRODUCT_CATALOG["paket-3"];
 
-  if (badgeEl) badgeEl.textContent = scenario.badge;
-  if (titleEl) titleEl.textContent = scenario.title;
-  if (descEl) descEl.textContent = scenario.desc;
-  if (priceTagEl) priceTagEl.textContent = scenario.price;
-  if (priceSubEl) priceSubEl.textContent = scenario.priceSub;
+  // Update DOM cards with accessibility state
+  const cards = document.querySelectorAll(".package-radio-card");
+  cards.forEach(card => {
+    const cardId = card.getAttribute("data-package-id");
+    const cardPkg = (card.getAttribute("data-package") || "").toLowerCase();
+    const isSelected = cardId === pkg.id || cardPkg.includes(pkg.id) || (cardId && pkg.aliases.includes(cardId));
 
-  if (featuresEl && scenario.features) {
-    featuresEl.innerHTML = scenario.features
-      .map(feat => `<li><span>✓</span> ${escapeHtml(feat)}</li>`)
-      .join("");
+    card.classList.toggle("selected", isSelected);
+    card.setAttribute("aria-checked", isSelected ? "true" : "false");
+    card.tabIndex = isSelected ? 0 : -1;
+  });
+
+  // Update hidden input for form submission
+  const hiddenInput = document.getElementById("selected-package");
+  if (hiddenInput) {
+    hiddenInput.value = `${pkg.title} (${pkg.priceValue})`;
   }
 
-  if (ctaBtn) {
-    ctaBtn.textContent = `Jetzt Paket anfragen (${scenario.price}) →`;
-    ctaBtn.href = scenario.bookingUrl;
+  // Update summary overview
+  const summaryPkg = document.getElementById("summary-package-name");
+  const summaryPrice = document.getElementById("summary-package-price");
+  const summaryDepositLabel = document.getElementById("summary-deposit-label");
+  const summaryDeposit = document.getElementById("summary-package-deposit");
+  const summaryNote = document.getElementById("summary-billing-note");
+
+  if (summaryPkg) summaryPkg.textContent = pkg.title;
+  if (summaryPrice) summaryPrice.textContent = pkg.priceValue;
+  if (summaryDepositLabel) summaryDepositLabel.textContent = pkg.depositLabel;
+  if (summaryDeposit) summaryDeposit.textContent = pkg.depositAmount;
+  if (summaryNote) summaryNote.textContent = pkg.depositNote;
+}
+
+// Backward-compatible helper for legacy onclick signatures
+function selectPackageCard(cardElement, packageName, priceValue) {
+  const pkgId = cardElement?.getAttribute("data-package-id");
+  if (pkgId && PRODUCT_CATALOG[pkgId]) {
+    selectPackage(pkgId);
+  } else {
+    selectPackage(packageName || priceValue);
   }
 }
 
-function selectPackageCard(cardElement, packageName, priceValue) {
-  document.querySelectorAll(".package-radio-card").forEach(c => c.classList.remove("selected"));
-  cardElement.classList.add("selected");
+function initPackageKeyboardNavigation() {
+  const group = document.querySelector(".package-radio-group");
+  if (!group) return;
 
-  const hiddenInput = document.getElementById("selected-package");
-  if (hiddenInput) hiddenInput.value = `${packageName} (${priceValue})`;
+  const catalogKeys = Object.keys(PRODUCT_CATALOG);
 
-  const summaryPkg = document.getElementById("summary-package-name");
-  const summaryPrice = document.getElementById("summary-package-price");
-  const summaryDeposit = document.getElementById("summary-package-deposit");
+  group.addEventListener("keydown", (e) => {
+    const cards = Array.from(group.querySelectorAll(".package-radio-card"));
+    const activeIndex = cards.findIndex(c => c === document.activeElement || c.classList.contains("selected"));
 
-  if (summaryPkg) summaryPkg.textContent = packageName;
-  if (summaryPrice) summaryPrice.textContent = priceValue;
+    let nextIndex = -1;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      e.preventDefault();
+      nextIndex = (activeIndex + 1) % cards.length;
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      nextIndex = (activeIndex - 1 + cards.length) % cards.length;
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      nextIndex = 0;
+    } else if (e.key === "End") {
+      e.preventDefault();
+      nextIndex = cards.length - 1;
+    } else if (e.key === " " || e.key === "Enter") {
+      e.preventDefault();
+      if (document.activeElement && document.activeElement.classList.contains("package-radio-card")) {
+        const pkgId = document.activeElement.getAttribute("data-package-id");
+        if (pkgId) selectPackage(pkgId);
+      }
+      return;
+    }
 
-  const numericMatch = priceValue.match(/(\d+)/);
-  if (numericMatch && summaryDeposit) {
-    const num = parseInt(numericMatch[1], 10);
-    const deposit = Math.round(num * 0.5);
-    summaryDeposit.textContent = `${deposit} €`;
-  } else if (summaryDeposit) {
-    summaryDeposit.textContent = "nach Absprache";
-  }
+    if (nextIndex >= 0 && cards[nextIndex]) {
+      const targetCard = cards[nextIndex];
+      const pkgId = targetCard.getAttribute("data-package-id");
+      if (pkgId) {
+        selectPackage(pkgId);
+        targetCard.focus();
+      }
+    }
+  });
 }
 
 function checkUrlPackageParameter() {
   const urlParams = new URLSearchParams(window.location.search);
   const pkgParam = urlParams.get("pkg");
-  if (!pkgParam) return;
-
-  const normalized = pkgParam.toLowerCase();
-  const packageCards = document.querySelectorAll(".package-radio-card");
-  let matched = false;
-
-  packageCards.forEach(card => {
-    const cardPkg = (card.getAttribute("data-package") || "").toLowerCase();
-    if (!matched && (cardPkg.includes(normalized) || normalized.includes(cardPkg) ||
-        (normalized.includes("paket 1") && cardPkg.includes("paket 1")) ||
-        (normalized.includes("paket 2") && cardPkg.includes("paket 2")) ||
-        (normalized.includes("paket 3") && cardPkg.includes("paket 3")) ||
-        (normalized.includes("paket 4") && cardPkg.includes("paket 4")) ||
-        (normalized.includes("retainer") && cardPkg.includes("retainer")) ||
-        (normalized.includes("consulting") && cardPkg.includes("consulting")))) {
-      card.click();
-      matched = true;
-    }
-  });
+  if (pkgParam) {
+    selectPackage(pkgParam);
+  } else {
+    // Default to Paket 3 if no parameter provided
+    selectPackage("paket-3");
+  }
 
   const notesField = document.getElementById("portal-notes");
   const auditDefects = urlParams.get("audit_defects");
@@ -1596,7 +1506,7 @@ async function handlePortalBookingSubmit(e) {
     if (successBox) successBox.style.display = "block";
     if (refCodeEl) refCodeEl.textContent = bookingRecord.id;
     if (statusMsg) {
-      statusMsg.innerHTML = `Ihre Terminanfrage wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${bookingRecord.id}</strong>). Ich prüfe Ihre Angaben persönlich und melde mich binnen 24 Stunden an Werktagen bei Ihnen.`;
+      statusMsg.innerHTML = `Ihre Terminanfrage wurde erfolgreich übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${bookingRecord.id}</strong>). Ich prüfe Ihre Angaben persönlich und melde mich zeitnah bei Ihnen.`;
     }
   } else {
     // Keep form and entered data VISIBLE! Show honest fallback container with 1-click mailto
@@ -1773,7 +1683,7 @@ async function handleContactSubmit(e) {
     if (successBox) successBox.style.display = "block";
     if (refCodeEl) refCodeEl.textContent = contactRecord.id;
     if (statusMsg) {
-      statusMsg.innerHTML = `Ihre Nachricht wurde erfolgreich an das System übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${contactRecord.id}</strong>). Ich melde mich innerhalb von 24 Stunden an Werktagen persönlich bei Ihnen.`;
+      statusMsg.innerHTML = `Ihre Nachricht wurde erfolgreich übermittelt (Vorgangsnummer: <strong style="color: var(--color-mint); font-family: var(--font-mono);">${contactRecord.id}</strong>). Ich prüfe Ihre Angaben und melde mich zeitnah bei Ihnen.`;
     }
   } else {
     // Keep form and entered data VISIBLE! Show honest fallback container with 1-click mailto
@@ -1793,9 +1703,22 @@ async function handleContactSubmit(e) {
 // Global initialization
 document.addEventListener("DOMContentLoaded", () => {
   checkUrlPackageParameter();
+  initPackageKeyboardNavigation();
 
-  if (document.getElementById("scenario-detail-title")) {
-    playScenario("invoicing");
+  // Tablist arrow keyboard navigation for accessibility
+  const tabList = document.querySelector(".terminal-mode-bar");
+  if (tabList) {
+    tabList.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        switchTerminalMode("audit");
+        document.getElementById("tab-mode-audit")?.focus();
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        switchTerminalMode("demo");
+        document.getElementById("tab-mode-demo")?.focus();
+      }
+    });
   }
 
   initRoiCalculator();
@@ -1810,8 +1733,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Explicit window bindings for robust inline event triggers & cross-context verification
 window.switchTerminalMode = switchTerminalMode;
-window.playScenario = playScenario;
-window.toggleScenarioTechDetails = toggleScenarioTechDetails;
+window.selectPackage = selectPackage;
+window.selectPackageCard = selectPackageCard;
 window.loadSampleDataset = loadSampleDataset;
 window.cleanDatasetInMemory = cleanDatasetInMemory;
 window.downloadCleanedFile = downloadCleanedFile;
@@ -1825,3 +1748,4 @@ window.copyTextToClipboard = copyTextToClipboard;
 window.sha256Utf8 = sha256Utf8;
 window.getCurrentDataset = () => typeof currentDataset !== "undefined" ? currentDataset : null;
 window.getCleanedContent = () => typeof cleanedDatasetContent !== "undefined" ? cleanedDatasetContent : null;
+window.PRODUCT_CATALOG = PRODUCT_CATALOG;

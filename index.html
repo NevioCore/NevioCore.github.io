@@ -15,7 +15,7 @@
   <meta property="og:url" content="https://nevioniebel.tech/">
   <meta property="og:title" content="Nevio Niebel | Softwareentwicklung &amp; Datenautomatisierung">
   <meta property="og:description" content="Schlüsselfertige Daten-Pipelines, API-Schnittstellen und Prozessautomatisierung für Unternehmen. Handwerklich sauber gebaut, direkt vom Entwickler.">
-  <meta property="og:image" content="https://nevioniebel.tech/assets/3d_hero_cyber.jpg">
+  <meta property="og:image" content="https://nevioniebel.tech/assets/og_banner_ethiack.jpg">
   <meta property="og:locale" content="de_DE">
 
   <!-- Schema.org Structured Data for SEO & AI Search Engines (GEO) -->
@@ -78,7 +78,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=6.0">
+  <link rel="stylesheet" href="style.css?v=7.0">
 </head>
 <body class="site-body">
 
@@ -138,22 +138,22 @@
             <div class="trust-badge">
               <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               <div>
-                <strong>DSGVO-orientiert</strong>
-                <small>Deutsche Datenschutzstandards &amp; lokale Datenhaltung</small>
+                <strong>Datenschutzbewusst</strong>
+                <small>Clientseitige Dateiprüfung &amp; sparsame Datenübertragung</small>
               </div>
             </div>
             <div class="trust-badge">
               <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               <div>
                 <strong>Sorgfältig getestet</strong>
-                <small>Automatisierte Pytest-Unittests für jeden Datenstrom</small>
+                <small>Testgetriebene Entwicklung mit Pytest &amp; Unittests</small>
               </div>
             </div>
             <div class="trust-badge">
               <svg class="badge-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               <div>
                 <strong>Schnelle Reaktionszeit</strong>
-                <small>Persönliche Rückmeldung an Werktagen binnen 24h</small>
+                <small>Persönliche Rückmeldung an Werktagen meist &lt; 24h</small>
               </div>
             </div>
             <div class="trust-badge">
@@ -196,12 +196,12 @@
             </div>
 
             <!-- Mode Switcher Tabs (2 Strictly Separated Functional Modes) -->
-            <div class="terminal-mode-bar" role="tablist">
-              <button class="terminal-mode-btn active" id="tab-mode-audit" role="tab" aria-selected="true" onclick="switchTerminalMode('audit')">
+            <div class="terminal-mode-bar" role="tablist" aria-label="Modus-Auswahl">
+              <button class="terminal-mode-btn active" id="tab-mode-audit" role="tab" aria-selected="true" aria-controls="view-audit" tabindex="0" onclick="switchTerminalMode('audit')">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                 <span>1. Eigene Datei prüfen (Kostenloser Audit)</span>
               </button>
-              <button class="terminal-mode-btn" id="tab-mode-demo" role="tab" aria-selected="false" onclick="switchTerminalMode('demo')">
+              <button class="terminal-mode-btn" id="tab-mode-demo" role="tab" aria-selected="false" aria-controls="view-demo" tabindex="-1" onclick="switchTerminalMode('demo')">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 <span>2. Automatisierung ansehen [DEMO-SIMULATION]</span>
               </button>
@@ -210,7 +210,7 @@
             <!-- ======================================================== -->
             <!-- MODE 1: KOSTENLOSER DATEN-AUDIT (REAL CLIENT-SIDE ENGINE) -->
             <!-- ======================================================== -->
-            <div id="view-audit" class="terminal-view-panel" style="display: block;">
+            <div id="view-audit" class="terminal-view-panel" role="tabpanel" aria-labelledby="tab-mode-audit" style="display: block;">
               
               <!-- Dropzone -->
               <div class="audit-dropzone" id="audit-dropzone" onclick="triggerFileInput()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
@@ -393,7 +393,7 @@
             <!-- ======================================================== -->
             <!-- MODE 2: AUTOMATISIERUNG ANSEHEN [DEMO-SIMULATION]        -->
             <!-- ======================================================== -->
-            <div id="view-demo" class="terminal-view-panel" style="display: none;">
+            <div id="view-demo" class="terminal-view-panel" role="tabpanel" aria-labelledby="tab-mode-demo" style="display: none;">
               
               <div style="text-align: center; margin-bottom: 2rem;">
                 <span class="badge badge-mint" style="font-size: 0.75rem;">[DEMO-SIMULATION]</span>
@@ -425,7 +425,7 @@
                     </div>
                   </div>
                   <div class="demo-benefit-bar">
-                    <strong>Konkreter Nutzen:</strong> Bis zu 80% weniger Zeitaufwand in der vorbereitenden Buchhaltung, null Tippfehler.
+                    <strong>Konkreter Nutzen:</strong> Signifikante Zeitersparnis bei der vorbereitenden Buchhaltung und Vermeidung von manuellen Übertragungsfehlern.
                   </div>
                 </div>
 
@@ -446,7 +446,7 @@
                     </div>
                   </div>
                   <div class="demo-benefit-bar">
-                    <strong>Konkreter Nutzen:</strong> Stets aktuelle Preise im System, keine Falschbestellungen, null manuelle Tabellenarbeit.
+                    <strong>Konkreter Nutzen:</strong> Konsistente Preise im System, verringertes Fehlerrisiko und spürbare Entlastung von manueller Tabellenkorrektur.
                   </div>
                 </div>
 
@@ -863,6 +863,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=6.0"></script>
+  <script src="app.js?v=7.0"></script>
 </body>
 </html>

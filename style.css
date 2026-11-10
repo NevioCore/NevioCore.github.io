@@ -1122,6 +1122,11 @@ select.form-control option {
   border-color: var(--color-border-hover);
 }
 
+.package-radio-card:focus-visible {
+  outline: 2px solid var(--color-mint);
+  outline-offset: 2px;
+}
+
 .package-radio-card.selected {
   border-color: var(--color-mint);
   background: rgba(94, 255, 136, 0.05);

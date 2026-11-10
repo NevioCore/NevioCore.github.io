@@ -23,9 +23,9 @@
 6. **Consulting & Erstgespräch (Kostenlos / 95 € / Std.)**: 30-minütige Machbarkeitsanalyse via Videocall unverbindlich und kostenfrei. Vertiefende Architektur-Reviews auf Stundenbasis. (https://nevioniebel.tech/booking.html)
 
 ## Qualitätsstandards & Arbeitsweise
-- **DSGVO-orientiert**: Lokale Datenverarbeitung, Einhaltung deutscher und europäischer Datenschutzstandards.
+- **Datenschutzbewusst**: Clientseitige Dateiprüfung im Browser, Einhaltung deutscher und europäischer Datenschutzstandards.
 - **100% Quellcode-Eigentum**: Alle Nutzungs- und Verwertungsrechte gehen nach vollständiger Bezahlung uneingeschränkt an den Auftraggeber über.
-- **50% Anzahlungsmodell**: 50% Anzahlung bei Projektstart per SEPA-Überweisung, 50% nach erfolgreicher Abnahme.
+- **Faire Zahlungskonditionen**: 50% Anzahlung bei Festpreisprojekten (Pakete 1–3) bei Projektstart per SEPA-Überweisung, 50% nach erfolgreicher Abnahme. Stundensätze und Retainer ohne Anzahlung.
 
 ## Web-Architektur & Unterseiten
 - **Startseite & Terminal-Demo**: https://nevioniebel.tech/
