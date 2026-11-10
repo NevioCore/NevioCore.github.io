@@ -1213,11 +1213,19 @@ select.form-control option {
 }
 
 @media (max-width: 768px) {
+  .container { padding: 0 1.25rem; }
+  .brand { font-size: 1.05rem; }
+  .brand-symbol { font-size: 1.15rem; }
+  .navbar .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.82rem; }
   .hero-section { padding: 6.5rem 0 3.5rem 0; }
-  .hero-title { font-size: 2.15rem; }
-  .hero-subtitle { font-size: 1.05rem; }
+  .hero-title { font-size: 1.95rem; line-height: 1.2; word-break: break-word; }
+  .hero-subtitle { font-size: 1.02rem; line-height: 1.6; }
   .hero-studio-tag { font-size: 0.75rem; padding: 0.35rem 0.85rem; }
+  .hero-actions { flex-direction: column; width: 100%; gap: 0.75rem; }
+  .hero-actions .btn { width: 100%; }
   .trust-strip { grid-template-columns: 1fr; }
+  .terminal-mode-bar { flex-direction: column; }
+  .terminal-mode-btn { width: 100%; border-right: none; border-bottom: 1px solid var(--color-border); white-space: normal; text-align: left; padding: 0.75rem 1rem; }
   .terminal-button-grid { grid-template-columns: 1fr; }
   .package-radio-group { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
@@ -1229,14 +1237,8 @@ select.form-control option {
 
 @media (max-width: 480px) {
   .container { padding: 0 1rem; }
-  .hero-title { font-size: 1.8rem; line-height: 1.2; word-break: break-word; }
-  .hero-subtitle { font-size: 0.95rem; line-height: 1.6; }
-  .hero-actions { flex-direction: column; width: 100%; gap: 0.75rem; }
-  .hero-actions .btn { width: 100%; }
+  .hero-title { font-size: 1.7rem; }
   .hero-studio-tag { font-size: 0.7rem; padding: 0.3rem 0.65rem; }
-  .navbar-container { padding: 0.75rem 1rem; }
-  .nav-cta { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
-  .logo { font-size: 1.1rem; }
 }
 
 /* ROI Calculator Styles */

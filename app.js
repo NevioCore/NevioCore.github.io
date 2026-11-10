@@ -1799,6 +1799,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initRoiCalculator();
+
+  if (window.location.hash) {
+    const targetEl = document.querySelector(window.location.hash);
+    if (targetEl) {
+      targetEl.scrollIntoView();
+    }
+  }
 });
 
 // Explicit window bindings for robust inline event triggers & cross-context verification
