@@ -961,7 +961,8 @@ async function dispatchLeadData(payload) {
       _honey: ""
     };
 
-    const res = await fetch("https://formsubmit.co/ajax/dev@nevioniebel.tech", {
+    // Verified FormSubmit endpoint for dev@nevioniebel.tech
+    const res = await fetch("https://formsubmit.co/ajax/3e8d7d7335df9eb6d794f7a7e9a93053", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
