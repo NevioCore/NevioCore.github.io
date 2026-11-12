@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-
-Sitemap: https://nevioniebel.tech/sitemap.xml
+Disallow: /
